@@ -182,6 +182,7 @@ namespace AlphaSoft
                     if (null == editUserForm || editUserForm.IsDisposed)
                             editUserForm = new dataUserDetailForm(globalConstants.EDIT_USER, selectedUserID);
 
+                    editUserForm.MdiParent = this.MdiParent;
                     editUserForm.Show();
                     editUserForm.WindowState = FormWindowState.Normal;
                     break;
@@ -194,6 +195,7 @@ namespace AlphaSoft
             if (null == newUserForm || newUserForm.IsDisposed)
                     newUserForm = new dataUserDetailForm(globalConstants.NEW_USER);
 
+            newUserForm.MdiParent = this.MdiParent;
             newUserForm.Show();
             newUserForm.WindowState = FormWindowState.Normal;
         }

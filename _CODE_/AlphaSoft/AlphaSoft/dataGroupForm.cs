@@ -114,6 +114,7 @@ namespace AlphaSoft
             if (null == newGroupForm || newGroupForm.IsDisposed)
                     newGroupForm = new dataGroupDetailForm(globalConstants.NEW_GROUP_USER);
 
+            newGroupForm.MdiParent = this.MdiParent;
             newGroupForm.Show();
             newGroupForm.WindowState = FormWindowState.Normal;
         }
@@ -166,6 +167,7 @@ namespace AlphaSoft
                     if (null == editGroupForm || editGroupForm.IsDisposed)
                             editGroupForm = new dataGroupDetailForm(globalConstants.EDIT_GROUP_USER, selectedGroupID);
 
+                    editGroupForm.MdiParent = this.MdiParent;
                     editGroupForm.Show();
                     editGroupForm.WindowState = FormWindowState.Normal;
                     break;
@@ -176,6 +178,7 @@ namespace AlphaSoft
                     if (null == displayGroupAccessForm || displayGroupAccessForm.IsDisposed)
                             displayGroupAccessForm = new groupAccessModuleForm(selectedGroupID);
 
+                    displayGroupAccessForm.MdiParent = this.MdiParent;
                     displayGroupAccessForm.Show();
                     displayGroupAccessForm.WindowState = FormWindowState.Normal;
                     break;

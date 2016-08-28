@@ -155,6 +155,7 @@ namespace AlphaSoft
                 if (null == pembayaranPiutangForm || pembayaranPiutangForm.IsDisposed)
                     pembayaranPiutangForm = new pembayaranLumpSumForm(originModuleID, selectedBranchID);
 
+                pembayaranPiutangForm.MdiParent = this.MdiParent;
                 pembayaranPiutangForm.Show();
                 pembayaranPiutangForm.WindowState = FormWindowState.Normal;
             }
@@ -163,6 +164,7 @@ namespace AlphaSoft
                 if (null == editBranchForm || editBranchForm.IsDisposed)
                         editBranchForm = new dataCabangDetailForm(globalConstants.EDIT_BRANCH, selectedBranchID);
 
+                editBranchForm.MdiParent = this.MdiParent;
                 editBranchForm.Show();
                 editBranchForm.WindowState = FormWindowState.Normal;
             }
@@ -205,6 +207,7 @@ namespace AlphaSoft
                     if (null == pembayaranPiutangForm || pembayaranPiutangForm.IsDisposed)
                         pembayaranPiutangForm = new pembayaranLumpSumForm(originModuleID, selectedBranchID);
 
+                    pembayaranPiutangForm.MdiParent = this.MdiParent;
                     pembayaranPiutangForm.Show();
                     pembayaranPiutangForm.WindowState = FormWindowState.Normal;
                 }
@@ -214,6 +217,7 @@ namespace AlphaSoft
                     if (null == editBranchForm || editBranchForm.IsDisposed)
                             editBranchForm = new dataCabangDetailForm(globalConstants.EDIT_BRANCH, selectedBranchID);
 
+                    editBranchForm.MdiParent = this.MdiParent;
                     editBranchForm.Show();
                     editBranchForm.WindowState = FormWindowState.Normal;
                 }
@@ -223,7 +227,9 @@ namespace AlphaSoft
         private void newButton_Click_1(object sender, EventArgs e)
         {
             dataCabangDetailForm displayedForm = new dataCabangDetailForm(globalConstants.NEW_BRANCH, 0);
+            displayedForm.MdiParent = this.MdiParent;
             displayedForm.ShowDialog(this);
+
             dataCabangGridView.DataSource = null;
             if (!namaBranchTextbox.Text.Equals(""))
                 loadBranchData(namaBranchTextbox.Text);

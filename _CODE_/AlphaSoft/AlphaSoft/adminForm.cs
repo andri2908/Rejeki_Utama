@@ -412,6 +412,7 @@ namespace AlphaSoft
             if (null == tambahHapusUserForm || tambahHapusUserForm.IsDisposed)
                 tambahHapusUserForm = new dataUserForm();
 
+            tambahHapusUserForm.MdiParent = this;
             tambahHapusUserForm.Show();
             tambahHapusUserForm.WindowState = FormWindowState.Normal;
             //dataUserForm displayedForm = new dataUserForm();
@@ -425,6 +426,7 @@ namespace AlphaSoft
             if (null == tambahHapusGroupForm || tambahHapusGroupForm.IsDisposed)
                 tambahHapusGroupForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_USER);
 
+            tambahHapusGroupForm.MdiParent = this;
             tambahHapusGroupForm.Show();
             tambahHapusGroupForm.WindowState = FormWindowState.Normal;
         }
@@ -434,6 +436,7 @@ namespace AlphaSoft
             if (null == pengaturanGrupAksesForm || pengaturanGrupAksesForm.IsDisposed)
                 pengaturanGrupAksesForm = new dataGroupForm(globalConstants.PENGATURAN_GRUP_AKSES);
 
+            pengaturanGrupAksesForm.MdiParent = this;
             pengaturanGrupAksesForm.Show();
             pengaturanGrupAksesForm.WindowState = FormWindowState.Normal;
             //dataGroupForm displayedForm = new dataGroupForm(globalConstants.PENGATURAN_GRUP_AKSES);
@@ -445,6 +448,7 @@ namespace AlphaSoft
             if (null == displaySinkronisasiForm || displaySinkronisasiForm.IsDisposed)
                 displaySinkronisasiForm = new sinkronisasiInformasiForm();
 
+            displaySinkronisasiForm.MdiParent = this;
             displaySinkronisasiForm.Show();
             displaySinkronisasiForm.WindowState = FormWindowState.Normal;
             //sinkronisasiInformasiForm displayedForm = new sinkronisasiInformasiForm();
@@ -456,6 +460,7 @@ namespace AlphaSoft
             if (null == tambahHapusCabangForm || tambahHapusCabangForm.IsDisposed)
                 tambahHapusCabangForm = new dataCabangForm();
 
+            tambahHapusCabangForm.MdiParent = this;
             tambahHapusCabangForm.Show();
             tambahHapusCabangForm.WindowState = FormWindowState.Normal;
             //dataCabangForm displayedForm = new dataCabangForm();
@@ -796,9 +801,9 @@ namespace AlphaSoft
             if (null == displayChangePasswordForm || displayChangePasswordForm.IsDisposed)
                 displayChangePasswordForm = new changePasswordForm(selectedUserID);
 
+            displayChangePasswordForm.MdiParent = this;
             displayChangePasswordForm.Show();
-            displayChangePasswordForm.Parent = this;
-            displayChangePasswordForm.WindowState = FormWindowState.Normal;
+            //displayChangePasswordForm.WindowState = FormWindowState.Normal;
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1191,6 +1196,7 @@ namespace AlphaSoft
             if (null == displaySetApplicationForm || displaySetApplicationForm.IsDisposed)
                 displaySetApplicationForm = new SetApplicationForm();
 
+            displaySetApplicationForm.MdiParent = this;
             displaySetApplicationForm.Show();
             displaySetApplicationForm.WindowState = FormWindowState.Normal;
         }
@@ -1200,6 +1206,7 @@ namespace AlphaSoft
             if (null == displayBackupRestoreForm || displayBackupRestoreForm.IsDisposed)
                 displayBackupRestoreForm = new backupRestoreDatabaseForm();
 
+            displayBackupRestoreForm.MdiParent = this;
             displayBackupRestoreForm.Show();
             displayBackupRestoreForm.WindowState = FormWindowState.Normal;
 
@@ -1225,9 +1232,10 @@ namespace AlphaSoft
             {
                 newMessageFormExist = true;
                 newMessageForm newMsgForm = new newMessageForm((Form) this);
-                newMsgForm.Top = Screen.PrimaryScreen.Bounds.Height - newMsgForm.Height;
-                newMsgForm.Left = Screen.PrimaryScreen.Bounds.Width- newMsgForm.Width;
+                //newMsgForm.Top = Screen.PrimaryScreen.Bounds.Height - newMsgForm.Height;
+                //newMsgForm.Left = Screen.PrimaryScreen.Bounds.Width- newMsgForm.Width;
 
+                newMsgForm.MdiParent = this;
                 newMsgForm.Show();
 
                 //  ALlow main UI thread to properly display please wait form.
