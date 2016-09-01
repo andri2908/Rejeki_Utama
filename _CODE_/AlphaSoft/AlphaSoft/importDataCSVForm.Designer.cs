@@ -137,8 +137,6 @@
             this.detailImportDataGrid.RowHeadersVisible = false;
             this.detailImportDataGrid.Size = new System.Drawing.Size(817, 531);
             this.detailImportDataGrid.TabIndex = 44;
-            this.detailImportDataGrid.Enter += new System.EventHandler(this.detailImportDataGrid_Enter);
-            this.detailImportDataGrid.Leave += new System.EventHandler(this.detailImportDataGrid_Leave);
             // 
             // productID
             // 
@@ -223,8 +221,6 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "IMPORT DATA CSV";
-            this.Activated += new System.EventHandler(this.importDataCSVForm_Activated);
-            this.Deactivate += new System.EventHandler(this.importDataCSVForm_Deactivate);
             this.Load += new System.EventHandler(this.importDataCSVForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.detailImportDataGrid)).EndInit();
             this.ResumeLayout(false);

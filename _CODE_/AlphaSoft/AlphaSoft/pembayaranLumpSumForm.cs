@@ -12,8 +12,6 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class pembayaranLumpSumForm : Form
@@ -30,9 +28,6 @@ namespace AlphaSoft
         private Data_Access DS = new Data_Access();
         private globalUtilities gutil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
 
         public pembayaranLumpSumForm()
         {
@@ -60,48 +55,6 @@ namespace AlphaSoft
                 label14.Text = "SUPPLIER";
                 label3.Text = "TOTAL HUTANG";
             }
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
         }
 
         private void loadDataBranch()
@@ -138,13 +91,13 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.DATA_PIUTANG_MUTASI)
                 sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_CREDIT PC, PRODUCTS_MUTATION_HEADER PM, CREDIT C " +
-                                    "WHERE PC.CREDIT_ID = C.CREDIT_ID AND C.PM_INVOICE = PM.PM_INVOICE AND C.CREDIT_PAID = 0 AND PC.PAYMENT_INVALID = 0 AND PM.BRANCH_ID_TO = " + selectedBranchID;
+                                    "WHERE PC.CREDIT_ID = C.CREDIT_ID AND C.PM_INVOICE = PM.PM_INVOICE AND PC.PAYMENT_INVALID = 0 AND PM.BRANCH_ID_TO = " + selectedBranchID;
             else if (originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
                 sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_CREDIT PC, SALES_HEADER SH, CREDIT C " +
-                                    "WHERE PC.CREDIT_ID = C.CREDIT_ID AND C.SALES_INVOICE = SH.SALES_INVOICE AND C.CREDIT_PAID = 0 AND PC.PAYMENT_INVALID = 0 AND SH.CUSTOMER_ID = " + selectedCustomerID;
+                                    "WHERE PC.CREDIT_ID = C.CREDIT_ID AND C.SALES_INVOICE = SH.SALES_INVOICE AND PC.PAYMENT_INVALID = 0 AND SH.CUSTOMER_ID = " + selectedCustomerID;
             else if (originModuleID == globalConstants.PEMBAYARAN_HUTANG)
                 sqlCommand = "SELECT IFNULL(SUM(PAYMENT_NOMINAL), 0) FROM PAYMENT_DEBT PD, PURCHASE_HEADER PH, DEBT D " +
-                                    "WHERE PD.DEBT_ID = D.DEBT_ID AND D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND D.DEBT_PAID = 0 AND PD.PAYMENT_INVALID = 0 AND PH.SUPPLIER_ID = " + selectedSupplierID;
+                                    "WHERE PD.DEBT_ID = D.DEBT_ID AND D.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.PAYMENT_INVALID = 0 AND PH.SUPPLIER_ID = " + selectedSupplierID;
 
             if (creditID > 0)
             { 
@@ -403,17 +356,16 @@ namespace AlphaSoft
             DateTime selectedPaymentDueDate;
 
             string paymentDescription = "";
-            string dailyJournalDateTime = "";
-            string currentTime = "";
+
+            int salesPersonID = 0;
+            string selectedSQInvoice = "";
+            double commissionValue = 0;
+            
 
             MySqlException internalEX = null;
 
             selectedPaymentDate = paymentDateTimePicker.Value;
             paymentDateTime = String.Format(culture, "{0:dd-MM-yyyy}", selectedPaymentDate);
-
-            currentTime = gutil.getCustomStringFormatTime(DateTime.Now);
-            dailyJournalDateTime = paymentDateTime + " " + currentTime;
-
             paymentNominal = Convert.ToDouble(paymentMaskedTextBox.Text);
             paymentDescription = MySqlHelper.EscapeString(descriptionTextBox.Text);
 
@@ -524,7 +476,7 @@ namespace AlphaSoft
                         else
                         {
                             if (paymentConfirmed == 0)
-                            { 
+                            {
                                 sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE) VALUES " +
                                                 "(" + currentCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), 1, " + gutil.validateDecimalNumericInput(actualPaymentAmount) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
                             }
@@ -533,8 +485,6 @@ namespace AlphaSoft
                                 sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_CONFIRMED_DATE, PAYMENT_DUE_DATE) VALUES " +
                                                 "(" + currentCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), 1, " + gutil.validateDecimalNumericInput(actualPaymentAmount) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
                             }
-
-                            gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : INSERT INTO PAYMENT CREDIT [" + currentCreditID + ", " + gutil.validateDecimalNumericInput(actualPaymentAmount) + "]");
                         }
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -576,6 +526,25 @@ namespace AlphaSoft
                                     gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : UPDATE SALES HEADER TAX SET FULLY PAID [" + noInvoice + "]");
                                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
+
+                                    // INSERT TO SALES COMMISSION DETAIL
+
+                                    // CHECK WHETHER THE SALES INVOICE COMES FROM A SALES QUOTATION
+                                    //selectedSQInvoice = DS.getDataSingleValue("SELECT IFNULL(SQ_INVOICE, '') FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1").ToString();
+
+                                    //if (selectedSQInvoice.Length > 0)
+                                    //{
+                                    //    salesPersonID = Convert.ToInt32(DS.getDataSingleValue("SELECT SALESPERSON_ID FROM SALES_QUOTATION_HEADER WHERE SQ_INVOICE = '" + selectedSQInvoice + "'"));
+                                    //    commissionValue = gutil.getSalesCommission(noInvoice, selectedSQInvoice);
+
+                                    //    sqlCommand = "INSERT INTO SALES_COMMISSION_DETAIL (SALESPERSON_ID, COMMISSION_DATE, COMMISSION_AMOUNT, SALES_INVOICE) VALUES " +
+                                    //                            "(" + salesPersonID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y %H:%i'), " + commissionValue + ", " + noInvoice + ")";
+
+                                    //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES COMMISSION DETAIL [" + noInvoice + "/" + salesPersonID + "/ " + commissionValue + "]");
+                                    //    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    //        throw internalEX;
+                                    //}
+
                                 }
                             }
                             else if (originModuleID == globalConstants.PEMBAYARAN_HUTANG)
@@ -599,7 +568,7 @@ namespace AlphaSoft
                             // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
                             noInvoice = DS.getDataSingleValue("SELECT IFNULL(SALES_INVOICE, '') FROM CREDIT WHERE CREDIT_ID = " + currentCreditID).ToString();
                             sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, BRANCH_ID, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                               "VALUES (1, STR_TO_DATE('" + dailyJournalDateTime + "', '%d-%m-%Y %H:%i')" + ", " + actualPaymentAmount + ", " + branchID + ", 'PEMBAYARAN PIUTANG " + noInvoice + "', '" + gutil.getUserID() + "', 1)";
+                                                               "VALUES (1, STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y')" + ", " + actualPaymentAmount + ", " + branchID + ", 'PEMBAYARAN PIUTANG " + noInvoice + "', '" + gutil.getUserID() + "', 1)";
 
                             gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : INSERT INTO DAILY JOURNAL [" + actualPaymentAmount + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -617,7 +586,7 @@ namespace AlphaSoft
                     // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
                     // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
                     sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, BRANCH_ID, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                        "VALUES (1, STR_TO_DATE('" + dailyJournalDateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(changeAmount) + ", " + selectedBranchID + ", 'SISA PIUTANG MUTASI" + noInvoice + "', '" + gutil.getUserID() + "', 1)";
+                                        "VALUES (1, STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y')" + ", " + gutil.validateDecimalNumericInput(changeAmount) + ", " + selectedBranchID + ", 'SISA PIUTANG MUTASI" + noInvoice + "', '" + gutil.getUserID() + "', 1)";
 
                     gutil.saveSystemDebugLog(0, "PEMBAYARAN LUMPSUM : INSERT INTO DAILY JOURNAL [" + actualPaymentAmount + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1145,8 +1114,6 @@ namespace AlphaSoft
             //            loadDataPayment();
 
             calculateGlobalOutstandingCredit();
-
-            registerGlobalHotkey();
         }
 
         private void detailPMDataGridView_DoubleClick(object sender, EventArgs e)
@@ -1225,21 +1192,6 @@ namespace AlphaSoft
             {
                 paymentMaskedTextBox.SelectAll();
             });
-        }
-
-        private void pembayaranLumpSumForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
         }
     }
 }

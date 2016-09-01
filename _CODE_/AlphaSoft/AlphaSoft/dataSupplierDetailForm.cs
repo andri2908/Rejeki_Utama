@@ -12,8 +12,6 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataSupplierDetailForm : Form
@@ -27,10 +25,7 @@ namespace AlphaSoft
         private Data_Access DS = new Data_Access();
         private globalUtilities gUtil = new globalUtilities();
         private int options = 0;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
+        
         public dataSupplierDetailForm()
         {
             InitializeComponent();
@@ -51,56 +46,24 @@ namespace AlphaSoft
             selectedSupplierID = supplierID;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-        }
-
         private void loadSupplierData()
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
-
+            string sqlCommand = "";
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT * FROM MASTER_SUPPLIER WHERE SUPPLIER_ID =  " + selectedSupplierID))
+            sqlCommand = "SELECT IFNULL(SUPPLIER_FULL_NAME, '') AS SUPPLIER_FULL_NAME, " +
+                                   "IFNULL(SUPPLIER_ADDRESS1, '') AS SUPPLIER_ADDRESS1, " +
+                                   "IFNULL(SUPPLIER_ADDRESS2, '') AS SUPPLIER_ADDRESS2, " +
+                                   "IFNULL(SUPPLIER_ADDRESS_CITY, '') AS SUPPLIER_ADDRESS_CITY, " +
+                                   "IFNULL(SUPPLIER_PHONE, '') AS SUPPLIER_PHONE, " +
+                                   "IFNULL(SUPPLIER_FAX, '') AS SUPPLIER_FAX, " +
+                                   "IFNULL(SUPPLIER_EMAIL, '') AS SUPPLIER_EMAIL, " +
+                                   "SUPPLIER_ACTIVE " +
+                                    "FROM MASTER_SUPPLIER WHERE SUPPLIER_ID =  " + selectedSupplierID;
+
+            using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
                 {
@@ -339,12 +302,6 @@ namespace AlphaSoft
                     loadSupplierData();
                     break;
             }
-            registerGlobalHotkey();
-        }
-
-        private void dataSupplierDetailForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
         }
     }
 }

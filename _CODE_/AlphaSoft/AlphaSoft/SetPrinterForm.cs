@@ -18,6 +18,8 @@ namespace AlphaSoft
         private PrintDocument printdoc = new PrintDocument();
         private globalUtilities gutil = new globalUtilities();
 
+        private int[] arrPaperSize = { globalUtilities.PAPER_HALF_KWARTO, globalUtilities.PAPER_FULL_KWARTO };
+
         public SetPrinterForm()
         {
             InitializeComponent();
@@ -67,7 +69,7 @@ namespace AlphaSoft
         {
             string pname = this.PrinterlistBox.SelectedItem.ToString();
 
-            gutil.setPaper(sizeComboBox.SelectedIndex);
+            gutil.setPaper(arrPaperSize[sizeComboBox.SelectedIndex]);
             gutil.saveSystemDebugLog(globalConstants.MENU_PENGATURAN_PRINTER, "PAPER SIZE CHANGED [" + sizeComboBox.SelectedIndex + "]");
 
             myPrinters.SetDefaultPrinter(pname);

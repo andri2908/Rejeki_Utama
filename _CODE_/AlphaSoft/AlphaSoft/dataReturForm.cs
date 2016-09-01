@@ -13,8 +13,6 @@ using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Drawing.Printing;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataReturForm : Form
@@ -26,14 +24,6 @@ namespace AlphaSoft
         private int supplierID = 0;
         private string returID = "";
 
-        dataReturPermintaanForm returPembelianForm = null;
-        dataReturPermintaanForm returMutasiForm = null;
-        dataInvoiceForm returPenjualanForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-        private bool navKeyRegistered = false;
-
         public dataReturForm()
         {
             InitializeComponent();
@@ -43,52 +33,6 @@ namespace AlphaSoft
         {
             InitializeComponent();
             originModuleID = moduleID;
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
         }
 
         public void fillInSupplierCombo()
@@ -310,10 +254,10 @@ namespace AlphaSoft
             {
                 label3.Text = "PELANGGAN";
                 fillInCustomerCombo();
-                labelPrintOut.Visible = true;
-                comboPrintOut.Visible = true;
-                comboPrintOut.SelectedIndex = 0;
-                comboPrintOut.Text = comboPrintOut.Items[comboPrintOut.SelectedIndex].ToString();
+                //labelPrintOut.Visible = true;
+                //comboPrintOut.Visible = true;
+                //comboPrintOut.SelectedIndex = 0;
+                //comboPrintOut.Text = comboPrintOut.Items[comboPrintOut.SelectedIndex].ToString();
             }
 
             arrButton[0] = displayButton;
@@ -321,6 +265,8 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
+
+            noPOInvoiceTextBox.Select();
         }
 
         private void displayButton_Click(object sender, EventArgs e)
@@ -372,13 +318,24 @@ namespace AlphaSoft
             string returNo = noRetur;
             string sqlCommandx = "";
 
-            sqlCommandx = "SELECT 'RETUR PENJUALAN' AS MODULE_TYPE, RSH.RS_INVOICE AS 'NO_RETUR', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'NAME', RSH.RS_DATETIME AS 'RETUR_DATE', RSH.RS_TOTAL AS 'RETUR_TOTAL', MP.PRODUCT_NAME AS 'PRODUCT_NAME', RSD.PRODUCT_SALES_PRICE AS 'PRICE', RSD.PRODUCT_RETURN_QTY AS 'QTY', RSD.RS_DESCRIPTION AS 'DESC', RSD.RS_SUBTOTAL AS 'SUBTOTAL' " +
-                                     "FROM RETURN_SALES_HEADER RSH LEFT OUTER JOIN MASTER_CUSTOMER MC ON RSH.CUSTOMER_ID = MC.CUSTOMER_ID, MASTER_PRODUCT MP, RETURN_SALES_DETAIL RSD " +
-                                     "WHERE RSD.RS_INVOICE = RSH.RS_INVOICE AND RSD.PRODUCT_ID = MP.PRODUCT_ID AND RSH.RS_INVOICE = '" + returNo + "'";
+            sqlCommandx = "SELECT RH.SALES_INVOICE, MP.PRODUCT_NAME, RD.PRODUCT_SALES_PRICE, RD.PRODUCT_RETURN_QTY, RD.RS_DESCRIPTION, RD.RS_SUBTOTAL " +
+                                     "FROM MASTER_PRODUCT MP, RETURN_SALES_DETAIL RD, RETURN_SALES_HEADER RH, " +
+                                     "(SELECT MAX(RS_INVOICE) AS INVOICE " +
+                                     "FROM RETURN_SALES_HEADER " +
+                                     "GROUP BY SALES_INVOICE) TAB1 " +
+                                     "WHERE RD.PRODUCT_ID = MP.PRODUCT_ID AND RH.RS_INVOICE = TAB1.INVOICE AND RD.RS_INVOICE = RH.RS_INVOICE AND RH.RS_INVOICE = '" + returNo + "'";
 
-            DS.writeXML(sqlCommandx, globalConstants.returPermintaanXML);
-            dataReturPermintaanPrintOutForm displayForm = new dataReturPermintaanPrintOutForm();
+            DS.writeXML(sqlCommandx, globalConstants.returPenjualanXML);
+            dataReturPenjualanPrintOutForm displayForm = new dataReturPenjualanPrintOutForm();
             displayForm.ShowDialog(this);
+
+            //sqlCommandx = "SELECT 'RETUR PENJUALAN' AS MODULE_TYPE, RSH.RS_INVOICE AS 'NO_RETUR', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'NAME', RSH.RS_DATETIME AS 'RETUR_DATE', RSH.RS_TOTAL AS 'RETUR_TOTAL', MP.PRODUCT_NAME AS 'PRODUCT_NAME', RSD.PRODUCT_SALES_PRICE AS 'PRICE', RSD.PRODUCT_RETURN_QTY AS 'QTY', RSD.RS_DESCRIPTION AS 'DESC', RSD.RS_SUBTOTAL AS 'SUBTOTAL' " +
+            //                         "FROM RETURN_SALES_HEADER RSH LEFT OUTER JOIN MASTER_CUSTOMER MC ON RSH.CUSTOMER_ID = MC.CUSTOMER_ID, MASTER_PRODUCT MP, RETURN_SALES_DETAIL RSD " +
+            //                         "WHERE RSD.RS_INVOICE = RSH.RS_INVOICE AND RSD.PRODUCT_ID = MP.PRODUCT_ID AND RSH.RS_INVOICE = '" + returNo + "'";
+
+            //DS.writeXML(sqlCommandx, globalConstants.returPermintaanXML);
+            //dataReturPermintaanPrintOutForm displayForm = new dataReturPermintaanPrintOutForm();
+            //displayForm.ShowDialog(this);
         }
 
         private void printOutSelectedRetur(string noRetur)
@@ -395,9 +352,9 @@ namespace AlphaSoft
                 }
                 else if (originModuleID == globalConstants.RETUR_PENJUALAN)
                 {
-                    if (comboPrintOut.SelectedIndex == 0)
-                        printReceipt(noRetur);
-                    else
+                    //if (comboPrintOut.SelectedIndex == 0)
+                    //    printReceipt(noRetur);
+                    //else
                         printOutReturPenjualan(noRetur);
                 }
             }
@@ -420,6 +377,16 @@ namespace AlphaSoft
             selectedNoRetur = selectedRow.Cells["NO RETUR"].Value.ToString();
 
             printOutSelectedRetur(selectedNoRetur);
+        }
+
+        private void dataPurchaseOrder_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataPurchaseOrder_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           
         }
 
         private void dataPurchaseOrder_KeyDown(object sender, KeyEventArgs e)
@@ -947,62 +914,19 @@ namespace AlphaSoft
         {
             if (originModuleID == globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER)
             {
-                if (null == returPembelianForm || returPembelianForm.IsDisposed)
-                        returPembelianForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
-
-                returPembelianForm.Show();
-                returPembelianForm.WindowState = FormWindowState.Normal;
+                dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
+                displayedForm.ShowDialog(this);
             }
             else if (originModuleID == globalConstants.RETUR_PEMBELIAN_KE_PUSAT)
             {
-                if (null == returMutasiForm || returMutasiForm.IsDisposed)
-                        returMutasiForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
-
-                returMutasiForm.Show();
-                returMutasiForm.WindowState = FormWindowState.Normal;
+                dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+                displayedForm.ShowDialog(this);
             }
             else if (originModuleID == globalConstants.RETUR_PENJUALAN)
             {
-                if (null == returPenjualanForm || returPenjualanForm.IsDisposed)
-                        returPenjualanForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
-
-                returPenjualanForm.Show();
-                returPenjualanForm.WindowState = FormWindowState.Normal;
+                dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
+                displayedForm.ShowDialog(this);
             }
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
-        }
-
-        private void dataReturForm_Activated(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
-        }
-
-        private void dataReturForm_Deactivate(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataPurchaseOrder_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataPurchaseOrder_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
         }
     }
 }

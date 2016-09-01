@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.noInvoiceTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -39,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.customerHiddenCombo = new System.Windows.Forms.ComboBox();
             this.showAllCheckBox = new System.Windows.Forms.CheckBox();
+            this.newButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -87,8 +88,6 @@
             this.PODtPicker_1.Name = "PODtPicker_1";
             this.PODtPicker_1.Size = new System.Drawing.Size(144, 27);
             this.PODtPicker_1.TabIndex = 38;
-            this.PODtPicker_1.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.PODtPicker_1.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // label5
             // 
@@ -110,8 +109,6 @@
             this.PODtPicker_2.Name = "PODtPicker_2";
             this.PODtPicker_2.Size = new System.Drawing.Size(145, 27);
             this.PODtPicker_2.TabIndex = 43;
-            this.PODtPicker_2.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.PODtPicker_2.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // label1
             // 
@@ -147,6 +144,17 @@
             this.showAllCheckBox.TabIndex = 47;
             this.showAllCheckBox.Text = "Show All";
             this.showAllCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // newButton
+            // 
+            this.newButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newButton.Location = new System.Drawing.Point(508, 149);
+            this.newButton.Name = "newButton";
+            this.newButton.Size = new System.Drawing.Size(187, 37);
+            this.newButton.TabIndex = 65;
+            this.newButton.Text = "NEW INVOICE";
+            this.newButton.UseVisualStyleBackColor = true;
+            this.newButton.Click += new System.EventHandler(this.newButton_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -205,8 +213,6 @@
             this.customerCombo.Size = new System.Drawing.Size(311, 26);
             this.customerCombo.TabIndex = 40;
             this.customerCombo.SelectedIndexChanged += new System.EventHandler(this.customerCombo_SelectedIndexChanged);
-            this.customerCombo.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.customerCombo.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // displayButton
             // 
@@ -224,23 +230,23 @@
             this.dataPenerimaanBarang.AllowUserToAddRows = false;
             this.dataPenerimaanBarang.AllowUserToDeleteRows = false;
             this.dataPenerimaanBarang.BackgroundColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataPenerimaanBarang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataPenerimaanBarang.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataPenerimaanBarang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataPenerimaanBarang.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataPenerimaanBarang.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataPenerimaanBarang.Location = new System.Drawing.Point(0, 210);
             this.dataPenerimaanBarang.MultiSelect = false;
             this.dataPenerimaanBarang.Name = "dataPenerimaanBarang";
@@ -248,9 +254,7 @@
             this.dataPenerimaanBarang.Size = new System.Drawing.Size(921, 427);
             this.dataPenerimaanBarang.TabIndex = 63;
             this.dataPenerimaanBarang.DoubleClick += new System.EventHandler(this.dataPenerimaanBarang_DoubleClick);
-            this.dataPenerimaanBarang.Enter += new System.EventHandler(this.dataPenerimaanBarang_Enter);
             this.dataPenerimaanBarang.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataPenerimaanBarang_KeyDown);
-            this.dataPenerimaanBarang.Leave += new System.EventHandler(this.dataPenerimaanBarang_Leave);
             // 
             // dataSalesInvoice
             // 
@@ -259,6 +263,7 @@
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(920, 637);
             this.Controls.Add(this.customerHiddenCombo);
+            this.Controls.Add(this.newButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.displayButton);
             this.Controls.Add(this.dataPenerimaanBarang);
@@ -266,8 +271,6 @@
             this.Name = "dataSalesInvoice";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Activated += new System.EventHandler(this.dataSalesInvoice_Activated);
-            this.Deactivate += new System.EventHandler(this.dataSalesInvoice_Deactivate);
             this.Load += new System.EventHandler(this.dataSalesInvoice_Load);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
@@ -289,6 +292,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox customerHiddenCombo;
         private System.Windows.Forms.CheckBox showAllCheckBox;
+        private System.Windows.Forms.Button newButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

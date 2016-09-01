@@ -10,8 +10,6 @@ using System.Windows.Forms;
 
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Hotkeys;
-
 
 namespace AlphaSoft
 {
@@ -25,9 +23,6 @@ namespace AlphaSoft
         private int options = 0;
 
         private groupAccessModuleForm parentForm;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
 
         public dataGroupDetailForm()
         {
@@ -53,48 +48,6 @@ namespace AlphaSoft
             InitializeComponent();
             originModuleID = moduleID;
             parentForm = originForm;
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();         
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
         }
 
         private void loadUserGroupDataInformation()
@@ -126,9 +79,9 @@ namespace AlphaSoft
         {
             Button[] arrButton = new Button[2];
 
-            arrButton[0] = SaveButton;
-            arrButton[1] = ResetButton;
-            gutil.reArrangeButtonPosition(arrButton, SaveButton.Top, this.Width);
+            arrButton[0] = saveButton;
+            arrButton[1] = button1;
+            gutil.reArrangeButtonPosition(arrButton, 184, this.Width);
 
             gutil.reArrangeTabOrder(this);
         }
@@ -238,40 +191,15 @@ namespace AlphaSoft
 
             return result;
         }
-        
-        private void dataGroupDetailForm_Activated(object sender, EventArgs e)
-        {
-            switch (originModuleID)
-            {
-                case (globalConstants.NEW_GROUP_USER):
-                case (globalConstants.PENGATURAN_GRUP_AKSES):
-                    options = gutil.INS;
-                    nonAktifCheckbox.Enabled = false;
-                    break;
-                case (globalConstants.EDIT_GROUP_USER):
-                    options = gutil.UPD;
-                    nonAktifCheckbox.Enabled = true;
-                    loadUserGroupDataInformation();
-                    break;
-            }            
-            errorLabel.Text = "";
 
-            registerGlobalHotkey();
-        }
-
-        private void dataGroupDetailForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
+        private void saveButton_Click(object sender, EventArgs e)
+        {           
             if (saveData())
             {
                 switch (originModuleID)
                 {
                     case globalConstants.NEW_GROUP_USER:
-                        gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_INSERT, "ADD NEW GROUP USER [" + namaGroupTextBox.Text + "]");
+                        gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_INSERT, "ADD NEW GROUP USER ["+namaGroupTextBox.Text+"]");
                         break;
                     case globalConstants.EDIT_GROUP_USER:
                         if (nonAktifCheckbox.Checked)
@@ -282,7 +210,7 @@ namespace AlphaSoft
                 }
 
                 if (originModuleID != globalConstants.PENGATURAN_GRUP_AKSES)
-                {
+                { 
                     gutil.showSuccess(options);
                     gutil.ResetAllControls(this);
 
@@ -299,9 +227,27 @@ namespace AlphaSoft
             }
         }
 
-        private void ResetButton_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             gutil.ResetAllControls(this);
+        }
+
+        private void dataGroupDetailForm_Activated(object sender, EventArgs e)
+        {
+            switch (originModuleID)
+            {
+                case (globalConstants.NEW_GROUP_USER):
+                case (globalConstants.PENGATURAN_GRUP_AKSES):
+                    options = gutil.INS;
+                    nonAktifCheckbox.Enabled = false;
+                    break;
+                case (globalConstants.EDIT_GROUP_USER):
+                    options = gutil.UPD;
+                    nonAktifCheckbox.Enabled = true;
+                    loadUserGroupDataInformation();
+                    break;
+            }            
+            errorLabel.Text = "";
         }
     }
 }

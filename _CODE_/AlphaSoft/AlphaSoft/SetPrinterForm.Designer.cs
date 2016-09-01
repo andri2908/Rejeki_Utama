@@ -101,14 +101,13 @@
             this.sizeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.sizeComboBox.FormattingEnabled = true;
             this.sizeComboBox.Items.AddRange(new object[] {
-            "POS Receipt",
             "1/2 Kwarto",
             "Kwarto"});
             this.sizeComboBox.Location = new System.Drawing.Point(136, 146);
             this.sizeComboBox.Name = "sizeComboBox";
             this.sizeComboBox.Size = new System.Drawing.Size(146, 26);
             this.sizeComboBox.TabIndex = 13;
-            this.sizeComboBox.Text = "POS Receipt";
+            this.sizeComboBox.Text = "1/2 Kwarto";
             // 
             // panel1
             // 

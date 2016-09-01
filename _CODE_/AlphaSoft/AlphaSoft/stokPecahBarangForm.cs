@@ -12,20 +12,23 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class stokPecahBarangForm : Form
     {
         private int newSelectedInternalProductID = 0;
+        private string newSelectedProductID = "";
+
         private int selectedInternalProductID = 0;
+        private string selectedProductID = "";
+
         private int selectedUnitID = 0;
         private List<int> selectedKategoriID = new List<int>();
         private double currentStockQty;
         private int currentUnitID;
         private int newUnitID;
         private double newUnitConverter;
+        private int locationID = 0;
 
         private Data_Access DS = new Data_Access();
         private string previousInput = "";
@@ -33,12 +36,6 @@ namespace AlphaSoft
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
         private bool isLoading = false;
-
-        dataProdukForm displayBrowseDataProdukForm = null;
-        dataProdukDetailForm newProdukForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
 
         public stokPecahBarangForm()
         {
@@ -51,73 +48,25 @@ namespace AlphaSoft
             selectedInternalProductID = productID;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-        }
-
         public void setNewSelectedProductID(int productID)
         {
             newSelectedInternalProductID = productID;
-
-            loadProductName();
         }
 
         private void newProduk_Click(object sender, EventArgs e)
         {
-            if (null == newProdukForm || newProdukForm.IsDisposed)
-                    newProdukForm = new dataProdukDetailForm(globalConstants.STOK_PECAH_BARANG, this);
+            dataProdukDetailForm displayForm = new dataProdukDetailForm(globalConstants.STOK_PECAH_BARANG, this);
+            displayForm.ShowDialog(this);
 
-            newProdukForm.Show();
-            newProdukForm.WindowState = FormWindowState.Normal;
-            //loadProductName();
+            loadProductName();
         }
 
         private void browseProdukButton_Click(object sender, EventArgs e)
         {
-            if (null == displayBrowseDataProdukForm || displayBrowseDataProdukForm.IsDisposed)
-                    displayBrowseDataProdukForm = new dataProdukForm(globalConstants.BROWSE_STOK_PECAH_BARANG, this);
+            dataProdukForm displayForm = new dataProdukForm(globalConstants.BROWSE_STOK_PECAH_BARANG, this);
+            displayForm.ShowDialog(this);
 
-            displayBrowseDataProdukForm.Show();
-            displayBrowseDataProdukForm.WindowState = FormWindowState.Normal;
-
+            loadProductName();
             numberOfProductTextBox.Text = "0";
         }
 
@@ -226,6 +175,13 @@ namespace AlphaSoft
 
         private void stokPecahBarangForm_Load(object sender, EventArgs e)
         {
+            locationID = gUtil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             gUtil.reArrangeTabOrder(this);
         }
 
@@ -233,9 +189,16 @@ namespace AlphaSoft
         {
             double convertValue = 0;
             DS.mySqlConnect();
+            int numRows = 0;
 
             if (currentUnitID != newUnitID)
-                convertValue = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 0) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+            {
+                numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+                if (numRows > 0)
+                    convertValue = Convert.ToDouble(DS.getDataSingleValue("SELECT IFNULL(CONVERT_MULTIPLIER , 1) FROM UNIT_CONVERT WHERE CONVERT_UNIT_ID_1 = " + currentUnitID + " AND CONVERT_UNIT_ID_2 = " + newUnitID));
+                else
+                    convertValue = 1;
+            }
             else
                 convertValue = 1;
 
@@ -355,10 +318,24 @@ namespace AlphaSoft
             {
                 DS.mySqlConnect();
 
+                newSelectedProductID = gUtil.getProductID(newSelectedInternalProductID);
+                selectedProductID = gUtil.getProductID(selectedInternalProductID);
+
+                //REDUCE CURRENT PRODUCT LOCATION QTY
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE PRODUCT_ID = " + selectedProductID + " AND LOCATION_ID = " + locationID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE PRODUCT LOCATION QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "/" + locationID + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
                 //REDUCE CURRENT STOCK QTY
                 sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + " WHERE ID = " + selectedInternalProductID;
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "REDUCE QTY [" + productIDTextBox.Text + "] AMT [" + gUtil.validateDecimalNumericInput(Convert.ToDouble(numberOfProductTextBox.Text)) + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
 
+                //INCREASE NEW PRODUCT LOCATION QTY
+                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + actualResult + " WHERE PRODUCT_ID = " + newSelectedProductID + " AND LOCATION_ID = " + locationID;
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PECAH_SATUAN_PRODUK, "ADD PRODUCT LOCATION QTY [" + newProductIDTextBox.Text + "] AMT [" + actualResult + "] [" + locationID + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
 
@@ -492,13 +469,6 @@ namespace AlphaSoft
             loadUnitInformation();
 
             loadCategoryInformation();
-
-            registerGlobalHotkey();
-        }
-
-        private void stokPecahBarangForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
         }
     }
 }

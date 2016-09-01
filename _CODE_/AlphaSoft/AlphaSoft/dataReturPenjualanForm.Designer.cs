@@ -57,6 +57,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -105,7 +106,7 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label11.Location = new System.Drawing.Point(221, 8);
+            this.label11.Location = new System.Drawing.Point(224, 8);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(171, 18);
             this.label11.TabIndex = 20;
@@ -141,7 +142,7 @@
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.38756F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.61244F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 192F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 213F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
             this.tableLayoutPanel6.Controls.Add(this.rsDateTimePicker, 3, 0);
             this.tableLayoutPanel6.Controls.Add(this.noReturTextBox, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.label11, 2, 0);
@@ -157,12 +158,10 @@
             this.rsDateTimePicker.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rsDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rsDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.rsDateTimePicker.Location = new System.Drawing.Point(413, 4);
+            this.rsDateTimePicker.Location = new System.Drawing.Point(416, 4);
             this.rsDateTimePicker.Name = "rsDateTimePicker";
             this.rsDateTimePicker.Size = new System.Drawing.Size(173, 27);
             this.rsDateTimePicker.TabIndex = 55;
-            this.rsDateTimePicker.Enter += new System.EventHandler(this.rsDateTimePicker_Enter);
-            this.rsDateTimePicker.Leave += new System.EventHandler(this.rsDateTimePicker_Leave);
             // 
             // tableLayoutPanel2
             // 
@@ -248,6 +247,7 @@
             // 
             // detailReturDataGridView
             // 
+            this.detailReturDataGridView.AllowUserToAddRows = false;
             this.detailReturDataGridView.AllowUserToDeleteRows = false;
             this.detailReturDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -274,11 +274,9 @@
             this.detailReturDataGridView.RowHeadersVisible = false;
             this.detailReturDataGridView.Size = new System.Drawing.Size(888, 379);
             this.detailReturDataGridView.TabIndex = 51;
-            this.detailReturDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.detailReturDataGridView_CellFormatting);
+            this.detailReturDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellEnter);
             this.detailReturDataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellValidated);
             this.detailReturDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailReturDataGridView_RowsAdded);
-            this.detailReturDataGridView.Enter += new System.EventHandler(this.detailReturDataGridView_Enter);
-            this.detailReturDataGridView.Leave += new System.EventHandler(this.detailReturDataGridView_Leave);
             // 
             // tableLayoutPanel1
             // 
@@ -377,7 +375,7 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(374, 617);
+            this.saveButton.Location = new System.Drawing.Point(264, 616);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(122, 37);
             this.saveButton.TabIndex = 52;
@@ -400,12 +398,25 @@
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // button1
+            // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(407, 616);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(214, 37);
+            this.button1.TabIndex = 53;
+            this.button1.Text = "PRINT LAST RECEIPT";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // dataReturPenjualanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
             this.ClientSize = new System.Drawing.Size(894, 661);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.detailReturDataGridView);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -460,5 +471,6 @@
         private System.Windows.Forms.Label errorLabel;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.Button button1;
     }
 }

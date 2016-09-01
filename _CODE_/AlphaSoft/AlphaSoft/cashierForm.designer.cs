@@ -41,6 +41,8 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.rejectButton = new System.Windows.Forms.Button();
+            this.approvalButton = new System.Windows.Forms.Button();
             this.ChangePrinterButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -54,8 +56,8 @@
             this.customerComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.discJualMaskedTextBox = new System.Windows.Forms.TextBox();
-            this.bayarTextBox = new System.Windows.Forms.TextBox();
+            this.bayarTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.discJualMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.uangKembaliTextBox = new System.Windows.Forms.TextBox();
             this.totalAfterDiscTextBox = new System.Windows.Forms.TextBox();
             this.totalPenjualanTextBox = new System.Windows.Forms.TextBox();
@@ -153,10 +155,12 @@
             // 
             // cashierDataGridView
             // 
+            this.cashierDataGridView.AllowUserToAddRows = false;
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.cashierDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -167,8 +171,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.cashierDataGridView.ColumnHeadersHeight = 50;
-            this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
@@ -197,15 +200,13 @@
             this.cashierDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.cashierDataGridView.Size = new System.Drawing.Size(983, 334);
             this.cashierDataGridView.TabIndex = 8;
-            this.cashierDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.cashierDataGridView_CellFormatting);
             this.cashierDataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.cashierDataGridView_CellValidated);
-            this.cashierDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.cashierDataGridView_RowsAdded);
-            this.cashierDataGridView.Enter += new System.EventHandler(this.cashierDataGridView_Enter);
-            this.cashierDataGridView.Leave += new System.EventHandler(this.cashierDataGridView_Leave);
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.rejectButton);
+            this.panel5.Controls.Add(this.approvalButton);
             this.panel5.Controls.Add(this.ChangePrinterButton);
             this.panel5.Controls.Add(this.errorLabel);
             this.panel5.Controls.Add(this.tempoMaskedTextBox);
@@ -225,6 +226,31 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 162);
             this.panel5.TabIndex = 9;
+            // 
+            // rejectButton
+            // 
+            this.rejectButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rejectButton.ForeColor = System.Drawing.Color.Black;
+            this.rejectButton.Location = new System.Drawing.Point(452, 107);
+            this.rejectButton.Name = "rejectButton";
+            this.rejectButton.Size = new System.Drawing.Size(131, 34);
+            this.rejectButton.TabIndex = 39;
+            this.rejectButton.Text = "REJECT SQ";
+            this.rejectButton.UseVisualStyleBackColor = true;
+            this.rejectButton.Visible = false;
+            this.rejectButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // approvalButton
+            // 
+            this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.approvalButton.ForeColor = System.Drawing.Color.Black;
+            this.approvalButton.Location = new System.Drawing.Point(343, 107);
+            this.approvalButton.Name = "approvalButton";
+            this.approvalButton.Size = new System.Drawing.Size(158, 34);
+            this.approvalButton.TabIndex = 38;
+            this.approvalButton.Text = "APPROVE SQ";
+            this.approvalButton.UseVisualStyleBackColor = true;
+            this.approvalButton.Click += new System.EventHandler(this.approvalButton_Click);
             // 
             // ChangePrinterButton
             // 
@@ -298,8 +324,6 @@
             this.paymentComboBox.TabIndex = 7;
             this.paymentComboBox.Text = "Cash";
             this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
-            this.paymentComboBox.Enter += new System.EventHandler(this.paymentComboBox_Enter);
-            this.paymentComboBox.Leave += new System.EventHandler(this.paymentComboBox_Leave);
             // 
             // labelCaraBayar
             // 
@@ -362,8 +386,6 @@
             this.customerComboBox.TabIndex = 2;
             this.customerComboBox.Text = "P-UMUM";
             this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
-            this.customerComboBox.Enter += new System.EventHandler(this.customerComboBox_Enter);
-            this.customerComboBox.Leave += new System.EventHandler(this.customerComboBox_Leave);
             // 
             // label3
             // 
@@ -381,8 +403,8 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.discJualMaskedTextBox);
             this.panel6.Controls.Add(this.bayarTextBox);
+            this.panel6.Controls.Add(this.discJualMaskedTextBox);
             this.panel6.Controls.Add(this.uangKembaliTextBox);
             this.panel6.Controls.Add(this.totalAfterDiscTextBox);
             this.panel6.Controls.Add(this.totalPenjualanTextBox);
@@ -398,33 +420,30 @@
             this.panel6.Size = new System.Drawing.Size(370, 161);
             this.panel6.TabIndex = 0;
             // 
-            // discJualMaskedTextBox
-            // 
-            this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.discJualMaskedTextBox.Location = new System.Drawing.Point(185, 33);
-            this.discJualMaskedTextBox.Name = "discJualMaskedTextBox";
-            this.discJualMaskedTextBox.Size = new System.Drawing.Size(181, 27);
-            this.discJualMaskedTextBox.TabIndex = 19;
-            this.discJualMaskedTextBox.Text = "0";
-            this.discJualMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.discJualMaskedTextBox.TextChanged += new System.EventHandler(this.discJualMaskedTextBox_TextChanged);
-            this.discJualMaskedTextBox.Enter += new System.EventHandler(this.discJualMaskedTextBox_Enter);
-            this.discJualMaskedTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.discJualMaskedTextBox_KeyPress);
-            this.discJualMaskedTextBox.Leave += new System.EventHandler(this.discJualMaskedTextBox_Leave);
-            // 
             // bayarTextBox
             // 
             this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bayarTextBox.Location = new System.Drawing.Point(186, 102);
+            this.bayarTextBox.Mask = "000000000000000";
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
             this.bayarTextBox.TabIndex = 18;
-            this.bayarTextBox.Text = "0";
             this.bayarTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.bayarTextBox.TextChanged += new System.EventHandler(this.bayarTextBox_TextChanged);
             this.bayarTextBox.Enter += new System.EventHandler(this.bayarTextBox_Enter);
-            this.bayarTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.bayarTextBox_KeyPress);
-            this.bayarTextBox.Leave += new System.EventHandler(this.bayarTextBox_Leave);
+            // 
+            // discJualMaskedTextBox
+            // 
+            this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.discJualMaskedTextBox.Location = new System.Drawing.Point(184, 33);
+            this.discJualMaskedTextBox.Mask = "000000000000000";
+            this.discJualMaskedTextBox.Name = "discJualMaskedTextBox";
+            this.discJualMaskedTextBox.Size = new System.Drawing.Size(181, 27);
+            this.discJualMaskedTextBox.TabIndex = 17;
+            this.discJualMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.discJualMaskedTextBox.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBox1_MaskInputRejected);
+            this.discJualMaskedTextBox.Enter += new System.EventHandler(this.discJualMaskedTextBox_Enter);
+            this.discJualMaskedTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.discJualMaskedTextBox_Validating);
             // 
             // uangKembaliTextBox
             // 
@@ -710,6 +729,7 @@
             this.Deactivate += new System.EventHandler(this.cashierForm_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.cashierForm_FormClosed);
             this.Load += new System.EventHandler(this.cashierForm_Load);
+            this.Shown += new System.EventHandler(this.cashierForm_Shown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).EndInit();
@@ -756,9 +776,11 @@
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.MaskedTextBox discJualMaskedTextBox;
         private System.Windows.Forms.TextBox pelangganTextBox;
         private System.Windows.Forms.MaskedTextBox tempoMaskedTextBox;
         private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.MaskedTextBox bayarTextBox;
         private System.Windows.Forms.Button ChangePrinterButton;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
@@ -773,8 +795,8 @@
         private System.Windows.Forms.ToolStripStatusLabel dateTimeStampLabel;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.TextBox bayarTextBox;
-        private System.Windows.Forms.TextBox discJualMaskedTextBox;
+        private System.Windows.Forms.Button approvalButton;
+        private System.Windows.Forms.Button rejectButton;
     }
 }
 

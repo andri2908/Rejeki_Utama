@@ -13,8 +13,6 @@ using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Drawing.Printing;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class pembayaranPiutangForm : Form
@@ -30,9 +28,6 @@ namespace AlphaSoft
         private globalUtilities gutil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
         public pembayaranPiutangForm()
         {
             InitializeComponent();
@@ -43,48 +38,6 @@ namespace AlphaSoft
             InitializeComponent();
 
             selectedSOInvoice = SOInvoice;
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
         }
 
         private void loadDataHeaderSO()
@@ -266,7 +219,6 @@ namespace AlphaSoft
             string sqlCommand = "";
             int paymentMethod = 0;
             string paymentDateTime = "";
-            string currentTime = "";
             DateTime selectedPaymentDate;
             string paymentDueDateTime = "";
             DateTime selectedPaymentDueDate;
@@ -276,16 +228,14 @@ namespace AlphaSoft
             string paymentDescription = "";
             int paymentConfirmed = 0;
 
-            string dailyJournalDateTime = "";
+            int salesPersonID = 0;
+            string selectedSQInvoice = "";
+            double commissionValue = 0;
 
             MySqlException internalEX = null;
 
             selectedPaymentDate = paymentDateTimePicker.Value;
-
             paymentDateTime = String.Format(culture, "{0:dd-MM-yyyy}", selectedPaymentDate);
-            currentTime = gutil.getCustomStringFormatTime(DateTime.Now);
-            dailyJournalDateTime = paymentDateTime + " " + currentTime;
-
             paymentNominal = Convert.ToDouble(paymentMaskedTextBox.Text);
             paymentMethod = paymentCombo.SelectedIndex + 1;
             paymentDescription = MySqlHelper.EscapeString(descriptionTextBox.Text);
@@ -329,9 +279,9 @@ namespace AlphaSoft
 
                 if (paymentConfirmed == 0)
                 { 
-                    // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE) VALUES " +
-                                        "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
+                // SAVE HEADER TABLE
+                sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE) VALUES " +
+                                    "(" + selectedCreditID + ", STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y'), " + paymentMethod + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", '" + paymentDescription + "', " + paymentConfirmed + ", STR_TO_DATE('" + paymentDueDateTime + "', '%d-%m-%Y'))";
                 }
                 else
                 {
@@ -367,6 +317,7 @@ namespace AlphaSoft
                     gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "UPDATE SALES HEADER TAX SET TO FULLY PAID [" + selectedSOInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
+
                 }
 
                 if (paymentMethod == 1)
@@ -374,7 +325,7 @@ namespace AlphaSoft
                     // PAYMENT IN CASH THEREFORE ADDING THE AMOUNT OF CASH IN THE CASH REGISTER
                     // ADD A NEW ENTRY ON THE DAILY JOURNAL TO KEEP TRACK THE ADDITIONAL CASH AMOUNT 
                     sqlCommand = "INSERT INTO DAILY_JOURNAL (ACCOUNT_ID, JOURNAL_DATETIME, JOURNAL_NOMINAL, BRANCH_ID, JOURNAL_DESCRIPTION, USER_ID, PM_ID) " +
-                                                   "VALUES (1, STR_TO_DATE('" + dailyJournalDateTime + "', '%d-%m-%Y %H:%i')" + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", " + branchID + ", 'PEMBAYARAN PIUTANG " + selectedSOInvoice + "', '" + gutil.getUserID() + "', 1)";
+                                                   "VALUES (1, STR_TO_DATE('" + paymentDateTime + "', '%d-%m-%Y')" + ", " + gutil.validateDecimalNumericInput(paymentNominal) + ", " + branchID + ", 'PEMBAYARAN PIUTANG " + selectedSOInvoice + "', '" + gutil.getUserID() + "', 1)";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PEMBAYARAN_PIUTANG, "CASH TRANSACTION, INSERT INTO DAILY JOURNAL [" + gutil.validateDecimalNumericInput(paymentNominal) + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -432,19 +383,40 @@ namespace AlphaSoft
         
         private void printReceipt()
         {
-            int paperLength;
+            string sqlCommandx;
+            //sqlCommandx = "SELECT SH.SALES_INVOICE, SH.SALES_TOTAL, SH.SALES_DISCOUNT_FINAL, SH.SALES_TOP, SH.SALES_TOP_DATE, PC.PAYMENT_DATE, PC.PAYMENT_CONFIRMED, PC.PAYMENT_CONFIRMED_DATE, PC.PAYMENT_NOMINAL, IF(PC.PAYMENT_CONFIRMED = 1, PC.PAYMENT_NOMINAL, 0) AS ACTUAL_PAYMENT " +
+            //                                  "FROM SALES_HEADER SH, CREDIT C, PAYMENT_CREDIT PC " +
+            //                                  "WHERE C.SALES_INVOICE = SH.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID AND SH.SALES_INVOICE = '" + invoiceNoTextBox.Text + "'";
 
-            paperLength = calculatePageLength();
-            PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
-            printDocument1.DefaultPageSettings.PaperSize = psize;
-            DialogResult result;
-            printPreviewDialog1.Width = 512;
-            printPreviewDialog1.Height = 768;
-            result = printPreviewDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                printDocument1.Print();
-            }
+            sqlCommandx = "SELECT PC.PAYMENT_ID, SH.SALES_INVOICE, SH.SALES_TOTAL, SH.SALES_DISCOUNT_FINAL, SH.SALES_TOP, SH.SALES_TOP_DATE, PC.PAYMENT_DATE, PC.PAYMENT_CONFIRMED, PC.PAYMENT_CONFIRMED_DATE, PC.PAYMENT_NOMINAL, TAB2.PAID_AMT AS ACTUAL_PAYMENT " +
+                                     "FROM SALES_HEADER SH, CREDIT C, PAYMENT_CREDIT PC, " +
+                                     "(SELECT CREDIT_ID, MAX(PAYMENT_ID) AS PAY_ID " +
+                                     "FROM PAYMENT_CREDIT " +
+                                     "GROUP BY CREDIT_ID) TAB1, " +
+                                     "(SELECT CREDIT_ID, SUM(PAYMENT_NOMINAL) AS PAID_AMT " +
+                                     "FROM PAYMENT_CREDIT " +
+                                     "WHERE PAYMENT_CONFIRMED = 1 " +
+                                     "GROUP BY CREDIT_ID) TAB2 " +
+                                     "WHERE C.SALES_INVOICE = SH.SALES_INVOICE AND PC.CREDIT_ID = C.CREDIT_ID AND PC.PAYMENT_ID = TAB1.PAY_ID AND SH.SALES_INVOICE = '" + invoiceNoTextBox.Text + "' AND TAB1.CREDIT_ID = C.CREDIT_ID AND TAB2.CREDIT_ID = C.CREDIT_ID";
+
+            DS.writeXML(sqlCommandx, globalConstants.creditPaymentXML);
+            paymentCreditPrintOutForm displayForm = new paymentCreditPrintOutForm();
+            displayForm.ShowDialog(this);
+
+
+            //int paperLength;
+
+            //paperLength = calculatePageLength();
+            //PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
+            //printDocument1.DefaultPageSettings.PaperSize = psize;
+            //DialogResult result;
+            //printPreviewDialog1.Width = 512;
+            //printPreviewDialog1.Height = 768;
+            //result = printPreviewDialog1.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+            //    printDocument1.Print();
+            //}
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -798,7 +770,6 @@ namespace AlphaSoft
         private void pembayaranPiutangForm_Activated(object sender, EventArgs e)
         {
             //if need something
-            registerGlobalHotkey();
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
@@ -1283,21 +1254,6 @@ namespace AlphaSoft
             {
                 printReceipt();
             }
-        }
-
-        private void pembayaranPiutangForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
         }
     }
 }

@@ -83,7 +83,7 @@ namespace AlphaSoft
                                     break;
 
                                 case globalConstants.MENU_PRODUK:
-                                    messageContent = "PRODUCT_ID [" + param1 + "] SUDAH MENDEKATI LIMIT";
+                                    messageContent = "PRODUCT_NAME [" + gutil.getProductName(param1) + "] SUDAH MENDEKATI LIMIT";
                                     break;
                             }
 
@@ -154,7 +154,7 @@ namespace AlphaSoft
             sqlCommand = "SELECT RO_INVOICE AS 'PARAM_1', DATE_FORMAT(RO_EXPIRED, '%d-%M-%Y') AS 'PARAM_2' FROM REQUEST_ORDER_HEADER WHERE RO_ACTIVE = 1 AND DATE_FORMAT(RO_EXPIRED, '%Y%m%d')  <= '" + roExpiredDate + "'  AND RO_INVOICE NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
             newData |= pullDetailMessageAndSaveToTable(moduleID, sqlCommand);
 
-            // PULL PRODUCT_ID THAT ALREADY HIT LIMIT STOCK
+            // PULL PRODUCT_NAME THAT ALREADY HIT LIMIT STOCK
             moduleID = globalConstants.MENU_PRODUK;
             sqlCommand = "SELECT PRODUCT_ID AS 'PARAM_1', PRODUCT_LIMIT_STOCK AS 'PARAM_2' FROM  MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_STOCK_QTY <= PRODUCT_LIMIT_STOCK AND PRODUCT_ID NOT IN (SELECT IDENTIFIER_NO FROM MASTER_MESSAGE WHERE MODULE_ID = " + moduleID + " AND STATUS = 0)";
             newData |= pullDetailMessageAndSaveToTable(moduleID, sqlCommand);

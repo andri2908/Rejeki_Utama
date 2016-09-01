@@ -22,11 +22,9 @@ namespace AlphaSoft
         private string previousInput = "";
         private int originModuleID = 0;
         private bool isLoading = false;
+        private int locationID = 0;
 
         private List<string> detailQty = new List<string>();
-        private List<string> productPriceList = new List<string>();
-        private List<string> subtotalList = new List<string>();
-
         private CultureInfo culture = new CultureInfo("id-ID");
 
         private Hotkeys.GlobalHotkey ghk_F1;
@@ -34,21 +32,12 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_F8;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F11;
-        private Hotkeys.GlobalHotkey ghk_DEL;
 
         private Hotkeys.GlobalHotkey ghk_CTRL_DEL;
         private Hotkeys.GlobalHotkey ghk_CTRL_ENTER;
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
         private Data_Access DS = new Data_Access();
         private globalUtilities GUTIL = new globalUtilities();
-        private bool navKeyRegistered = false;
-        private bool delKeyRegistered = false;
-
-        barcodeForm displayBarcodeForm = null;
-        dataProdukForm browseProdukForm = null;
 
         public dataReturPermintaanForm()
         {
@@ -121,13 +110,14 @@ namespace AlphaSoft
             productIDColumn.HeaderText = "KODE PRODUK";
             productIDColumn.Name = "productID";
             productIDColumn.Width = 200;
-            productIDColumn.DefaultCellStyle.BackColor = Color.LightBlue;
+            productIDColumn.Visible = false;
+            //productIDColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailReturDataGridView.Columns.Add(productIDColumn);
 
             productNameColumn.HeaderText = "NAMA PRODUK";
             productNameColumn.Name = "productName";
             productNameColumn.Width = 300;
-            productNameColumn.ReadOnly = true;
+            productNameColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailReturDataGridView.Columns.Add(productNameColumn);
 
             basePriceColumn.HeaderText = "HARGA POKOK";
@@ -168,19 +158,12 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
-                        ReturDtPicker_1.Focus();
+                        barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.RETUR_PEMBELIAN);
 
-                        if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
-                        {
-                            displayBarcodeForm = new barcodeForm(this, globalConstants.RETUR_PEMBELIAN);
+                        displayBarcodeForm.Top = this.Top + 5;
+                        displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
 
-                            displayBarcodeForm.Top = this.Top + 5;
-                            displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
-                        }
-
-                        displayBarcodeForm.Show();
-                        displayBarcodeForm.WindowState = FormWindowState.Normal;
-                    //detailReturDataGridView.Focus();
+                        displayBarcodeForm.ShowDialog(this);
                     break;
 
                 case Keys.F8:
@@ -193,25 +176,8 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                        ReturDtPicker_1.Focus();
-
-                        if (null == browseProdukForm || browseProdukForm.IsDisposed)
-                            browseProdukForm = new dataProdukForm(originModuleID, this);
-
-                        browseProdukForm.Show();
-                        browseProdukForm.WindowState = FormWindowState.Normal;
-                        //detailReturDataGridView.Focus();
-                    break;
-
-                case Keys.Delete:
-                    if (detailReturDataGridView.ReadOnly == false)
-                    {
-                            if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
-                            {
-                                deleteCurrentRow();
-                                calculateTotal();
-                            }
-                    }
+                        dataProdukForm displayProdukForm = new dataProdukForm(originModuleID, this);
+                        displayProdukForm.ShowDialog(this);
                     break;
             }
         }
@@ -260,11 +226,11 @@ namespace AlphaSoft
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
-            //ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
-            //ghk_F8.Register();
+            ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
+            ghk_F8.Register();
 
             ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
             ghk_F9.Register();
@@ -272,64 +238,25 @@ namespace AlphaSoft
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
 
-            //ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            //ghk_DEL.Register();
 
-            //ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
-            //ghk_CTRL_DEL.Register();
+            ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
+            ghk_CTRL_DEL.Register();
 
             ghk_CTRL_ENTER = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
             ghk_CTRL_ENTER.Register();
 
-            registerNavigationKey();
         }
 
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
-            //ghk_F8.Unregister();
+            //ghk_F2.Unregister();
+            ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
 
-            //ghk_CTRL_DEL.Unregister();
+            ghk_CTRL_DEL.Unregister();
             ghk_CTRL_ENTER.Unregister();
-
-            unregisterNavigationKey();
-        }
-
-        private void registerDelKey()
-        {
-            ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            ghk_DEL.Register();
-
-            delKeyRegistered = true;
-        }
-
-        private void unregisterDelKey()
-        {
-            ghk_DEL.Unregister();
-
-            delKeyRegistered = false;
-        }
-
-        private void registerNavigationKey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterNavigationKey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
         }
 
         public void addNewRow()
@@ -339,9 +266,9 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailReturDataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailReturDataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -366,7 +293,7 @@ namespace AlphaSoft
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailReturDataGridView.CurrentCell = detailReturDataGridView.Rows[newRowIndex].Cells["productID"];
+            detailReturDataGridView.CurrentCell = detailReturDataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -388,12 +315,8 @@ namespace AlphaSoft
             // CHECK FOR EXISTING SELECTED ITEM
             for (i = 0; i < detailReturDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
             {
-                if (
-                    null != detailReturDataGridView.Rows[i].Cells["productName"].Value && 
-                    null != detailReturDataGridView.Rows[i].Cells["productID"].Value 
-                    && GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString())
-                    )               
-               {
+                if (null != detailReturDataGridView.Rows[i].Cells["productName"].Value)
+                {
                     if (detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
                     {
                         found = true;
@@ -443,7 +366,6 @@ namespace AlphaSoft
 
             subTotal = Math.Round((hpp * currQty), 2);
             selectedRow.Cells["subTotal"].Value = subTotal;
-            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
@@ -465,13 +387,13 @@ namespace AlphaSoft
         {
             double total = 0;
 
-            for (int i = 0; i < detailReturDataGridView.Rows.Count-1; i++)
+            for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
             {
-                total = total + Convert.ToDouble(subtotalList[i]);
+                total = total + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
             globalTotalValue = total;
-            totalLabel.Text = total.ToString("C0", culture);//"Rp. " + total.ToString();
+            totalLabel.Text = total.ToString("C2", culture);//"Rp. " + total.ToString();
         }
 
         private void setTextBoxCustomSource(TextBox textBox)
@@ -480,8 +402,11 @@ namespace AlphaSoft
             string sqlCommand = "";
             string[] arr = null;
             List<string> arrList = new List<string>();
+            int locationID = 0;
 
-            sqlCommand = "SELECT PRODUCT_ID, PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK > 0) ORDER BY PRODUCT_NAME ASC";
+            locationID = GUTIL.loadlocationID(2);
+
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT M, PRODUCT_LOCATION P WHERE M.PRODUCT_ID = P.PRODUCT_ID AND P.LOCATION_ID = " + locationID + " AND M.PRODUCT_ACTIVE = 1 AND (P.PRODUCT_LOCATION_QTY - M.PRODUCT_LIMIT_STOCK > 0) ORDER BY M.PRODUCT_NAME ASC";
 
             rdr = DS.getData(sqlCommand);
 
@@ -489,7 +414,7 @@ namespace AlphaSoft
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -503,7 +428,7 @@ namespace AlphaSoft
 
         private void detailReturDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -528,10 +453,9 @@ namespace AlphaSoft
             isLoading = true;
             selectedRow.Cells["productName"].Value = "";
             selectedRow.Cells["hpp"].Value = "0";
-            productPriceList[rowSelectedIndex] = "0";
             selectedRow.Cells["subTotal"].Value = "0";
-            subtotalList[rowSelectedIndex] = "0";
             selectedRow.Cells["qty"].Value = "0";
+
             detailQty[rowSelectedIndex] = "0";
 
             calculateTotal();
@@ -549,11 +473,11 @@ namespace AlphaSoft
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -561,7 +485,7 @@ namespace AlphaSoft
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID= DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -578,13 +502,11 @@ namespace AlphaSoft
                 hpp = getHPPValue(selectedProductID);
                 GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PERMINTAAN, "updateSomeRowsContent, PRODUCT_BASE_PRICE [" + hpp + "]");
                 selectedRow.Cells["hpp"].Value = hpp.ToString();
-                productPriceList[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qty"].Value = 0;
                 detailQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PERMINTAAN, "updateSomeRowsContent, attempt to calculate total");
 
@@ -602,7 +524,7 @@ namespace AlphaSoft
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailReturDataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -648,7 +570,6 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subTotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailQty.Count > rowSelectedIndex)
                     detailQty[rowSelectedIndex] = "0";
@@ -681,6 +602,14 @@ namespace AlphaSoft
                     && (dataGridViewTextBoxEditingControl.Text.Length > 0))
                 {
                     detailQty.Add(dataGridViewTextBoxEditingControl.Text);
+                    //if (detailReturDataGridView.CurrentCell.ColumnIndex == 2)
+                    //{
+                    //    detailQty.Add(dataGridViewTextBoxEditingControl.Text);
+                    //}
+                    //else
+                    //{
+                    //    detailQty.Add(selectedRow.Cells["qty"].Value.ToString());
+                    //}
                 }
                 else
                 {
@@ -705,12 +634,11 @@ namespace AlphaSoft
                 //changes on qty
                 productQty = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
                 if (null != selectedRow.Cells["hpp"].Value)
-                    hppValue = Convert.ToDouble(productPriceList[rowSelectedIndex]);
+                    hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
 
                 subTotal = Math.Round((hppValue * productQty), 2);
 
-                selectedRow.Cells["subTotal"].Value = subTotal.ToString();
-                subtotalList[rowSelectedIndex] = subTotal.ToString();
+                selectedRow.Cells["subTotal"].Value = subTotal;
 
                 calculateTotal();
             }
@@ -725,6 +653,14 @@ namespace AlphaSoft
 
         private void dataReturPermintaanForm_Load(object sender, EventArgs e)
         {
+            locationID = GUTIL.loadlocationID(2);
+
+            if (locationID<=0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             errorLabel.Text = "";
             detailReturDataGridView.EditingControlShowing += detailReturDataGridView_EditingControlShowing;
 
@@ -744,10 +680,6 @@ namespace AlphaSoft
             addColumnToDataGrid();
 
             GUTIL.reArrangeTabOrder(this);
-
-            detailQty.Add("0");
-            productPriceList.Add("0");
-            subtotalList.Add("0");
         }
 
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -806,19 +738,19 @@ namespace AlphaSoft
                 return false;
             }
 
-            //for (i = 0; i < detailReturDataGridView.Rows.Count && dataExist; i++)
-            //{
-            //    if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
-            //        dataExist = GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString());
-            //    else
-            //        dataExist = false;
-            //}
-            //if (!dataExist)
-            //{
-            //    i = i + 1;
-            //    errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
-            //    return false;
-            //}
+            for (i = 0; i < detailReturDataGridView.Rows.Count && dataExist; i++)
+            {
+                if (null != detailReturDataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = GUTIL.isProductNameExist(detailReturDataGridView.Rows[i].Cells["productName"].Value.ToString());
+                else
+                    dataExist = false;
+            }
+            if (!dataExist)
+            {
+                i = i + 1;
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
+                return false;
+            }
 
             return true;
         }
@@ -860,12 +792,12 @@ namespace AlphaSoft
                       throw internalEX;
 
                 // SAVE DETAIL TABLE
-                for (int i = 0; i < detailReturDataGridView.Rows.Count-1; i++)
+                for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
                 {
-                    if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value && GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
                     { 
-                       hppValue = Convert.ToDouble(productPriceList[i]);
-                       qtyValue = Convert.ToDouble(detailQty[i]);
+                       hppValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["HPP"].Value);
+                       qtyValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["qty"].Value);
                       
                        try
                        {
@@ -876,13 +808,19 @@ namespace AlphaSoft
                             descriptionValue = " ";
                        }
                        sqlCommand = "INSERT INTO RETURN_PURCHASE_DETAIL (RP_ID, PRODUCT_ID, PRODUCT_BASEPRICE, PRODUCT_QTY, RP_DESCRIPTION, RP_SUBTOTAL) VALUES " +
-                                           "('" + returID + "', '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "', " +hppValue  + ", " + qtyValue + ", '" + MySqlHelper.EscapeString(descriptionValue) + "', " + Convert.ToDouble(subtotalList[i]) + ")";
+                                           "('" + returID + "', '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "', " +hppValue  + ", " + qtyValue + ", '" + MySqlHelper.EscapeString(descriptionValue) + "', " + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value) + ")";
                         GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PEMBELIAN, "INSERT TO RETURN PURCHASE DETAIL");
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                            throw internalEX;
 
-                       // UPDATE MASTER PRODUCT
-                       sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
+                        // UPDATE PRODUCT LOCATION DATA
+                        sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = "+locationID;
+                        GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PEMBELIAN, "UPDATE PRODUCT LOCATION DATA");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+
+                        // UPDATE MASTER PRODUCT
+                        sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
                        GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PEMBELIAN, "UPDATE MASTER PRODUCT");
                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                          throw internalEX;
@@ -974,7 +912,7 @@ namespace AlphaSoft
                 GUTIL.ResetAllControls(this);
                 detailReturDataGridView.Rows.Clear();
                 globalTotalValue = 0;
-                totalLabel.Text = globalTotalValue.ToString("C0", culture);
+                totalLabel.Text = globalTotalValue.ToString("C", culture);
                 ReturDtPicker_1.Value = DateTime.Now;
             }
         }
@@ -988,11 +926,6 @@ namespace AlphaSoft
         private void detailReturDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             detailQty.Add("0");
-            productPriceList.Add("0");
-            subtotalList.Add("0");
-
-            if (navKeyRegistered)
-                unregisterNavigationKey();
         }
 
         private void deleteCurrentRow()
@@ -1001,21 +934,8 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailReturDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailReturDataGridView.Rows[rowSelectedIndex];
-                detailReturDataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                if (null != selectedRow && rowSelectedIndex != detailReturDataGridView.Rows.Count - 1)
-                {
-                    for (int i = rowSelectedIndex; i < detailReturDataGridView.Rows.Count - 1; i++)
-                    {
-                        detailQty[i] = detailQty[i + 1];
-                        productPriceList[i] = productPriceList[i + 1];
-                        subtotalList[i] = subtotalList[i + 1];
-                    }
-
-                    isLoading = true;
-                    detailReturDataGridView.Rows.Remove(selectedRow);
-                    isLoading = false;
-                }
+                detailReturDataGridView.Rows.Remove(selectedRow);
             }
         }
 
@@ -1034,17 +954,11 @@ namespace AlphaSoft
         private void dataReturPermintaanForm_Activated(object sender, EventArgs e)
         {
             registerGlobalHotkey();
-
-            if (detailReturDataGridView.Focused)
-                registerDelKey();
         }
 
         private void dataReturPermintaanForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
-
-            if (delKeyRegistered)
-                unregisterDelKey();
         }
 
         private void detailReturDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
@@ -1052,7 +966,7 @@ namespace AlphaSoft
             var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productID")
+            if (cell.OwningColumn.Name == "productName")
             {
                 if (null != cell.Value)
                 {
@@ -1067,47 +981,5 @@ namespace AlphaSoft
                 }
             }
         }
-
-        private void detailReturDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (
-               (detailReturDataGridView.Columns[e.ColumnIndex].Name == "hpp" ||
-               detailReturDataGridView.Columns[e.ColumnIndex].Name == "qty" ||
-               detailReturDataGridView.Columns[e.ColumnIndex].Name == "subTotal")
-              && e.RowIndex != this.detailReturDataGridView.NewRowIndex && null != e.Value)
-            {
-                isLoading = true;
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-                isLoading = false;
-            }
-        }
-
-        private void detailReturDataGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterNavigationKey();
-
-            registerDelKey();
-        }
-
-        private void detailReturDataGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerNavigationKey();
-
-            unregisterDelKey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterNavigationKey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerNavigationKey();
-        }
-
     }
 }

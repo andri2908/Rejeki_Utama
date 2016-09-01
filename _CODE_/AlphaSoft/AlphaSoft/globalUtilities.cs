@@ -11,6 +11,8 @@ using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace AlphaSoft
 {
@@ -20,9 +22,13 @@ namespace AlphaSoft
         public const string REGEX_NUMBER_ONLY = @"^[0-9]*$";
         public const string REGEX_ALPHANUMERIC_ONLY = @"^[0-9A-Za-z]*$";
         public const string CUSTOM_DATE_FORMAT = "dd MMM yyyy";
-        public const string CUSTOM_MONTH_FORMAT = "MMMM yyyy";
-        public const string CELL_FORMATTING_NUMERIC_FORMAT = "#,0.##";
         private const string logFileName = "system.log";
+
+        public const int PAPER_POS_RECEIPT = 0;
+        public const int PAPER_HALF_KWARTO = 1;
+        public const int PAPER_FULL_KWARTO = 2;
+
+        public const double MAX_CREDIT_TOLERANCE_PERCENTAGE = 10;
 
         public int INS = 1;
         public int UPD = 2;
@@ -122,6 +128,36 @@ namespace AlphaSoft
                 }
             }
             return rslt;
+        }
+
+        public int loadlocationID(int opt)
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+            DS.mySqlConnect();
+            int rslt = 0;
+            //1 load default 2 setting user
+            using (rdr = DS.getData("SELECT IFNULL(S.LOCATION_ID,0) AS 'ID' FROM SYS_CONFIG S WHERE ID =  " + opt))
+            {
+                if (rdr.HasRows)
+                {
+                    rdr.Read();
+                    if (!String.IsNullOrEmpty(rdr.GetString("ID")))
+                    {
+                        rslt = rdr.GetInt32("ID");
+                    }
+                }
+            }
+            return rslt;
+        }
+
+        public string getProductID(int internalProductID)
+        {
+            string productID = "";
+
+            productID = DS.getDataSingleValue("SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE ID = " + internalProductID).ToString();
+
+            return productID;
         }
 
         public bool loadinfotoko(int opt, out string NamaToko, out string AlamatToko, out string TeleponToko, out string EmailToko)
@@ -483,8 +519,6 @@ namespace AlphaSoft
 
         public void saveSystemDebugLog(int moduleID, string logMessage)
         {
-          //  return;
-
             string messageToWrite;
             string dateTimeLog = DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString();
             string moduleName = "";
@@ -536,6 +570,91 @@ namespace AlphaSoft
             return result;
         }
 
+        public bool isProductNameExist(string productName)
+        {
+            bool result = false;
+            int numRows = 0;
+
+            numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + productName + "' AND PRODUCT_ACTIVE = 1"));
+
+            if (numRows > 0)
+                result = true;
+
+            return result;
+        }
+
+        public bool checkLocalIPAddressFound(string ipToCheck)
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    if (ip.ToString() == ipToCheck)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public string getLatestRevisionNo(string salesInvoice)
+        {
+            string result = "0";
+
+            result = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(CONVERT(REV_NO, UNSIGNED INTEGER)), 0) FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "'")) + 1).ToString();
+
+            return result;
+        }
+
+        public double getSalesCommission(string salesInvoice, string sqInvoice)
+        {
+            double commissionValue = 0;
+            string currentYear = "";
+            string currentMonth = "";
+            int numericCurrentYear = 0;
+            int numericCurrentMonth = 0;
+            double commissionPercentage = 0;
+            double salesDiscountFinal = 0;
+            int numRows = 0;
+            double salesTotalAmount = 0;
+            double totalReturAmount = 0;
+
+            // CALCULATE COMMISSION FOR SALESPERSON
+            salesTotalAmount = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_TOTAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1"));
+            salesDiscountFinal = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_DISCOUNT_FINAL FROM SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "' AND SALES_VOID = 0 AND SALES_ACTIVE = 1"));
+            totalReturAmount = Convert.ToDouble(DS.getDataSingleValue("SELECT SUM(RS_TOTAL) FROM RETURN_SALES_HEADER WHERE SALES_INVOICE = '" + salesInvoice + "'"));
+
+            currentYear = String.Format(culture, "{0:yyyy}", DateTime.Now);
+            numericCurrentYear = Convert.ToInt32(currentYear);
+            currentMonth = String.Format(culture, "{0:MM}", DateTime.Now);
+            numericCurrentMonth = Convert.ToInt32(currentMonth);
+
+            numRows = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+            if (numRows > 0)
+            { 
+                commissionPercentage = Convert.ToDouble(DS.getDataSingleValue("SELECT SALES_COMMISSION FROM MASTER_SALES_TARGET WHERE TARGET_MONTH = " + numericCurrentMonth + " AND TARGET_YEAR = " + numericCurrentYear));
+
+                salesTotalAmount = salesTotalAmount - salesDiscountFinal - totalReturAmount;
+
+                if (salesTotalAmount > 0)
+                    commissionValue = Math.Round((salesTotalAmount * commissionPercentage) / 100, 2);
+            }
+
+            return commissionValue;
+        }
+
+        public string getProductName(string productID)
+        {
+            string result = "";
+
+            result = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME, '') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'").ToString();
+
+            return result;
+        }
+
         public string getCustomStringFormatDate(DateTime inputDateTime)
         {
             string result = "";
@@ -549,34 +668,6 @@ namespace AlphaSoft
             minuteInput = String.Format(culture, "{0:mm}", inputDateTime);
 
             result = dateInput + " " + hourInput + ":" + minuteInput;
-
-            return result;
-        }
-
-        public string getCustomStringFormatTime(DateTime inputDateTime)
-        {
-            string result = "";
-
-            string hourInput = "";
-            string minuteInput = "";
-
-            hourInput = String.Format(culture, "{0:HH}", inputDateTime);
-            minuteInput = String.Format(culture, "{0:mm}", inputDateTime);
-
-            result = hourInput + ":" + minuteInput;
-
-            return result;
-        }
-
-        public bool productIsService(string productID)
-        {
-            bool result = false;
-            int isService = 0;
-
-            isService = Convert.ToInt32(DS.getDataSingleValue("SELECT PRODUCT_IS_SERVICE FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
-
-            if (isService == 1)
-                result = true;
 
             return result;
         }

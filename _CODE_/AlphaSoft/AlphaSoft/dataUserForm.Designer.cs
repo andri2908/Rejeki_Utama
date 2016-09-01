@@ -93,9 +93,7 @@
             this.dataUserGridView.Size = new System.Drawing.Size(634, 438);
             this.dataUserGridView.TabIndex = 2;
             this.dataUserGridView.DoubleClick += new System.EventHandler(this.dataSalesDataGridView_DoubleClick);
-            this.dataUserGridView.Enter += new System.EventHandler(this.dataUserGridView_Enter);
             this.dataUserGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataUserGridView_KeyDown);
-            this.dataUserGridView.Leave += new System.EventHandler(this.dataUserGridView_Leave);
             // 
             // newButton
             // 
@@ -133,8 +131,6 @@
             this.groupcombobox.TabIndex = 3;
             this.groupcombobox.Text = "ALL";
             this.groupcombobox.SelectedIndexChanged += new System.EventHandler(this.groupcombobox_SelectedIndexChanged);
-            this.groupcombobox.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.groupcombobox.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // searchlabel
             // 
@@ -164,6 +160,7 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pilihan Pencarian";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // CetakButton
             // 
@@ -193,7 +190,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NAMA USER";
             this.Activated += new System.EventHandler(this.dataUserForm_Activated);
-            this.Deactivate += new System.EventHandler(this.dataUserForm_Deactivate);
             this.Load += new System.EventHandler(this.dataUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataUserGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);

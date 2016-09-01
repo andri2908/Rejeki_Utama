@@ -24,7 +24,6 @@ namespace AlphaSoft
         private double globalTotalValue = 0;
         private List<string> detailQty = new List<string>();
         private List<string> detailHpp = new List<string>();
-        private List<string> subtotalList = new List<string>();
 
         private CultureInfo culture = new CultureInfo("id-ID");
         string previousInput = "";
@@ -34,26 +33,16 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_F8;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F11;
-        private Hotkeys.GlobalHotkey ghk_DEL;
 
         private Hotkeys.GlobalHotkey ghk_CTRL_DEL;
         private Hotkeys.GlobalHotkey ghk_CTRL_ENTER;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
 
         int originModuleID = globalConstants.NEW_PURCHASE_ORDER;
         string selectedROInvoice = "";        
         private int selectedSupplierID = 0;
         private int selectedPOID = 0;
-        private bool navKeyRegistered = false;
-        private bool delKeyRegistered = false;
-
-        // private string selectedPOInvoice = "";
+        private string selectedPOInvoice = "";
         Button[] arrButton = new Button[2];
-
-        barcodeForm displayBarcodeForm = null;
-        dataProdukForm browseProdukForm = null;
 
         public purchaseOrderDetailForm()
         {
@@ -86,18 +75,12 @@ namespace AlphaSoft
                 case Keys.F2:
                     if (detailPODataGridView.ReadOnly == false)
                     {
-                        PODateTimePicker.Focus();
-                        if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
-                        { 
-                            displayBarcodeForm = new barcodeForm(this, globalConstants.NEW_PURCHASE_ORDER);
+                        barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.NEW_PURCHASE_ORDER);
 
-                            displayBarcodeForm.Top = this.Top + 5;
-                            displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
-                        }
+                        displayBarcodeForm.Top = this.Top + 5;
+                        displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
 
-                        displayBarcodeForm.Show();
-                        displayBarcodeForm.WindowState = FormWindowState.Normal;
-                        //detailPODataGridView.Focus();
+                        displayBarcodeForm.ShowDialog(this);
                     }
                     break;
 
@@ -117,34 +100,9 @@ namespace AlphaSoft
                 case Keys.F11:
                     if (detailPODataGridView.ReadOnly == false)
                     {
-                        PODateTimePicker.Focus();
-                        if (null == browseProdukForm || browseProdukForm.IsDisposed)
-                                browseProdukForm = new dataProdukForm(globalConstants.NEW_PURCHASE_ORDER, this);
-
-                        browseProdukForm.Show();
-                        browseProdukForm.WindowState = FormWindowState.Normal;
-                        //detailPODataGridView.Focus();
+                        dataProdukForm displayProdukForm = new dataProdukForm(globalConstants.NEW_PURCHASE_ORDER, this);
+                        displayProdukForm.ShowDialog(this);
                     }
-                    break;
-
-                case Keys.Delete:
-                    if (detailPODataGridView.Rows.Count > 1)
-                        if (detailPODataGridView.ReadOnly == false)
-                        {
-                            if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
-                            {
-                                deleteCurrentRow();
-                                calculateTotal();
-                            }
-                        }
-                    break;
-
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
                     break;
             }
         }
@@ -194,11 +152,11 @@ namespace AlphaSoft
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
-            //ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
-            //ghk_F8.Register();
+            ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
+            ghk_F8.Register();
 
             ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
             ghk_F9.Register();
@@ -206,11 +164,9 @@ namespace AlphaSoft
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
 
-            //ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-           // ghk_DEL.Register();
 
-            //ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
-            //ghk_CTRL_DEL.Register();
+            ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
+            ghk_CTRL_DEL.Register();
 
             ghk_CTRL_ENTER = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
             ghk_CTRL_ENTER.Register();
@@ -220,49 +176,13 @@ namespace AlphaSoft
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
-            //ghk_F8.Unregister();
+            //ghk_F2.Unregister();
+            ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
 
-           // ghk_DEL.Unregister();
-
-            //ghk_CTRL_DEL.Unregister();
+            ghk_CTRL_DEL.Unregister();
             ghk_CTRL_ENTER.Unregister();
-        }
-
-        private void registerNavigationKey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterNavigationKey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
-        }
-
-        private void registerDelKey()
-        {
-            ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_DEL.Register();
-
-            delKeyRegistered = true;
-        }
-
-        private void unregisterDelKey()
-        {
-            ghk_DEL.Unregister();
-
-            delKeyRegistered = false;
         }
 
         public void addNewRow()
@@ -272,9 +192,9 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailPODataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!gUtil.isProductNameExist(detailPODataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -292,7 +212,6 @@ namespace AlphaSoft
                 detailPODataGridView.Rows.Add();
                 detailHpp.Add("0");
                 detailQty.Add("0");
-                subtotalList.Add("0");
                 newRowIndex = detailPODataGridView.Rows.Count - 1;
             }
             else
@@ -301,7 +220,7 @@ namespace AlphaSoft
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailPODataGridView.CurrentCell = detailPODataGridView.Rows[newRowIndex].Cells["productID"];
+            detailPODataGridView.CurrentCell = detailPODataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -318,15 +237,12 @@ namespace AlphaSoft
             if (detailPODataGridView.ReadOnly == true)
                 return;
 
-            detailPODataGridView.AllowUserToAddRows = false;
-
             detailPODataGridView.Focus();
 
             // CHECK FOR EXISTING SELECTED ITEM
             for (i = 0; i < detailPODataGridView.Rows.Count && !found && !foundEmptyRow; i++)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value && 
-                    null != detailPODataGridView.Rows[i].Cells["productID"].Value && gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value)
                 {
                     if (detailPODataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
                     {
@@ -347,7 +263,6 @@ namespace AlphaSoft
                 {
                     detailQty[emptyRowIndex] = "0";
                     detailHpp[emptyRowIndex] = "0";
-                    subtotalList[emptyRowIndex] = "0";
                     rowSelectedIndex = emptyRowIndex;
                 }
                 else
@@ -355,13 +270,12 @@ namespace AlphaSoft
                     detailPODataGridView.Rows.Add();
                     detailQty.Add("0");
                     detailHpp.Add("0");
-                    subtotalList.Add("0");
                     rowSelectedIndex = detailPODataGridView.Rows.Count - 1;
                 }
             }
 
             DataGridViewRow selectedRow = detailPODataGridView.Rows[rowSelectedIndex];
-            updateSomeRowContents(selectedRow, rowSelectedIndex, productID);
+            updateSomeRowContents(selectedRow, rowSelectedIndex, productName);
 
             if (!found)
             {
@@ -377,16 +291,14 @@ namespace AlphaSoft
                 detailQty[rowSelectedIndex] = currQty.ToString();
             }
 
-            hpp = Convert.ToDouble(detailHpp[rowSelectedIndex]);
+            hpp = Convert.ToDouble(selectedRow.Cells["HPP"].Value);
 
             subTotal = Math.Round((hpp * currQty), 2);
-            selectedRow.Cells["subTotal"].Value = subTotal.ToString();
-            subtotalList[rowSelectedIndex] = subTotal.ToString();
+            selectedRow.Cells["subTotal"].Value = subTotal;
 
             calculateTotal();
 
             detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailPODataGridView.AllowUserToAddRows = true;
         }
 
         private void fillInSupplierCombo()
@@ -424,6 +336,12 @@ namespace AlphaSoft
 
         private void addDataGridColumn()
         {
+            //MySqlDataReader rdr;
+            //string sqlCommand = "";
+
+            //DataGridViewComboBoxColumn productIdCmb= new DataGridViewComboBoxColumn();
+            //DataGridViewComboBoxColumn productNameCmb = new DataGridViewComboBoxColumn();
+
             DataGridViewTextBoxColumn productIDTextBox = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn productNameTextBox = new DataGridViewTextBoxColumn();
 
@@ -432,16 +350,47 @@ namespace AlphaSoft
             DataGridViewTextBoxColumn subTotalColumn = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn displaySubTotalColumn = new DataGridViewTextBoxColumn();
 
+            //sqlCommand = "SELECT PRODUCT_ID, PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 ORDER BY PRODUCT_NAME ASC";
+
+            ////productIDComboHidden.Items.Clear();
+            ////productNameComboHidden.Items.Clear();
+
+            //using (rdr = DS.getData(sqlCommand))
+            //{
+            //    while (rdr.Read())
+            //    {
+            //        productNameCmb.Items.Add(rdr.GetString("PRODUCT_NAME"));
+            //        productIdCmb.Items.Add(rdr.GetString("PRODUCT_ID"));
+            //        //productIDComboHidden.Items.Add(rdr.GetString("PRODUCT_ID"));
+            //        //productNameComboHidden.Items.Add(rdr.GetString("PRODUCT_NAME"));
+            //    }
+            //}
+
+            //rdr.Close();
+
+            //productIdCmb.HeaderText = "KODE PRODUK";
+            //productIdCmb.Name = "productID";
+            //productIdCmb.Width = 200;
+            //productIdCmb.DefaultCellStyle.BackColor = Color.LightBlue;
+            //detailPODataGridView.Columns.Add(productIdCmb);
+
+            //productNameCmb.HeaderText = "NAMA PRODUK";
+            //productNameCmb.Name = "productName";
+            //productNameCmb.Width = 300;
+            //productNameCmb.DefaultCellStyle.BackColor = Color.LightBlue;
+            //detailPODataGridView.Columns.Add(productNameCmb);
+
             productIDTextBox.HeaderText = "KODE PRODUK";
             productIDTextBox.Name = "productID";
             productIDTextBox.Width = 200;
-            productIDTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
+            productIDTextBox.Visible = false;
+            //productIDTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailPODataGridView.Columns.Add(productIDTextBox);
 
             productNameTextBox.HeaderText = "NAMA PRODUK";
             productNameTextBox.Name = "productName";
             productNameTextBox.Width = 300;
-            productNameTextBox.ReadOnly = true;
+            productNameTextBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailPODataGridView.Columns.Add(productNameTextBox);
 
             basePriceColumn.HeaderText = "HARGA POKOK";
@@ -471,14 +420,14 @@ namespace AlphaSoft
             string[] arr = null;
             List<string> arrList = new List<string>();
 
-            sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             rdr = DS.getData(sqlCommand);
 
             if (rdr.HasRows)
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -501,7 +450,7 @@ namespace AlphaSoft
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
 
-            if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -528,13 +477,13 @@ namespace AlphaSoft
         {
             double total = 0;
 
-            for (int i = 0; i < detailPODataGridView.Rows.Count-1; i++)
+            for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
             {
-                total = total + Convert.ToDouble(subtotalList[i]);
+                total = total + Convert.ToDouble(detailPODataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
             globalTotalValue = total;
-            totalLabel.Text = total.ToString("C0", culture);
+            totalLabel.Text = total.ToString("C2", culture);
         }
 
         private void clearUpSomeRowContents(DataGridViewRow selectedRow, int rowSelectedIndex)
@@ -544,7 +493,6 @@ namespace AlphaSoft
             selectedRow.Cells["HPP"].Value = "0";
             detailHpp[rowSelectedIndex] = "0";
             selectedRow.Cells["subTotal"].Value = "0";
-            subtotalList[rowSelectedIndex] = "0";
             selectedRow.Cells["qty"].Value = "0";
             detailQty[rowSelectedIndex] = "0";
 
@@ -563,11 +511,11 @@ namespace AlphaSoft
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -575,7 +523,7 @@ namespace AlphaSoft
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -591,14 +539,13 @@ namespace AlphaSoft
 
                 hpp = getHPPValue(selectedProductID);
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "updateSomeRowsContent, PRODUCT_BASE_PRICE [" + hpp + "]");
-                selectedRow.Cells["HPP"].Value = hpp;
+                selectedRow.Cells["HPP"].Value = hpp.ToString();
                 detailHpp[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qty"].Value = 0;
                 detailQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "updateSomeRowsContent, attempt to calculate total");
 
@@ -616,7 +563,7 @@ namespace AlphaSoft
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailPODataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailPODataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -662,7 +609,6 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subtotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
                     detailQty[rowSelectedIndex] = "0";
@@ -713,8 +659,7 @@ namespace AlphaSoft
             productQty = Convert.ToDouble(detailQty[rowSelectedIndex]);
             subTotal = Math.Round((hppValue * productQty), 2);
 
-            selectedRow.Cells["subtotal"].Value = subTotal.ToString();
-            subtotalList[rowSelectedIndex] = subTotal.ToString();
+            selectedRow.Cells["subtotal"].Value = subTotal;
 
             calculateTotal();
 
@@ -798,10 +743,6 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
-
-            detailHpp.Add("0");
-            detailQty.Add("0");
-            subtotalList.Add("0");
         }
 
         private void POinvoiceTextBox_TextChanged(object sender, EventArgs e)
@@ -842,18 +783,18 @@ namespace AlphaSoft
                 return false;
             }
 
-            //for (i = 0; i < detailPODataGridView.Rows.Count && dataExist; i++)
-            //{
-            //    if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
-            //        dataExist = gUtil.isProductIDExist(detailPODataGridView.Rows[i].Cells["productID"].Value.ToString());
-            //    else
-            //        dataExist = false;
-            //}
-            //if (!dataExist)
-            //{
-            //    errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
-            //    return false;
-            //}
+            for (i = 0; i < detailPODataGridView.Rows.Count && dataExist; i++)
+            {
+                if (null != detailPODataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailPODataGridView.Rows[i].Cells["productName"].Value.ToString());
+                else
+                    dataExist = false;
+            }
+            if (!dataExist)
+            {
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
+                return false;
+            }
 
             return true;
         }
@@ -979,7 +920,7 @@ namespace AlphaSoft
                         }
 
                         // SAVE DETAIL TABLE
-                        for (int i = 0; i < detailPODataGridView.Rows.Count-1; i++)
+                        for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
                         {
                             if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
                             { 
@@ -1031,7 +972,7 @@ namespace AlphaSoft
                         }
 
                         // SAVE DETAIL TABLE
-                        for (int i = 0; i < detailPODataGridView.Rows.Count-1; i++)
+                        for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
                         {
                             if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
                             {
@@ -1078,7 +1019,7 @@ namespace AlphaSoft
                             throw internalEX;
 
                         // RE-INSERT DETAIL TABLE
-                        for (int i = 0; i < detailPODataGridView.Rows.Count-1; i++)
+                        for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
                         {
                             if (null != detailPODataGridView.Rows[i].Cells["productID"].Value)
                             {
@@ -1211,6 +1152,8 @@ namespace AlphaSoft
                         POinvoiceTextBox.Text = rdr.GetString("PURCHASE_INVOICE");
                         PODateTimePicker.Value = rdr.GetDateTime("PURCHASE_DATETIME");
 
+                        //ROInvoiceTextBox.Text = rdr.GetString("RO_INVOICE");
+                        
                         supplierCombo.Text = rdr.GetString("SUPPLIER_FULL_NAME");
                         termOfPaymentCombo.SelectedIndex = rdr.GetInt32("PURCHASE_TERM_OF_PAYMENT");
                         durationTextBox.Text = rdr.GetString("PURCHASE_TERM_OF_PAYMENT_DURATION");//Convert.ToInt32((rdr.GetDateTime("PURCHASE_TERM_OF_PAYMENT_DATE") - rdr.GetDateTime("PURCHASE_DATETIME")).TotalDays).ToString();
@@ -1252,9 +1195,6 @@ namespace AlphaSoft
                     while(rdr.Read())
                     {
                         detailPODataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("RO_QTY"), rdr.GetString("RO_SUBTOTAL"));
-                        detailHpp[detailPODataGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_BASE_PRICE");
-                        detailQty[detailPODataGridView.Rows.Count - 2] = rdr.GetString("RO_QTY");
-                        subtotalList[detailPODataGridView.Rows.Count - 2] = rdr.GetString("RO_SUBTOTAL");
                     }
 
                     calculateTotal();
@@ -1277,9 +1217,6 @@ namespace AlphaSoft
                     while (rdr.Read())
                     {
                         detailPODataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PURCHASE_SUBTOTAL"));
-                        detailHpp[detailPODataGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_PRICE");
-                        detailQty[detailPODataGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_QTY");
-                        subtotalList[detailPODataGridView.Rows.Count - 2] = rdr.GetString("PURCHASE_SUBTOTAL");
                     }
 
                     calculateTotal();
@@ -1307,17 +1244,9 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailPODataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailPODataGridView.Rows[rowSelectedIndex];
-                detailPODataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                if (null != selectedRow && rowSelectedIndex != detailPODataGridView.Rows.Count - 1)
+                if (null != selectedRow)
                 {
-                    for (int i = rowSelectedIndex; i < detailPODataGridView.Rows.Count - 1; i++)
-                    {
-                        detailQty[i] = detailQty[i + 1];
-                        detailHpp[i] = detailHpp[i + 1];
-                        subtotalList[i] = subtotalList[i + 1];
-                    }
-
                     isLoading = true;
                     detailPODataGridView.Rows.Remove(selectedRow);
                     gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "deleteCurrentRow [" + rowSelectedIndex + "]");
@@ -1335,9 +1264,15 @@ namespace AlphaSoft
         {
             string PONo = POinvoiceTextBox.Text;
 
+            //string sqlCommandx = "SELECT PH.PURCHASE_INVOICE, MS.SUPPLIER_FULL_NAME, PURCHASE_DATETIME, IF(PURCHASE_TERM_OF_PAYMENT = 0, 'TUNAI', 'KREDIT') AS TOP, PURCHASE_TERM_OF_PAYMENT_DURATION, " +
+            //                              "MP.PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_QTY, PURCHASE_SUBTOTAL " +
+            //                              "FROM PURCHASE_HEADER PH, MASTER_SUPPLIER MS, PURCHASE_DETAIL PD, MASTER_PRODUCT MP " +
+            //                              "WHERE PH.PURCHASE_INVOICE = '" + PONo + "' AND PH.SUPPLIER_ID = MS.SUPPLIER_ID AND PD.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
             string sqlCommandx = "SELECT PH.PURCHASE_DATETIME AS 'TGL', PH.PURCHASE_DATE_RECEIVED AS 'TERIMA', PH.PURCHASE_INVOICE AS 'INVOICE', MS.SUPPLIER_FULL_NAME AS 'SUPPLIER', MP.PRODUCT_NAME AS 'PRODUK', PD.PRODUCT_PRICE AS 'HARGA', PD.PRODUCT_QTY AS 'QTY', PD.PURCHASE_SUBTOTAL AS 'SUBTOTAL' " +
                                         "FROM PURCHASE_HEADER PH, PURCHASE_DETAIL PD, MASTER_SUPPLIER MS, MASTER_PRODUCT MP " +
                                         "WHERE PH.PURCHASE_INVOICE = '" + PONo + "' AND PH.SUPPLIER_ID = MS.SUPPLIER_ID AND PD.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PD.PRODUCT_ID = MP.PRODUCT_ID";
+                                        //"WHERE PD.PURCHASE_INVOICE = PH.PURCHASE_INVOICE AND PH.SUPPLIER_ID = MS.SUPPLIER_ID " + supplier + "AND PD.PRODUCT_ID = MP.PRODUCT_ID AND DATE_FORMAT(PH.PURCHASE_DATETIME, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(PH.PURCHASE_DATETIME, '%Y%m%d')  <= '" + dateTo + "' " +
+                                        //"ORDER BY TGL,INVOICE,PRODUK";
 
             DS.writeXML(sqlCommandx, globalConstants.purchaseOrderXML);
             purchaseOrderPrintOutForm displayForm = new purchaseOrderPrintOutForm();
@@ -1385,7 +1320,6 @@ namespace AlphaSoft
         {
             detailQty.Add("0");
             detailHpp.Add("0");
-            subtotalList.Add("0");
         }
 
         private void durationTextBox_Enter(object sender, EventArgs e)
@@ -1399,58 +1333,35 @@ namespace AlphaSoft
         private void purchaseOrderDetailForm_Activated(object sender, EventArgs e)
         {
             registerGlobalHotkey();
-
-            if (detailPODataGridView.Focused)
-                registerDelKey();
         }
 
         private void purchaseOrderDetailForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
-
-            if (delKeyRegistered)
-                unregisterDelKey();
         }
 
-        private void detailPODataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void detailPODataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            if (
-              (detailPODataGridView.Columns[e.ColumnIndex].Name == "qty" ||
-              detailPODataGridView.Columns[e.ColumnIndex].Name == "HPP" ||
-              detailPODataGridView.Columns[e.ColumnIndex].Name == "subTotal")
-             && e.RowIndex != this.detailPODataGridView.NewRowIndex && null != e.Value)
+            var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
+
+            if (isLoading == true)
+                return;
+
+            if (cell.OwningColumn.Name == "productName")
             {
-                isLoading = true;
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-                isLoading = false;
+                if (null != cell.Value)
+                {
+                    if (cell.Value.ToString().Length > 0)
+                    {
+                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                    }
+                    else
+                    {
+                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                    }
+                }
             }
-        }
-
-        private void detailPODataGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterNavigationKey();
-
-            registerDelKey();
-        }
-
-        private void detailPODataGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerNavigationKey();
-
-            unregisterDelKey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterNavigationKey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerNavigationKey();
         }
     }
 }

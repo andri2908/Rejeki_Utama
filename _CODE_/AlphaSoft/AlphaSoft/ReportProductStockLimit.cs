@@ -41,7 +41,7 @@ namespace AlphaSoft {
         
         public override string FullResourceName {
             get {
-                return "AlphaSoft.ReportProductStockLimit.rpt";
+                return "RoyalPetz_ADMIN.ReportProductStockLimit.rpt";
             }
             set {
                 // Do nothing

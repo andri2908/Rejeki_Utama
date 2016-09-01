@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Hotkeys;
 
 namespace AlphaSoft
 {
@@ -33,15 +32,6 @@ namespace AlphaSoft
 
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
-
-        dataProdukDetailForm newProductForm = null;
-        dataProdukDetailForm editProductForm = null;
-        stokPecahBarangForm displayStokPecahBarangForm = null;
-        penyesuaianStokForm displayPenyesuaianStokForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-        private bool navKeyRegistered = false;
 
         public dataProdukForm()
         {
@@ -154,70 +144,18 @@ namespace AlphaSoft
             newButton.Visible = false;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
-        }
-
         private void displaySpecificForm()
         {
             switch (originModuleID)
             {
-                case globalConstants.STOK_PECAH_BARANG:
-                    if (null == displayStokPecahBarangForm || displayStokPecahBarangForm.IsDisposed)
-                        displayStokPecahBarangForm = new stokPecahBarangForm(selectedProductID);
-
-                    displayStokPecahBarangForm.Show();
-                    displayStokPecahBarangForm.WindowState = FormWindowState.Normal;
+                case globalConstants.STOK_PECAH_BARANG: 
+                    stokPecahBarangForm displaystokPecahBarangForm = new stokPecahBarangForm(selectedProductID);
+                    displaystokPecahBarangForm.ShowDialog(this);
                     break;
 
                 case globalConstants.PENYESUAIAN_STOK:
-                    if (null == displayPenyesuaianStokForm || displayPenyesuaianStokForm.IsDisposed)
-                        displayPenyesuaianStokForm = new penyesuaianStokForm(selectedProductID);
-
-                    displayPenyesuaianStokForm.Show();
-                    displayPenyesuaianStokForm.WindowState = FormWindowState.Normal;
+                    penyesuaianStokForm penyesuaianStokForm = new penyesuaianStokForm(selectedProductID);
+                    penyesuaianStokForm.ShowDialog(this);
                     break;
 
                 case globalConstants.BROWSE_STOK_PECAH_BARANG:
@@ -263,22 +201,16 @@ namespace AlphaSoft
                     break;
 
                 default: // MASTER DATA PRODUK
-                    if (null == editProductForm || editProductForm.IsDisposed)
-                        editProductForm = new dataProdukDetailForm(globalConstants.EDIT_PRODUK, selectedProductID);
-
-                    editProductForm.Show();
-                    editProductForm.WindowState = FormWindowState.Normal;
+                    dataProdukDetailForm displayForm = new dataProdukDetailForm(globalConstants.EDIT_PRODUK, selectedProductID);
+                    displayForm.ShowDialog(this);
                     break;
             }   
         }
 
         private void newButton_Click(object sender, EventArgs e)
         {
-            if (null == newProductForm || newProductForm.IsDisposed)
-                newProductForm = new dataProdukDetailForm(globalConstants.NEW_PRODUK);
-
-            newProductForm.Show();
-            newProductForm.WindowState = FormWindowState.Normal;
+            dataProdukDetailForm displayForm = new dataProdukDetailForm(globalConstants.NEW_PRODUK);
+            displayForm.ShowDialog(this);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -296,6 +228,7 @@ namespace AlphaSoft
             string sqlCommand = "";
             string namaProductParam = "";
             string kodeProductParam = "";
+            int locationID = 0;
 
             DS.mySqlConnect();
 
@@ -303,6 +236,7 @@ namespace AlphaSoft
             //    return;
             namaProductParam = MySqlHelper.EscapeString(namaProdukTextBox.Text);
             kodeProductParam = MySqlHelper.EscapeString(textBox1.Text);
+            locationID = gutil.loadlocationID(2);
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
             {
@@ -333,7 +267,7 @@ namespace AlphaSoft
             {
                 sqlCommand = sqlCommand + " AND PRODUCT_IS_SERVICE = 0";
             }
-            
+
             using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -342,7 +276,8 @@ namespace AlphaSoft
                     dataProdukGridView.DataSource = dt;
 
                     dataProdukGridView.Columns["ID"].Visible = false;
-                    dataProdukGridView.Columns["PRODUK ID"].Width = 200;
+                    //dataProdukGridView.Columns["PRODUK ID"].Width = 200;
+                    dataProdukGridView.Columns["PRODUK ID"].Visible = false;
                     dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
                     dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;                    
                 }
@@ -404,8 +339,6 @@ namespace AlphaSoft
             {
                 loadProdukData();
             }
-
-            registerGlobalHotkey();
         }
 
         private void produknonactiveoption_CheckedChanged(object sender, EventArgs e)
@@ -440,7 +373,9 @@ namespace AlphaSoft
 
             gutil.reArrangeTabOrder(this);
 
-            textBox1.Select();
+            textBox1.Focus();
+
+            namaProdukTextBox.Select();
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
@@ -462,24 +397,6 @@ namespace AlphaSoft
             {
                 dataProdukGridView.Focus();
             }
-        }
-
-        private void dataProdukGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataProdukGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
-        }
-
-        private void dataProdukForm_Deactivate(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
         }
     }
 }

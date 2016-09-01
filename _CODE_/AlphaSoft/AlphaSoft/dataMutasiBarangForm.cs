@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
-using Hotkeys;
 
 namespace AlphaSoft
 {
@@ -26,12 +25,6 @@ namespace AlphaSoft
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
         private Form parentForm;
-
-        dataMutasiBarangDetailForm newMutasiForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-        private bool navKeyRegistered = false;
 
         public dataMutasiBarangForm()
         {
@@ -57,68 +50,19 @@ namespace AlphaSoft
                 newButton.Visible = false;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
-        }
-
         private void displaySpecificForm(string PMInvoice = "")
         {
             int subModuleID;
             switch (originModuleID)
             {
                 case globalConstants.CEK_DATA_MUTASI:
-                        if (!PMInvoice.Equals(""))
-                            subModuleID = globalConstants.VIEW_PRODUCT_MUTATION;
-                        else
-                            subModuleID = globalConstants.MUTASI_BARANG;
+                    if (!PMInvoice.Equals(""))
+                        subModuleID = globalConstants.VIEW_PRODUCT_MUTATION;
+                    else
+                        subModuleID = globalConstants.MUTASI_BARANG;
 
-                        if (null == newMutasiForm || newMutasiForm.IsDisposed)
-                            newMutasiForm = new dataMutasiBarangDetailForm(subModuleID, PMInvoice);
-
-                        newMutasiForm.Show();
-                        newMutasiForm.WindowState = FormWindowState.Normal;
+                        dataMutasiBarangDetailForm displayedForm = new dataMutasiBarangDetailForm(subModuleID, PMInvoice);
+                        displayedForm.ShowDialog(this);
                     break;
 
                 case globalConstants.PENERIMAAN_BARANG:
@@ -256,12 +200,13 @@ namespace AlphaSoft
             gutil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gutil.reArrangeTabOrder(this);
+
+            noMutasiTextBox.Select();
         }
 
         private void dataMutasiBarangForm_Deactivate(object sender, EventArgs e)
         {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
+
         }
 
         private void dataMutasiBarangForm_Activated(object sender, EventArgs e)
@@ -269,7 +214,6 @@ namespace AlphaSoft
             loadROdata();
             //fillInBranchCombo(branchFromCombo, branchFromComboHidden);
             //fillInBranchCombo(branchToCombo, branchToComboHidden);
-            registerGlobalHotkey();
         }
 
         private void dataRequestOrderGridView_KeyPress(object sender, KeyPressEventArgs e)
@@ -526,27 +470,6 @@ namespace AlphaSoft
             }
         }
 
-        private void dataRequestOrderGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
 
-        private void dataRequestOrderGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
-        }
     }
 }

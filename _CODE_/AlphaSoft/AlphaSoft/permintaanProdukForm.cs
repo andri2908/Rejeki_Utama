@@ -27,34 +27,22 @@ namespace AlphaSoft
 
         private int selectedROID = 0;
         private string selectedROInvoice = "";
-        private bool navKeyRegistered = false;
-        private bool delKeyRegistered = false;
 
         private Hotkeys.GlobalHotkey ghk_F1;
         private Hotkeys.GlobalHotkey ghk_F2;
         private Hotkeys.GlobalHotkey ghk_F8;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F11;
-        private Hotkeys.GlobalHotkey ghk_DEL;
 
         private Hotkeys.GlobalHotkey ghk_CTRL_DEL;
         private Hotkeys.GlobalHotkey ghk_CTRL_ENTER;
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
         private Data_Access DS = new Data_Access();
-
         private List<string> detailRequestQty = new List<string>();
-        private List<string> productPriceList = new List<string>();
-        private List<string> subtotalList = new List<string>();
-
+        
         private globalUtilities gUtil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
         private Button[] arrButton = new Button[3];
-
-        barcodeForm displayBarcodeForm = null;
-        dataProdukForm browseProdukForm = null;
 
         public permintaanProdukForm()
         {
@@ -84,16 +72,12 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
-                    if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
-                    { 
-                        displayBarcodeForm = new barcodeForm(this, globalConstants.NEW_REQUEST_ORDER);
+                    barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.NEW_REQUEST_ORDER);
 
-                        displayBarcodeForm.Top = this.Top + 5;
-                        displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
-                    }
+                    displayBarcodeForm.Top = this.Top + 5;
+                    displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
 
-                    displayBarcodeForm.Show();
-                    displayBarcodeForm.WindowState = FormWindowState.Normal;
+                    displayBarcodeForm.ShowDialog(this);
                     break;
 
                 case Keys.F8:
@@ -106,31 +90,8 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                    if (null == browseProdukForm || browseProdukForm.IsDisposed)
-                        browseProdukForm = new dataProdukForm(globalConstants.NEW_REQUEST_ORDER, this);
-
-                    browseProdukForm.Show();
-                    browseProdukForm.WindowState = FormWindowState.Normal;
-                    break;
-
-                case Keys.Delete:
-                    if (detailRequestOrderDataGridView.Rows.Count > 1)
-                        if (detailRequestOrderDataGridView.ReadOnly == false)
-                        {
-                            if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
-                            {
-                                deleteCurrentRow();
-                                calculateTotal();
-                            }
-                        }
-                    break;
-
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
+                    dataProdukForm displayProdukForm = new dataProdukForm(globalConstants.NEW_REQUEST_ORDER, this);
+                    displayProdukForm.ShowDialog(this);
                     break;
             }
         }
@@ -179,11 +140,11 @@ namespace AlphaSoft
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
-            //ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
-            //ghk_F8.Register();
+            ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
+            ghk_F8.Register();
 
             ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
             ghk_F9.Register();
@@ -191,65 +152,25 @@ namespace AlphaSoft
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
 
-            //ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            //ghk_DEL.Register();
 
-            //ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
-            //ghk_CTRL_DEL.Register();
+            ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
+            ghk_CTRL_DEL.Register();
 
             ghk_CTRL_ENTER = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
             ghk_CTRL_ENTER.Register();
 
-            registerNavigationKey();
         }
 
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
-            //ghk_F8.Unregister();
+            //ghk_F2.Unregister();
+            ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
-            //ghk_DEL.Unregister();
 
-            //ghk_CTRL_DEL.Unregister();
+            ghk_CTRL_DEL.Unregister();
             ghk_CTRL_ENTER.Unregister();
-
-            unregisterNavigationKey();
-        }
-
-        private void registerDelKey()
-        {
-            ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            ghk_DEL.Register();
-
-            delKeyRegistered = true;
-        }
-
-        private void unregisterDelKey()
-        {
-            ghk_DEL.Unregister();
-
-            delKeyRegistered = false;
-        }
-
-        private void registerNavigationKey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterNavigationKey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
         }
 
         public void addNewRow()
@@ -259,9 +180,10 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count && allowToAdd; i++)
             {
-                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
+                //if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value)
                 {
-                    if (!gUtil.isProductIDExist(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                    if (!gUtil.isProductNameExist(detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString()))
                     {
                         allowToAdd = false;
                         newRowIndex = i;
@@ -286,7 +208,7 @@ namespace AlphaSoft
                 clearUpSomeRowContents(selectedRow, newRowIndex);
             }
 
-            detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[newRowIndex].Cells["productID"];
+            detailRequestOrderDataGridView.CurrentCell = detailRequestOrderDataGridView.Rows[newRowIndex].Cells["productName"];
         }
 
         public void addNewRowFromBarcode(string productID, string productName)
@@ -308,9 +230,7 @@ namespace AlphaSoft
             // CHECK FOR EXISTING SELECTED ITEM
             for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && !found && !foundEmptyRow; i++)
             {
-                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value &&
-                     null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value &&
-                     gUtil.isProductIDExist(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value)
                 {
                     if (detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
                     {
@@ -416,9 +336,6 @@ namespace AlphaSoft
                 {
                     productName = rdr.GetString("PRODUCT_NAME");
                     detailRequestOrderDataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), productName, rdr.GetString("RO_QTY"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("RO_SUBTOTAL"));
-                    subtotalList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("RO_SUBTOTAL");
-                    productPriceList[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
-                    detailRequestQty[detailRequestOrderDataGridView.Rows.Count - 1] = rdr.GetString("RO_QTY");
                 }
 
                 rdr.Close();
@@ -429,7 +346,7 @@ namespace AlphaSoft
         {
             double total = 0;
 
-            for (int i = 0; i<detailRequestOrderDataGridView.Rows.Count-1;i++)
+            for (int i = 0; i<detailRequestOrderDataGridView.Rows.Count;i++)
             {
                 total = total + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value);
             }
@@ -445,14 +362,15 @@ namespace AlphaSoft
             string[] arr = null;
             List<string> arrList = new List<string>();
 
-            sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            //sqlCommand = "SELECT PRODUCT_ID FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
+            sqlCommand = "SELECT PRODUCT_NAME FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1";
             rdr = DS.getData(sqlCommand);
 
             if (rdr.HasRows)
             {
                 while (rdr.Read())
                 {
-                    arrList.Add(rdr.GetString("PRODUCT_ID"));
+                    arrList.Add(rdr.GetString("PRODUCT_NAME"));
                 }
                 AutoCompleteStringCollection collection = new AutoCompleteStringCollection();
                 arr = arrList.ToArray();
@@ -466,7 +384,7 @@ namespace AlphaSoft
 
         private void detailRequestOrderDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if ((detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
+            if ((detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
                 productIDTextBox.TextChanged -= TextBox_TextChanged;
@@ -510,11 +428,11 @@ namespace AlphaSoft
             string currentProductName = "";
             bool changed = false;
 
-            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'"));
+            numRow = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'"));
 
             if (numRow > 0)
             {
-                selectedProductID = currentValue;
+                selectedProductName = currentValue;
 
                 if (null != selectedRow.Cells["productID"].Value)
                     currentProductID = selectedRow.Cells["productID"].Value.ToString();
@@ -522,7 +440,7 @@ namespace AlphaSoft
                 if (null != selectedRow.Cells["productName"].Value)
                     currentProductName = selectedRow.Cells["productName"].Value.ToString();
 
-                selectedProductName = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_NAME,'') FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + currentValue + "'").ToString();
+                selectedProductID = DS.getDataSingleValue("SELECT IFNULL(PRODUCT_ID,'') FROM MASTER_PRODUCT WHERE PRODUCT_NAME = '" + currentValue + "'").ToString();
 
                 selectedRow.Cells["productId"].Value = selectedProductID;
                 selectedRow.Cells["productName"].Value = selectedProductName;
@@ -561,7 +479,7 @@ namespace AlphaSoft
             int rowSelectedIndex = 0;
             DataGridViewTextBoxEditingControl dataGridViewComboBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
-            if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name != "productID")
+            if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name != "productName")
                 return;
 
             if (e.KeyCode == Keys.Enter)
@@ -856,13 +774,15 @@ namespace AlphaSoft
             productIdColumn.HeaderText = "KODE PRODUK";
             productIdColumn.Name = "productID";
             productIdColumn.Width = 200;
-            productIdColumn.DefaultCellStyle.BackColor = Color.LightBlue;
+            productIdColumn.Visible = false;
+            //productIdColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailRequestOrderDataGridView.Columns.Add(productIdColumn);
 
             productNameColumn.HeaderText = "NAMA PRODUK";
             productNameColumn.Name = "productName";
             productNameColumn.Width = 300;
-            productNameColumn.ReadOnly = true;
+            //productNameColumn.ReadOnly = true;
+            productNameColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailRequestOrderDataGridView.Columns.Add(productNameColumn);
 
             stockQtyColumn.HeaderText = "QTY";
@@ -870,10 +790,6 @@ namespace AlphaSoft
             stockQtyColumn.Width = 100;
             stockQtyColumn.DefaultCellStyle.BackColor = Color.LightBlue;
             detailRequestOrderDataGridView.Columns.Add(stockQtyColumn);
-
-            //detailRequestOrderDataGridView.Columns["qty"].DefaultCellStyle.Format = "0,.###";
-            //detailRequestOrderDataGridView.Columns["qty"].DefaultCellStyle.Format = "#,#";
-            detailRequestOrderDataGridView.Columns["qty"].DefaultCellStyle.Format = "#,0.##";
 
             basePriceColumn.HeaderText = "HARGA POKOK";
             basePriceColumn.Name = "HPP";
@@ -886,16 +802,8 @@ namespace AlphaSoft
             subTotalColumn.Width = 200;
             subTotalColumn.ReadOnly = true;
             detailRequestOrderDataGridView.Columns.Add(subTotalColumn);
-
-            //this.maskedTextBox = new MaskedTextBox();
-            //this.maskedTextBox.Visible = false;
-            //this.detailRequestOrderDataGridView.Controls.Add(this.maskedTextBox);
-
-            //this.detailRequestOrderDataGridView.CellBeginEdit += new DataGridViewCellCancelEventHandler(dataGridView1_CellBeginEdit);
-            //this.detailRequestOrderDataGridView.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
-            //this.detailRequestOrderDataGridView.Scroll += new ScrollEventHandler(dataGridView1_Scroll);
         }
-        
+
         private void permintaanProdukForm_Load(object sender, EventArgs e)
         {
             int userAccessOption = 0;
@@ -931,11 +839,7 @@ namespace AlphaSoft
             arrButton[2] = exportButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
-            gUtil.reArrangeTabOrder(this);
-
-            subtotalList.Add("0");
-            productPriceList.Add("0");
-            detailRequestQty.Add("0");
+            gUtil.reArrangeTabOrder(this);            
         }
 
         private bool invoiceExist()
@@ -1033,11 +937,11 @@ namespace AlphaSoft
         private bool dataValidated()
         {
             int i = 0;
-            //bool dataExist = true;
+            bool dataExist = true;
 
             if (selectedBranchToID == 0)
             {
-                errorLabel.Text = "SYSTEM BRANCH ID BELUM DIISI";
+                errorLabel.Text = "INFORMASI CABANG BELUM DI ISI";
                 return false;
             }
 
@@ -1053,19 +957,19 @@ namespace AlphaSoft
                 return false;
             }
 
-            //for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && dataExist; i++)
-            //{
-            //    if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
-            //        dataExist = gUtil.isProductIDExist(detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value.ToString());
-            //    else
-            //        dataExist = false;
-            //}
-            //if (!dataExist)
-            //{
-            //    i = i + 1;
-            //    errorLabel.Text = "PRODUCT ID PADA BARIS [" + i + "] INVALID";
-            //    return false;
-            //}
+            for (i = 0; i < detailRequestOrderDataGridView.Rows.Count && dataExist; i++)
+            {
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailRequestOrderDataGridView.Rows[i].Cells["productName"].Value.ToString());
+                else
+                    dataExist = false;
+            }
+            if (!dataExist)
+            {
+                i = i + 1;
+                errorLabel.Text = "NAMA PRODUK PADA BARIS [" + i + "] INVALID";
+                return false;
+            }
 
             return true;
         }
@@ -1123,7 +1027,7 @@ namespace AlphaSoft
                             throw internalEX;
 
                         // SAVE DETAIL TABLE
-                        for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count-1; i++)
+                        for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count; i++)
                         {
                             if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
                             {
@@ -1159,7 +1063,7 @@ namespace AlphaSoft
                             throw internalEX;
 
                         // RE-INSERT DETAIL TABLE
-                        for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count-1; i++)
+                        for (int i = 0; i < detailRequestOrderDataGridView.Rows.Count; i++)
                         {
                             if (null != detailRequestOrderDataGridView.Rows[i].Cells["productID"].Value)
                             {
@@ -1259,23 +1163,9 @@ namespace AlphaSoft
             if (detailRequestOrderDataGridView.SelectedCells.Count > 0)
             {
                 int rowSelectedIndex = detailRequestOrderDataGridView.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];
-                detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["productName"];
+                DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[rowSelectedIndex];    
 
-                if (null != selectedRow && rowSelectedIndex != detailRequestOrderDataGridView.Rows.Count - 1)
-                {
-                    for (int i = rowSelectedIndex; i < detailRequestOrderDataGridView.Rows.Count - 1; i++)
-                    {
-                        detailRequestQty[i] = detailRequestQty[i + 1];
-                        productPriceList[i] = productPriceList[i + 1];
-                        subtotalList[i] = subtotalList[i + 1];
-                    }
-
-                    isLoading = true;
-                    detailRequestOrderDataGridView.Rows.Remove(selectedRow);
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
-                    isLoading = false;
-                }
+                detailRequestOrderDataGridView.Rows.Remove(selectedRow);
             }
         }
 
@@ -1338,9 +1228,6 @@ namespace AlphaSoft
             }
 
             registerGlobalHotkey();
-
-            if (detailRequestOrderDataGridView.Focused)
-                registerDelKey();
         }
 
         private bool insertDataToHQ(Data_Access DAccess)
@@ -1447,33 +1334,41 @@ namespace AlphaSoft
             gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO SAVE TO LOCAL DATABASE");
             if (saveData()) // SAVE TO LOCAL DATABASE FIRST
             {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SAVED TO LOCAL DATABASE");
-                // CREATE CONNECTION TO CENTRAL HQ DATABASE SERVER
-                gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO CONNECT TO HQ");
-                if (DS.HQ_mySQLConnect())
+                if (gUtil.checkLocalIPAddressFound(DS.getHQ_IPServer()) || DS.getHQ_IPServer() == "127.0.0.1")
                 {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "CONNECTION TO HQ CREATED");
-                    // SEND REQUEST DATA TO HQ
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO INSERT DATA TO HQ");
-                    if (insertDataToHQ(DS))
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "HQ IP AND LOCAL IP ARE THE SAME");
+                    result = true;
+                }
+                else
+                { 
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SAVED TO LOCAL DATABASE");
+                    // CREATE CONNECTION TO CENTRAL HQ DATABASE SERVER
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO CONNECT TO HQ");
+                    if (DS.HQ_mySQLConnect())
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SENT TO HQ SUCCESSFULLY");
-                        result = true;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "CONNECTION TO HQ CREATED");
+                        // SEND REQUEST DATA TO HQ
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "ATTEMPT TO INSERT DATA TO HQ");
+                        if (insertDataToHQ(DS))
+                        {
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER SENT TO HQ SUCCESSFULLY");
+                            result = true;
+                        }
+                        else
+                        {
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER FAILED TO SENT TO HQ");
+                            MessageBox.Show("FAIL TO INSERT DATA TO HQ");
+                            result = false;
+                        }
+                        // CLOSE CONNECTION TO CENTRAL HQ DATABASE SERVER
+                        DS.HQ_mySqlClose();
                     }
                     else
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "REQUEST ORDER FAILED TO SENT TO HQ");
-                        MessageBox.Show("FAIL TO INSERT DATA TO HQ");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "FAILED TO CREATE CONNECTION TO HQ");
+                        MessageBox.Show("FAIL TO CONNECT");
                         result = false;
                     }
-                    // CLOSE CONNECTION TO CENTRAL HQ DATABASE SERVER
-                    DS.HQ_mySqlClose();
-                }
-                else
-                {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_REQUEST_ORDER, "FAILED TO CREATE CONNECTION TO HQ");
-                    MessageBox.Show("FAIL TO CONNECT");
-                    result = false;
                 }
             }
 
@@ -1587,9 +1482,6 @@ namespace AlphaSoft
         private void permintaanProdukForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
-
-            if (delKeyRegistered)
-                unregisterDelKey();
         }
 
         private void detailRequestOrderDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
@@ -1600,7 +1492,7 @@ namespace AlphaSoft
             if (isLoading == true)
                 return;
 
-            if (cell.OwningColumn.Name == "productID")
+            if (cell.OwningColumn.Name == "productName")
             {
                 if (null != cell.Value)
                 {
@@ -1615,57 +1507,6 @@ namespace AlphaSoft
                 }
             }
 
-        }
-
-        private void detailRequestOrderDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (
-              (detailRequestOrderDataGridView.Columns[e.ColumnIndex].Name == "qty" ||
-              detailRequestOrderDataGridView.Columns[e.ColumnIndex].Name == "HPP" ||
-              detailRequestOrderDataGridView.Columns[e.ColumnIndex].Name == "subTotal")
-             && e.RowIndex != this.detailRequestOrderDataGridView.NewRowIndex && null != e.Value)
-            {
-                isLoading = true;
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-                isLoading = false;
-            }
-        }
-
-        private void detailRequestOrderDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            subtotalList.Add("0");
-            productPriceList.Add("0");
-            detailRequestQty.Add("0");
-
-            if (navKeyRegistered)
-                unregisterNavigationKey();
-        }
-
-        private void detailRequestOrderDataGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterNavigationKey();
-
-            registerDelKey();
-        }
-
-        private void detailRequestOrderDataGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerNavigationKey();
-
-            unregisterDelKey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterNavigationKey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerNavigationKey();
         }
     }
 }

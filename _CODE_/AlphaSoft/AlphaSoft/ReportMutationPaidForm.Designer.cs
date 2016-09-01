@@ -1,4 +1,4 @@
-﻿namespace AlphaSoft
+﻿namespace RoyalPetz_ADMIN
 {
     partial class ReportMutationPaidForm
     {
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.crystalReportViewer1 = new CrystalDecisions.Windows.Forms.CrystalReportViewer();
-            this.ReportMutationPaid1 = new AlphaSoft.ReportMutationPaid();
+            this.ReportMutationPaid1 = new RoyalPetz_ADMIN.ReportMutationPaid();
             this.SuspendLayout();
             // 
             // crystalReportViewer1

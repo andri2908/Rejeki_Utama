@@ -49,6 +49,10 @@ namespace AlphaSoft
         public const int BROWSE_MUTASI_PENERIMAAN = 118;
         public const int REPRINT_PURCHASE_ORDER = 119;
         public const int DUMMY_TRANSACTION_TAX = 120;
+        public const int SALES_QUOTATION = 121;
+        public const int EDIT_SALES_QUOTATION = 122;
+        public const int SALES_ORDER_REVISION = 123;
+        public const int DELIVERY_ORDER = 124;
 
         public const int NEW_GROUP_USER = 201;
         public const int EDIT_GROUP_USER = 202;
@@ -76,11 +80,17 @@ namespace AlphaSoft
         public const int PRINTOUT_PURCHASE_ORDER = 224;
         public const int NEW_RETUR_PEMBELIAN = 225;
         public const int EDIT_RETUR_PEMBELIAN = 226;
+        public const int NEW_REGION = 227;
+        public const int EDIT_REGION = 228;
+
+
         public const int NEW_AKUN = 501;  //start from 5
         public const int EDIT_AKUN = 502;
         public const int NEW_DJ = 503;
         public const int EDIT_DJ = 504;
-        public const int COPY_NOTA = 505;
+        public const int SALES_COMMISSION = 505;
+        public const int MEMBERSHIP_POINT = 506;
+
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE
         // THE VALUES MUST BE TIED TO THE VALUES INSIDE THE DATABASE TABLE
@@ -146,8 +156,9 @@ namespace AlphaSoft
 
         public const int MENU_MODULE_MESSAGING = 50;
         public const int MENU_TAX_MODULE = 51;
-        public const int MENU_USB_UTILITY_MODULE = 52;
 
+        public const int MENU_SALES_QUOTATION = 52;
+        public const int APPROVAL_SALES_QUOTATION = 53;
 
         // CONSTANTS FOR USER CHANGE LOG
         public const int CHANGE_LOG_LOGIN = 1;
@@ -190,7 +201,6 @@ namespace AlphaSoft
         public const int REPORT_FINANCE_IN = 741;
         public const int REPORT_FINANCE_OUT = 742;
         public const int REPORT_MARGIN = 743;
-        public const int REPORT_MONTHLY_BALANCE = 744;
 
         //XML file
         public const string AccountXML = "MasterAccount.xml";
@@ -225,8 +235,6 @@ namespace AlphaSoft
         public const string FinanceInXML = "FinanceIn.xml";
         public const string FinanceOutXML = "FinanceOut.xml";
         public const string MarginXML = "Margin.xml";
-        //public const string DailyBalanceXML = "DailyBalance.xml";
-        public const string MonthlyBalanceXML = "MonthlyBalance.xml";
 
         public const string SalesReturnXML = "SalesReturn.xml";
         public const string PurchaseReturnXML = "PurchaseReturn.xml";
@@ -247,6 +255,15 @@ namespace AlphaSoft
         public const string purchaseOrderXML = "PurchaseOrder.xml";
         public const string penerimaanBarangXML = "ProductsReceived.xml";
         public const string returPermintaanXML = "ReturPermintaan.xml";
+        public const string deliveryOrderXML = "DeliveryOrder.xml";
+        public const string creditPaymentXML = "creditPaymentPrintOut.xml";
+        public const string returPenjualanXML = "dataReturPenjualanPrintOut.xml";
+        public const string penjualanRegionXML = "penjualanByRegion.xml";
+
+        public const string allSalesCommissionXML = "SalesCommission_ALL.xml";
+        public const string salesCommissionXML = "SalesCommission.xml";
+        public const string allMembershipPointXML = "MembershipPoint_ALL.xml";
+        public const string membershipPointXML = "MembershipPoint.xml";
 
     }
 }

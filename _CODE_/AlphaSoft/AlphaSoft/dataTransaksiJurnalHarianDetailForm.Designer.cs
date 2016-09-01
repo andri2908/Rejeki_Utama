@@ -113,6 +113,7 @@
             this.label5.Size = new System.Drawing.Size(93, 18);
             this.label5.TabIndex = 43;
             this.label5.Text = "TANGGAL";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // saveButton
             // 
@@ -160,6 +161,7 @@
             this.label8.Size = new System.Drawing.Size(14, 18);
             this.label8.TabIndex = 45;
             this.label8.Text = ":";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // TransaksiAccountGridView
             // 
@@ -201,9 +203,6 @@
             this.TransaksiAccountGridView.Size = new System.Drawing.Size(719, 357);
             this.TransaksiAccountGridView.TabIndex = 42;
             this.TransaksiAccountGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransaksiAccountGridView_CellDoubleClick);
-            this.TransaksiAccountGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.TransaksiAccountGridView_CellFormatting);
-            this.TransaksiAccountGridView.Enter += new System.EventHandler(this.TransaksiAccountGridView_Enter);
-            this.TransaksiAccountGridView.Leave += new System.EventHandler(this.TransaksiAccountGridView_Leave);
             // 
             // journal_id
             // 
@@ -295,8 +294,6 @@
             this.TanggalTransaksi.Size = new System.Drawing.Size(399, 27);
             this.TanggalTransaksi.TabIndex = 46;
             this.TanggalTransaksi.ValueChanged += new System.EventHandler(this.TanggalTransaksi_ValueChanged);
-            this.TanggalTransaksi.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.TanggalTransaksi.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // commitButton
             // 
@@ -321,8 +318,6 @@
             this.carabayarcombobox.Name = "carabayarcombobox";
             this.carabayarcombobox.Size = new System.Drawing.Size(384, 26);
             this.carabayarcombobox.TabIndex = 22;
-            this.carabayarcombobox.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.carabayarcombobox.Leave += new System.EventHandler(this.genericControl_Leave);
             // 
             // label1
             // 
@@ -422,6 +417,7 @@
             this.label11.Size = new System.Drawing.Size(82, 18);
             this.label11.TabIndex = 23;
             this.label11.Text = "CABANG";
+            this.label11.Visible = false;
             // 
             // label12
             // 
@@ -433,6 +429,7 @@
             this.label12.Size = new System.Drawing.Size(14, 18);
             this.label12.TabIndex = 24;
             this.label12.Text = ":";
+            this.label12.Visible = false;
             // 
             // branchCombobox
             // 
@@ -445,8 +442,7 @@
             this.branchCombobox.Name = "branchCombobox";
             this.branchCombobox.Size = new System.Drawing.Size(384, 26);
             this.branchCombobox.TabIndex = 25;
-            this.branchCombobox.Enter += new System.EventHandler(this.genericControl_Enter);
-            this.branchCombobox.Leave += new System.EventHandler(this.genericControl_Leave);
+            this.branchCombobox.Visible = false;
             // 
             // groupBox1
             // 
@@ -504,7 +500,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DATA TRANSAKSI JURNAL HARIAN";
             this.Activated += new System.EventHandler(this.dataTransaksiJurnalHarianDetailForm_Activated);
-            this.Deactivate += new System.EventHandler(this.dataTransaksiJurnalHarianDetailForm_Deactivate);
             this.Load += new System.EventHandler(this.dataTransaksiJurnalHarianDetailForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

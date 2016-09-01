@@ -12,7 +12,6 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 using System.Text.RegularExpressions;
-using Hotkeys;
 
 namespace AlphaSoft
 {
@@ -23,10 +22,13 @@ namespace AlphaSoft
 
         private int originModuleID = 0;
         private int selectedInternalProductID = 0;
-        private string productID = "";
+        private string selectedProductID = "";
         private int selectedUnitID;
         private string photoFileName = "";
         private List<int> currentSelectedKategoriID = new List<int>();
+        private List<string> detailQty = new List<string>();
+        private bool isLoading = false;
+        private string previousInput = "";
         
         private string stokAwalText = "";
         private string limitStokText = "";
@@ -36,15 +38,8 @@ namespace AlphaSoft
         private string hargaGrosirValueText = "";
         private string selectedPhoto = "";
         private int options = 0;
-        private bool isLoading = false;
         private stokPecahBarangForm parentForm;
-
-        dataKategoriProdukForm selectKategoriForm = null;
-        dataSatuanForm selectSatuanForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
+        
         public dataProdukDetailForm()
         {
             InitializeComponent();
@@ -65,56 +60,84 @@ namespace AlphaSoft
             parentForm = thisParentForm;
         }
 
-        private void captureAll(Keys key)
+        private void calculateTotal()
         {
-            switch (key)
+            double totalQty = 0;
+
+            //for (int i = 0; i < detailLokasiDataGridView.Rows.Count; i++)
+            //{
+            //    totalQty = totalQty + Convert.ToDouble(detailLokasiDataGridView.Rows[i].Cells["locationQty"].Value);
+            //}
+            for (int i = 0; i < detailQty.Count; i++)
+                totalQty = totalQty + Convert.ToDouble(detailQty[i]);
+
+            stokAwalTextBox.Text = totalQty.ToString();
+        }
+
+        private void detailLokasiDataGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if ((detailLokasiDataGridView.CurrentCell.ColumnIndex == 2)
+                && e.Control is TextBox)
             {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
+                TextBox textBox = e.Control as TextBox;
+                textBox.TextChanged += TextBox_TextChanged;
             }
         }
 
-        protected override void WndProc(ref Message m)
+        private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
+            int rowSelectedIndex = 0;
+           
+            if (isLoading)
+                return;
 
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
+            DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
+
+            rowSelectedIndex = detailLokasiDataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = detailLokasiDataGridView.Rows[rowSelectedIndex];
+
+            previousInput = "";
+            if (detailQty.Count < rowSelectedIndex + 1)
+            {
+                if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (dataGridViewTextBoxEditingControl.Text.Length > 0))
+                {
+                    detailQty.Add(dataGridViewTextBoxEditingControl.Text);
+                }
+                else
+                {
+                    dataGridViewTextBoxEditingControl.Text = previousInput;
+                }
+            }
+            else
+            {
+                if (gUtil.matchRegEx(dataGridViewTextBoxEditingControl.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (dataGridViewTextBoxEditingControl.Text.Length > 0))
+                {
+                    detailQty[rowSelectedIndex] = dataGridViewTextBoxEditingControl.Text;
+                }
+                else
+                {
+                    dataGridViewTextBoxEditingControl.Text = detailQty[rowSelectedIndex];
+                }
             }
 
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
+            try
+            {
+                calculateTotal();
+            }
+            catch (Exception ex)
+            {
+                //dataGridViewTextBoxEditingControl.Text = previousInput;
+            }
         }
 
         public void setSelectedUnitID(int unitID)
         {
             selectedUnitID = unitID;
-
-            loadUnitIDInformation();
         }
 
-        public void addSelectedKategoriID(int kategoriID, bool immediatelyLoad = true)
+        public void addSelectedKategoriID(int kategoriID)
         {
             bool exist = false;
             for (int i = 0; ((i<currentSelectedKategoriID.Count) && (exist == false));i++)
@@ -125,9 +148,6 @@ namespace AlphaSoft
 
             if (!exist)
                 currentSelectedKategoriID.Add(kategoriID);
-
-            if (immediatelyLoad == true)
-                loadKategoriIDInformation();
         }
 
         private bool checkRegEx(string textToCheck)
@@ -375,22 +395,23 @@ namespace AlphaSoft
                 {
                     while (rdr.Read())
                     {
-                        kodeProdukTextBox.Text = rdr.GetString("PRODUCT_ID");
-                        barcodeTextBox.Text = rdr.GetString("PRODUCT_BARCODE");
+                        //kodeProdukTextBox.Text = rdr.GetString("PRODUCT_ID");
+                        //barcodeTextBox.Text = rdr.GetString("PRODUCT_BARCODE");
+                        selectedProductID = rdr.GetString("PRODUCT_ID");
                         namaProdukTextBox.Text = rdr.GetString("PRODUCT_NAME");
                         produkDescTextBox.Text = rdr.GetString("PRODUCT_DESCRIPTION");
                         hppTextBox.Text = rdr.GetString("PRODUCT_BASE_PRICE");
                         hargaEcerTextBox.Text = rdr.GetString("PRODUCT_RETAIL_PRICE");
                         hargaPartaiTextBox.Text = rdr.GetString("PRODUCT_BULK_PRICE");
-                        hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); ;
+                        hargaGrosirTextBox.Text = rdr.GetString("PRODUCT_WHOLESALE_PRICE"); 
                         merkTextBox.Text = rdr.GetString("PRODUCT_BRAND");
                         stokAwalTextBox.Text = rdr.GetString("PRODUCT_STOCK_QTY");
                         limitStokTextBox.Text = rdr.GetString("PRODUCT_LIMIT_STOCK");
 
                         productShelves = rdr.GetString("PRODUCT_SHELVES");
 
-                        noRakBarisTextBox.Text = productShelves.Substring(0, 2);
-                        noRakKolomTextBox.Text = productShelves.Substring(2); 
+                        //noRakBarisTextBox.Text = productShelves.Substring(0, 2);
+                        //noRakKolomTextBox.Text = productShelves.Substring(2); 
 
                         selectedUnitID = rdr.GetInt32("UNIT_ID");
                         if (rdr.GetString("PRODUCT_ACTIVE").Equals("1"))
@@ -399,17 +420,9 @@ namespace AlphaSoft
                             nonAktifCheckbox.Checked = true;
                         
                         if (rdr.GetString("PRODUCT_IS_SERVICE").Equals("1"))
-                        { 
                             produkJasaCheckbox.Checked = true;
-                            stokAwalTextBox.Enabled = false;
-                            limitStokTextBox.Enabled = false;
-                        }
                         else
-                        { 
                             produkJasaCheckbox.Checked = false;
-                            stokAwalTextBox.Enabled = true;
-                            limitStokTextBox.Enabled = true;
-                        }
 
                         fileName = rdr.GetString("PRODUCT_PHOTO_1").Trim();
 
@@ -432,29 +445,97 @@ namespace AlphaSoft
             }
         }
 
+        private void createEntryForProductID(string productID)
+        {
+            MySqlDataReader rdr;
+            MySqlException internalEX = null;
+            string sqlCommand;
+
+            DS.beginTransaction();
+            try
+            { 
+                sqlCommand = "SELECT ID FROM MASTER_LOCATION";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        { 
+                            sqlCommand = "INSERT INTO PRODUCT_LOCATION (LOCATION_ID, PRODUCT_ID, PRODUCT_LOCATION_QTY) VALUES (" + rdr.GetInt32("ID") + ", '" + productID + "', 0)";
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw (internalEX);
+                        }
+                    }
+                }
+                rdr.Close();
+
+                DS.commit();
+            }
+            catch (Exception ex)
+            { }
+        }
+
+        private void loadProductLocationData()
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+
+            string sqlCommand;
+            int numRecords = 0;
+
+            numRecords = Convert.ToInt32(DS.getDataSingleValue("SELECT COUNT(1) FROM PRODUCT_LOCATION WHERE PRODUCT_ID = '" + selectedProductID + "'"));
+            if (numRecords == 0)
+            {
+                createEntryForProductID(selectedProductID);
+            }
+
+            if (originModuleID == globalConstants.NEW_PRODUK || originModuleID == globalConstants.STOK_PECAH_BARANG)
+            {
+                sqlCommand = "SELECT ID, LOCATION_NAME , 0 AS 'JUMLAH' FROM MASTER_LOCATION";
+            }
+            else
+            {
+                sqlCommand = "SELECT M.ID, LOCATION_NAME, PRODUCT_LOCATION_QTY AS 'JUMLAH' FROM MASTER_LOCATION M, PRODUCT_LOCATION P " +
+                                    "WHERE P.LOCATION_ID = M.ID AND P.PRODUCT_ID = '" + selectedProductID + "'";
+            }
+
+            using (rdr = DS.getData(sqlCommand))
+            {
+                detailLokasiDataGridView.Rows.Clear();
+                if (rdr.HasRows)
+                {
+                    //dt.Load(rdr);
+
+                    while (rdr.Read())
+                    {
+                        detailQty.Add(rdr.GetString("JUMLAH"));
+                        detailLokasiDataGridView.Rows.Add(rdr.GetString("ID"), rdr.GetString("LOCATION_NAME"), rdr.GetString("JUMLAH"));
+                    }                    
+                }
+                rdr.Close();
+            }
+        }
+
         private void loadProductCategoryData()
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
 
-            if (kodeProdukTextBox.Text.Equals(""))
-                return;
+            //if (kodeProdukTextBox.Text.Equals(""))
+            //    return;
 
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT * FROM PRODUCT_CATEGORY WHERE PRODUCT_ID =  '" + kodeProdukTextBox.Text +"'"))
+            using (rdr = DS.getData("SELECT * FROM PRODUCT_CATEGORY WHERE PRODUCT_ID =  '" + selectedProductID+"'"))
             {
                 if (rdr.HasRows)
                 {
                     while (rdr.Read())
                     {
-                        addSelectedKategoriID(rdr.GetInt32("CATEGORY_ID"), false);
+                        addSelectedKategoriID(rdr.GetInt32("CATEGORY_ID"));
                     }
                 }
             }
-
-            rdr.Close();
-            loadKategoriIDInformation();
         }
 
         private void loadUnitIDInformation()
@@ -494,19 +575,12 @@ namespace AlphaSoft
             produkKategoriTextBox.Text = kategoriName;
         }
 
-        private void clearUpProductCategory()
-        {
-            produkKategoriTextBox.Clear();
-            currentSelectedKategoriID.Clear();
-        }
-
         private void searchUnitButton_Click(object sender, EventArgs e)
         {
-            if (null == selectSatuanForm || selectSatuanForm.IsDisposed)
-                selectSatuanForm = new dataSatuanForm(globalConstants.PRODUK_DETAIL_FORM, this);
+            dataSatuanForm displayedForm = new dataSatuanForm(globalConstants.PRODUK_DETAIL_FORM, this);
+            displayedForm.ShowDialog(this);
 
-            selectSatuanForm.Show();
-            selectSatuanForm.WindowState = FormWindowState.Normal;
+            loadUnitIDInformation();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -532,13 +606,10 @@ namespace AlphaSoft
 
         private void searchKategoriButton_Click(object sender, EventArgs e)
         {
-            if (null == selectKategoriForm || selectKategoriForm.IsDisposed)
-            {
-                selectKategoriForm = new dataKategoriProdukForm(globalConstants.PRODUK_DETAIL_FORM, this);
-            }
+            dataKategoriProdukForm displayedForm = new dataKategoriProdukForm(globalConstants.PRODUK_DETAIL_FORM, this);
+            displayedForm.ShowDialog(this);
 
-            selectKategoriForm.Show();
-            selectKategoriForm.WindowState = FormWindowState.Normal;
+            loadKategoriIDInformation();
         }
 
         private bool dataValidated()
@@ -579,26 +650,20 @@ namespace AlphaSoft
                 return false;
             }
 
-            if (barcodeTextBox.Text.Length > 0 && (barcodeExist()) && (originModuleID == globalConstants.NEW_PRODUK))
-            {
-                errorLabel.Text = "BARCODE SUDAH ADA";
-                return false;
-            }
-
-            string kodeProdukValue = MySqlHelper.EscapeString(kodeProdukTextBox.Text);
-            if (kodeProdukValue.Length <= 0)
-            {
-                errorLabel.Text = "PRODUK ID TIDAK BOLEH KOSONG";
-                return false;
-            }
-
-            if ((productIDExist(kodeProdukValue)) && (originModuleID != globalConstants.EDIT_PRODUK))
-            {
-                errorLabel.Text = "PRODUK ID SUDAH ADA";
-                return false;
-            }
-
             return true;
+        }
+
+        private string getProdukID()
+        {
+            string productID = "";
+            //if (originModuleID == globalConstants.NEW_PRODUK)
+            //    return "TMPPRD001";
+            //else
+            //    return kodeProdukTextBox.Text;
+
+            productID = (Convert.ToInt32(DS.getDataSingleValue("SELECT IFNULL(MAX(CONVERT(PRODUCT_ID, UNSIGNED INTEGER)), 0) FROM MASTER_PRODUCT")) + 1).ToString();
+
+            return productID;
         }
 
         private bool saveDataTransaction()
@@ -607,14 +672,19 @@ namespace AlphaSoft
             string sqlCommand = "";
             string noRakBaris = "";
             string noRakKolom = "";
+            //string produkBarcode = "";
             MySqlException internalEX = null;
 
-            productID = MySqlHelper.EscapeString(kodeProdukTextBox.Text);
-            string produkBarcode = barcodeTextBox.Text;
-            if (produkBarcode.Equals(""))
-                produkBarcode = "0";
+            //string produkID = getProdukID();
+            //productID = kodeProdukTextBox.Text.Trim();
+            //string produkBarcode = barcodeTextBox.Text;
+            //if (produkBarcode.Equals(""))
+            //    produkBarcode = " ";
 
-            string produkName = MySqlHelper.EscapeString(namaProdukTextBox.Text.Trim());
+            if (originModuleID != globalConstants.EDIT_PRODUK)
+                selectedProductID = getProdukID();
+
+            string produkName = namaProdukTextBox.Text.Trim();
 
             string produkDesc = produkDescTextBox.Text.Trim();
             if (produkDesc.Equals(""))
@@ -641,8 +711,8 @@ namespace AlphaSoft
             if (limitStock.Equals(""))
                 limitStock = "0";
 
-            noRakBaris = MySqlHelper.EscapeString(noRakBarisTextBox.Text);
-            noRakKolom= noRakKolomTextBox.Text;
+            //noRakBaris = noRakBarisTextBox.Text;
+            //noRakKolom= noRakKolomTextBox.Text;
             
             while (noRakBaris.Length < 2)
                 noRakBaris = "-" + noRakBaris;
@@ -666,7 +736,7 @@ namespace AlphaSoft
 
             string produkPhoto = " ";
             if (!selectedPhoto.Equals(""))
-                produkPhoto = productID + ".jpg";
+                produkPhoto = selectedProductID + ".jpg";
 
             DS.beginTransaction();
 
@@ -679,7 +749,7 @@ namespace AlphaSoft
                     case globalConstants.EDIT_PRODUK:
                             // UPDATE MASTER_PRODUK TABLE
                             sqlCommand = "UPDATE MASTER_PRODUCT SET " +
-                                                "PRODUCT_BARCODE = '" + produkBarcode + "', " +
+            //                                    "PRODUCT_BARCODE = '" + produkBarcode + "', " +
                                                 "PRODUCT_NAME =  '" + produkName + "', " +
                                                 "PRODUCT_DESCRIPTION =  '" + produkDesc + "', " +
                                                 "PRODUCT_BASE_PRICE = " + produkHargaPokok + ", " +
@@ -694,27 +764,35 @@ namespace AlphaSoft
                                                 "PRODUCT_ACTIVE = " + produkStatus + ", " +
                                                 "PRODUCT_BRAND = '" + produkBrand + "', " +
                                                 "PRODUCT_IS_SERVICE = " + produkSvc + " " +
-                                                "WHERE PRODUCT_ID = '" + productID + "'";
+                                                "WHERE PRODUCT_ID = '" + selectedProductID + "'";
 
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE CURRENT PRODUCT DATA [" + productID + "]");
-                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE CURRENT PRODUCT DATA [" + selectedProductID + "]");
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // UPDATE PRODUCT_CATEGORY TABLE
-                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE PRODUCT CATEGORY FOR [" + productID + "]");
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "UPDATE PRODUCT CATEGORY FOR [" + selectedProductID + "]");
 
                             // delete the content first, and insert the new data based on the currentSelectedKategoryID LIST
-                            sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + productID + "'";
-                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT CATEGORY FOR [" + productID + "]");
+                            sqlCommand = "DELETE FROM PRODUCT_CATEGORY WHERE PRODUCT_ID = '" + selectedProductID + "'";
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // SAVE TO PRODUCT_CATEGORY TABLE
-                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + productID + "]");
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
 
                             for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                             {
-                                sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + productID + "', " + currentSelectedKategoriID[i] + ")";
+                                sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
+                                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                    throw internalEX;
+                            }
+
+                            // UPDATE PRODUCT LOCATION TABLE
+                            for (int j = 0; j < detailQty.Count;j++)
+                            {
+                                sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = " + Convert.ToDouble(detailQty[j]) + " WHERE LOCATION_ID = " + detailLokasiDataGridView.Rows[j].Cells["ID"].Value.ToString() + " AND PRODUCT_ID = '" + selectedProductID + "'";
                                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                     throw internalEX;
                             }
@@ -723,27 +801,37 @@ namespace AlphaSoft
                     default: // NEW PRODUK
                         // SAVE TO MASTER_PRODUK TABLE
                         sqlCommand = "INSERT INTO MASTER_PRODUCT " +
-                                            "(PRODUCT_ID, PRODUCT_BARCODE, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE) " +
+                                            "(PRODUCT_ID, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_BASE_PRICE, PRODUCT_RETAIL_PRICE, PRODUCT_BULK_PRICE, PRODUCT_WHOLESALE_PRICE, PRODUCT_PHOTO_1, UNIT_ID, PRODUCT_STOCK_QTY, PRODUCT_LIMIT_STOCK, PRODUCT_SHELVES, PRODUCT_ACTIVE, PRODUCT_BRAND, PRODUCT_IS_SERVICE) " +
                                             "VALUES " +
-                                            "('" + productID + "', '" + produkBarcode + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
+                                            "('" + selectedProductID + "', '" + produkName + "', '" + produkDesc + "', " + produkHargaPokok + ", " + produkHargaEcer + ", " + produkHargaPartai + ", " + produkHargaGrosir + ", '" + produkPhoto + "', " + selectedUnitID + ", " + produkQty + ", " + limitStock + ", '" + produkShelves + "', " + produkStatus + ", '" + produkBrand + "', " + produkSvc + ")";
 
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT NEW PRODUCT [" + productID + "]");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT NEW PRODUCT [" + selectedProductID + "]");
 
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
 
                         // SAVE TO PRODUCT_CATEGORY TABLE
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + productID + "]");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "INSERT PRODUCT CATEGORY FOR [" + selectedProductID + "]");
 
                         for (int i = 0; i < currentSelectedKategoriID.Count(); i++)
                         {
-                            sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + productID + "', " + currentSelectedKategoriID[i] + ")";
+                            sqlCommand = "INSERT INTO PRODUCT_CATEGORY (PRODUCT_ID, CATEGORY_ID) VALUES ('" + selectedProductID + "', " + currentSelectedKategoriID[i] + ")";
+                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                                throw internalEX;
+                        }
+
+                        // SAVE TO PRODUCT_LOCATION_TABLE
+                        for (int j = 0; j < detailQty.Count; j++)
+                        {
+                            sqlCommand = "INSERT INTO PRODUCT_LOCATION (LOCATION_ID, PRODUCT_ID, PRODUCT_LOCATION_QTY) VALUES (" + detailLokasiDataGridView.Rows[j].Cells["ID"].Value.ToString() + ", '" + selectedProductID + "', " + Convert.ToDouble(detailQty[j]) + ")";
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
                         break;
                     
                 }
+
+                //DS.executeNonQueryCommand(sqlCommand);
 
                 if (!selectedPhoto.Equals("PRODUCT_PHOTO/" + produkPhoto) && !selectedPhoto.Equals(""))// && result == true)
                 {
@@ -755,7 +843,7 @@ namespace AlphaSoft
 
                     if (System.IO.File.Exists("PRODUCT_PHOTO/" + produkPhoto))
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT IMAGE [" + productID + "]");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_TAMBAH_PRODUK, "DELETE CURRENT PRODUCT IMAGE [" + selectedProductID + "]");
 
                         System.GC.Collect();
                         System.GC.WaitForPendingFinalizers();
@@ -837,7 +925,7 @@ namespace AlphaSoft
 
                 if (originModuleID == globalConstants.STOK_PECAH_BARANG)
                 {
-                    internalProductID = getInternalProductID(productID);
+                    internalProductID = getInternalProductID(selectedProductID);
                     parentForm.setNewSelectedProductID(internalProductID);
 
                     this.Close();
@@ -869,28 +957,25 @@ namespace AlphaSoft
                 panelImage.BackgroundImage = null;
                 
                 errorLabel.Text = "";
-                
+
+                for (int i = 0;i<detailLokasiDataGridView.Rows.Count; i++)
+                {
+                    detailLokasiDataGridView.Rows[i].Cells["locationQty"].Value = 0;
+                }
+
                 originModuleID = globalConstants.NEW_PRODUK;
                 options = gUtil.INS;
-                kodeProdukTextBox.Enabled = true;
-            }
-            if (originModuleID== globalConstants.NEW_PRODUK)
-            {
-                kodeProdukTextBox.Select();
-            } else
-            {
-                barcodeTextBox.Select();
             }
         }
 
-        private bool productIDExist(string productID)
+        private bool productIDExist()
         {
             bool result = false;
 
-            if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '"+ productID + "'").ToString().Equals("0"))
-            {
-                result = true;
-            }
+            //if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '"+kodeProdukTextBox.Text.Trim()+"'").ToString().Equals("0"))
+            //{
+            //    result = true;
+            //}
 
             return result;
         }
@@ -899,37 +984,26 @@ namespace AlphaSoft
         {
             bool result = false;
 
-            if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_BARCODE = '" + barcodeTextBox.Text + "'").ToString().Equals("0"))
-            {
-                result = true;
-            }
+            //if (!DS.getDataSingleValue("SELECT COUNT(1) FROM MASTER_PRODUCT WHERE PRODUCT_BARCODE = '" + barcodeTextBox.Text.Trim() + "'").ToString().Equals("0"))
+            //{
+            //    result = true;
+            //}
 
             return result;
         }
 
+        private void kodeProdukTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if ((productIDExist()) &&  (originModuleID != globalConstants.EDIT_PRODUK))
+                errorLabel.Text = "PRODUK ID SUDAH ADA";
+            else
+                errorLabel.Text = "";
+        }
+
         private void kodeProdukTextBox_TextChanged(object sender, EventArgs e)
         {
-            string kodeProdukValue;
-
-            if (isLoading)
-                return;
-
-            if (kodeProdukTextBox.Text.IndexOf('\'') >= 0)
-                kodeProdukTextBox.Text = kodeProdukTextBox.Text.Remove(kodeProdukTextBox.Text.IndexOf('\''), 1);
-
-            kodeProdukValue = MySqlHelper.EscapeString(gUtil.allTrim(kodeProdukTextBox.Text));
-
-            if ((productIDExist(kodeProdukValue)) && (originModuleID != globalConstants.EDIT_PRODUK))
-            {
-                errorLabel.Text = "PRODUK ID SUDAH ADA";
-                kodeProdukTextBox.Focus();
-                //kodeProdukTextBox.BackColor = Color.Red;
-            }
-            else
-            {
-                errorLabel.Text = "";
-                //kodeProdukTextBox.BackColor = Color.White;
-            }
+//            string temp = kodeProdukTextBox.Text.Trim();
+//            kodeProdukTextBox.Text = temp;
         }
 
         private void resetbutton_Click(object sender, EventArgs e)
@@ -945,44 +1019,26 @@ namespace AlphaSoft
 
             selectedPhoto = "";
             panelImage.BackgroundImage = null;
-            
             errorLabel.Text = "";
-            
+            detailLokasiDataGridView.Rows.Clear();
             currentSelectedKategoriID.Clear();
             originModuleID = globalConstants.NEW_PRODUK;
             options = gUtil.INS;
-            kodeProdukTextBox.Enabled = true;
-        }
-
-        private void barcodeTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (isLoading)
-                return;
-
-            barcodeTextBox.Text = gUtil.allTrim(barcodeTextBox.Text);
-
-            if (barcodeTextBox.Text.Length > 0 && (barcodeExist()) && (originModuleID == globalConstants.NEW_PRODUK))
-            {
-                errorLabel.Text = "BARCODE SUDAH ADA";
-                barcodeTextBox.Focus();
-                barcodeTextBox.BackColor = Color.Red;
-            }
-            else
-            {
-                errorLabel.Text = "";
-                barcodeTextBox.BackColor = Color.White;
-            }
         }
 
         private void dataProdukDetailForm_Load(object sender, EventArgs e)
         {
             int userAccessOption = 0;
             Button[] arrButton = new Button[2];
+            detailLokasiDataGridView.EditingControlShowing += detailLokasiDataGridView_EditingControlShowing;
 
             errorLabel.Text = "";
 
             isLoading = true;
+
             loadProdukData();
+
+            loadProductLocationData();
 
             loadUnitIDInformation();
 
@@ -990,16 +1046,18 @@ namespace AlphaSoft
 
             loadKategoriIDInformation();
 
+            isLoading = false;
+
             switch (originModuleID)
             {
                 case globalConstants.NEW_PRODUK:
                 case globalConstants.STOK_PECAH_BARANG:
                     options = gUtil.INS;
-                    kodeProdukTextBox.Enabled = true;
+                    //kodeProdukTextBox.Enabled = true;
                     break;
                 case globalConstants.EDIT_PRODUK:
                     options = gUtil.UPD;
-                    kodeProdukTextBox.Enabled = false;
+                    //kodeProdukTextBox.Enabled = false;
                     break;
             }
             isLoading = false;
@@ -1025,7 +1083,19 @@ namespace AlphaSoft
             arrButton[1] = resetbutton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
-            gUtil.reArrangeTabOrder(this);
+            gUtil.reArrangeTabOrder(this);            
+        }
+
+        private void barcodeTextBox_Validated(object sender, EventArgs e)
+        {
+            if ((barcodeExist()) && (originModuleID == globalConstants.NEW_PRODUK))
+                errorLabel.Text = "BARCODE SUDAH ADA";
+            else
+                errorLabel.Text = "";
+        }
+
+        private void dataProdukDetailForm_Activated(object sender, EventArgs e)
+        {
         }
 
         private void namaProdukTextBox_TextChanged(object sender, EventArgs e)
@@ -1040,54 +1110,10 @@ namespace AlphaSoft
                 produkDescTextBox.Text = produkDescTextBox.Text.Remove(produkDescTextBox.Text.IndexOf('\''), 1);
         }
 
-        private void noRakKolomTextBox_Enter(object sender, EventArgs e)
-        {
-            BeginInvoke((Action)delegate
-            {
-                noRakKolomTextBox.SelectAll();
-            });
-            //noRakKolomTextBox.Focus();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            //PRINT BARCODE
-            string sqlCommandx = "SELECT PRODUCT_ID AS 'ID', CONCAT('*',PRODUCT_BARCODE,'*') AS 'BARCODE1', PRODUCT_BARCODE AS 'BARCODE2', PRODUCT_NAME AS 'NAME', PRODUCT_BRAND AS ' BRAND', PRODUCT_RETAIL_PRICE AS 'PRICE'" +
-                                    " FROM master_product" +
-                                    " WHERE PRODUCT_ID = '" + kodeProdukTextBox.Text + "'";
-            DS.writeXML(sqlCommandx, globalConstants.PrintBarcodeXML);
-            PrintBarcodeForm displayedForm = new PrintBarcodeForm();
-            displayedForm.ShowDialog(this);
-        }
-
-        private void dataProdukDetailForm_Activated(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
-        }
-
-        private void dataProdukDetailForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void produkJasaCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (produkJasaCheckbox.Checked)
-            {
-                // PRODUCT IS SERVICE
-                stokAwalTextBox.Enabled = false;
-                limitStokTextBox.Enabled = false;
-            }
-            else
-            {
-                stokAwalTextBox.Enabled = true;
-                limitStokTextBox.Enabled = true;
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            clearUpProductCategory();
+            currentSelectedKategoriID.Clear();
+            produkKategoriTextBox.Clear();
         }
     }
 }

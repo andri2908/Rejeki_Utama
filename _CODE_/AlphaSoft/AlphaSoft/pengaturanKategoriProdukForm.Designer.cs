@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,7 +62,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.0597F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.9403F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 360F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 361F));
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label6, 1, 1);
@@ -107,7 +108,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label6.Location = new System.Drawing.Point(204, 7);
+            this.label6.Location = new System.Drawing.Point(203, 7);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(14, 18);
             this.label6.TabIndex = 12;
@@ -119,7 +120,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label7.Location = new System.Drawing.Point(204, 42);
+            this.label7.Location = new System.Drawing.Point(203, 42);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(14, 18);
             this.label7.TabIndex = 13;
@@ -129,7 +130,7 @@
             // 
             this.namaKategoriTextbox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.namaKategoriTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.namaKategoriTextbox.Location = new System.Drawing.Point(231, 3);
+            this.namaKategoriTextbox.Location = new System.Drawing.Point(230, 3);
             this.namaKategoriTextbox.Name = "namaKategoriTextbox";
             this.namaKategoriTextbox.ReadOnly = true;
             this.namaKategoriTextbox.Size = new System.Drawing.Size(340, 27);
@@ -139,7 +140,7 @@
             // 
             this.deskripsiTextbox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.deskripsiTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deskripsiTextbox.Location = new System.Drawing.Point(231, 38);
+            this.deskripsiTextbox.Location = new System.Drawing.Point(230, 38);
             this.deskripsiTextbox.Name = "deskripsiTextbox";
             this.deskripsiTextbox.ReadOnly = true;
             this.deskripsiTextbox.Size = new System.Drawing.Size(210, 27);
@@ -164,6 +165,14 @@
             this.PRODUCT_ID,
             this.moduleID,
             this.hakAkses});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.pengaturanKategoriDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.pengaturanKategoriDataGridView.Location = new System.Drawing.Point(1, 219);
             this.pengaturanKategoriDataGridView.Name = "pengaturanKategoriDataGridView";
             this.pengaturanKategoriDataGridView.RowHeadersVisible = false;

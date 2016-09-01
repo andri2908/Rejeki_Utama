@@ -11,8 +11,6 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataTransaksiJurnalHarianDetailForm : Form
@@ -29,71 +27,16 @@ namespace AlphaSoft
         private int originModuleID = 0;
         private bool upd_mode = false;
         int selectedrowindex = -1;
-
-        dataNomorAkun browseNoAkunForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
-        private bool navKeyRegistered = false;
-
         public dataTransaksiJurnalHarianDetailForm()
         {
             InitializeComponent();
         }
-
         public dataTransaksiJurnalHarianDetailForm(int moduleID, int UserID)
         {
             selectedUserID = UserID;
             //originModuleID = moduleID;
 
             InitializeComponent();
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
         }
 
         private void loadtypeaccount()
@@ -162,18 +105,7 @@ namespace AlphaSoft
                 String pembayaran = carabayarcombobox.GetItemText(carabayarcombobox.SelectedItem);
                 String cabang = branchCombobox.GetItemText(branchCombobox.SelectedItem);
                 int pm_id = Int32.Parse(carabayarcombobox.SelectedValue.ToString());
-
                 int branch_id = 0;// Int32.Parse(branchCombobox.SelectedValue.ToString());
-
-                if (Int32.TryParse(gutil.allTrim(branchCombobox.SelectedValue.ToString()), out branch_id))
-                {
-                }
-                else
-                {
-                    // ASSUME GUDANG PUSAT
-                    branch_id = 0;
-                }
-
                 //tryparse
                 if (Double.TryParse(gutil.allTrim(NominalTextbox.Text), out nominalakun))
                 {
@@ -246,7 +178,6 @@ namespace AlphaSoft
         {
             selectedAccountID = AccountID;
             //kodeAkunTextbox.Text = selectedAccountID.ToString();
-            loadDeskripsi(selectedAccountID);
         }
 
         private void loadDeskripsi(int accountID)
@@ -311,11 +242,9 @@ namespace AlphaSoft
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            if (null == browseNoAkunForm || browseNoAkunForm.IsDisposed)
-                browseNoAkunForm = new dataNomorAkun(globalConstants.TAMBAH_HAPUS_JURNAL_HARIAN, this);
-
-            browseNoAkunForm.Show();
-            browseNoAkunForm.WindowState = FormWindowState.Normal;
+            dataNomorAkun displayedForm = new dataNomorAkun(globalConstants.TAMBAH_HAPUS_JURNAL_HARIAN, this);
+            displayedForm.ShowDialog(this);
+            loadDeskripsi(selectedAccountID);
         }
 
         private void dataTransaksiJurnalHarianDetailForm_Load(object sender, EventArgs e)
@@ -333,7 +262,6 @@ namespace AlphaSoft
             errorLabel.Text = "";
             //TransaksiAccountGridView.Rows.Clear();
             //loadTransaksi();
-            registerGlobalHotkey();
         }
 
         private bool saveDataTransaction()
@@ -345,9 +273,8 @@ namespace AlphaSoft
 
             int Account_ID = 0;
             String TglTrans = "";
-            String timeTrans = "";
             Double NominalAkun = 0;
-            int branch_id = getBranchID();
+            int branch_id = 0;// getBranchID();
             String deskripsi = "";
             int user_id = 0;
             int pm_id = 0;
@@ -357,11 +284,7 @@ namespace AlphaSoft
 
             for (int rows = 0; rows < TransaksiAccountGridView.Rows.Count; rows++)
             {
-                TglTrans = String.Format(culture, "{0:dd-MM-yyyy}", TransaksiAccountGridView.Rows[rows].Cells[1].Value.ToString());
-                timeTrans = gutil.getCustomStringFormatTime(DateTime.Now);
-
-                TglTrans = TglTrans + " " + timeTrans;
-
+                TglTrans = String.Format(culture, "{0:dd-MM-yyyy HH:mm}", TransaksiAccountGridView.Rows[rows].Cells[1].Value.ToString());
                 Account_ID = Int32.Parse(TransaksiAccountGridView.Rows[rows].Cells[2].Value.ToString());
                 pm_id = Int32.Parse(TransaksiAccountGridView.Rows[rows].Cells[6].Value.ToString());
                 Double debet, credit;
@@ -669,52 +592,23 @@ namespace AlphaSoft
                 TransaksiAccountGridView.Refresh();
             }
         }
-      
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void NominalTextbox_Enter(object sender, EventArgs e)
         {
             BeginInvoke((Action)delegate
             {
                 NominalTextbox.SelectAll();
             });
-        }
-
-        private void TransaksiAccountGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (
-                 (TransaksiAccountGridView.Columns[e.ColumnIndex].Name == "debet" ||
-                 TransaksiAccountGridView.Columns[e.ColumnIndex].Name == "kredit" )
-                && e.RowIndex != this.TransaksiAccountGridView.NewRowIndex && null != e.Value)
-            {
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-            }
-        }
-
-        private void dataTransaksiJurnalHarianDetailForm_Deactivate(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void TransaksiAccountGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void TransaksiAccountGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            unregisterGlobalHotkey();
-        }
-
-        private void genericControl_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
         }
     }
 }

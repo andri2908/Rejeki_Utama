@@ -99,10 +99,9 @@
             this.dataSupplierDataGridView.RowHeadersVisible = false;
             this.dataSupplierDataGridView.Size = new System.Drawing.Size(438, 480);
             this.dataSupplierDataGridView.TabIndex = 13;
+            this.dataSupplierDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataSupplierDataGridView_CellContentClick);
             this.dataSupplierDataGridView.DoubleClick += new System.EventHandler(this.dataSupplierDataGridView_DoubleClick);
-            this.dataSupplierDataGridView.Enter += new System.EventHandler(this.dataSupplierDataGridView_Enter);
             this.dataSupplierDataGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataSupplierDataGridView_KeyDown);
-            this.dataSupplierDataGridView.Leave += new System.EventHandler(this.dataSupplierDataGridView_Leave);
             // 
             // suppliernonactiveoption
             // 
@@ -134,7 +133,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NAMA SUPPLIER";
             this.Activated += new System.EventHandler(this.dataSupplierForm_Activated);
-            this.Deactivate += new System.EventHandler(this.dataSupplierForm_Deactivate);
             this.Load += new System.EventHandler(this.dataSupplierForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataSupplierDataGridView)).EndInit();
             this.ResumeLayout(false);

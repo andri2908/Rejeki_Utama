@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AlphaSoft {
+namespace RoyalPetz_ADMIN {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace AlphaSoft {
         
         public override string FullResourceName {
             get {
-                return "AlphaSoft.ReportFinanceIn.rpt";
+                return "RoyalPetz_ADMIN.ReportFinanceIn.rpt";
             }
             set {
                 // Do nothing

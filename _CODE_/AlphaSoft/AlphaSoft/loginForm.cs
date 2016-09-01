@@ -256,6 +256,7 @@ namespace AlphaSoft
             {
                 loginButton.PerformClick();
             }
+
         }
 
         private void resetbutton_Click(object sender, EventArgs e)

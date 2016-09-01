@@ -11,8 +11,6 @@ using System.IO;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class SetApplicationForm : Form
@@ -24,54 +22,9 @@ namespace AlphaSoft
         private int options = 0;
         private Data_Access DS = new Data_Access();
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
         public SetApplicationForm()
         {
             InitializeComponent();
-        }
-
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
         }
 
         private void serverIPRadioButton_Click(object sender, EventArgs e)
@@ -129,7 +82,7 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
             //1 load default 2 setting user
-            using (rdr = DS.getData("SELECT IFNULL(BRANCH_ID,0) AS 'BRANCH_ID', IFNULL(HQ_IP4,'') AS 'IP', IFNULL(STORE_NAME,'') AS 'NAME', IFNULL(STORE_ADDRESS,'') AS 'ADDRESS', IFNULL(STORE_PHONE,'') AS 'PHONE', IFNULL(STORE_EMAIL,'') AS 'EMAIL' FROM SYS_CONFIG WHERE ID =  " + opt))
+            using (rdr = DS.getData("SELECT IFNULL(LOCATION_ID, 0) AS 'LOCATION_ID', IFNULL(BRANCH_ID,0) AS 'BRANCH_ID', IFNULL(HQ_IP4,'') AS 'IP', IFNULL(STORE_NAME,'') AS 'NAME', IFNULL(STORE_ADDRESS,'') AS 'ADDRESS', IFNULL(STORE_PHONE,'') AS 'PHONE', IFNULL(STORE_EMAIL,'') AS 'EMAIL' FROM SYS_CONFIG WHERE ID =  " + opt))
             {
                 if (rdr.HasRows)
                 {                    
@@ -169,7 +122,11 @@ namespace AlphaSoft
                         if (!String.IsNullOrEmpty(rdr.GetString("EMAIL")))
                         {
                             EmailTextbox.Text = rdr.GetString("EMAIL");
-                        }                                  
+                        }
+                        if (!String.IsNullOrEmpty(rdr.GetString("LOCATION_ID")))
+                        {
+                            locationIDTextBox.Text = rdr.GetString("LOCATION_ID");
+                        }
                     }
                 }
             }
@@ -301,7 +258,6 @@ namespace AlphaSoft
         private void setDatabaseLocationForm_Activated(object sender, EventArgs e)
         {
             //if need something
-            registerGlobalHotkey();
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -369,6 +325,7 @@ namespace AlphaSoft
             MySqlException internalEX = null;
             string HQIP = HQIP1.Text.Trim() + "." + HQIP2.Text.Trim() + "." + HQIP3.Text.Trim() + "." + HQIP4.Text.Trim(); ;
             String branchID = BranchIDTextbox.Text;
+            String locationID = locationIDTextBox.Text;
             //String no_faktur = "";
             String nama_toko = MySqlHelper.EscapeString(NamaTokoTextbox.Text);
             String alamat_toko = MySqlHelper.EscapeString(AlamatTextbox.Text);
@@ -384,8 +341,8 @@ namespace AlphaSoft
                 switch (mode)
                 {
                     case 1:
-                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL) " +
-                                            "VALUES (2, '', '" + branchID + "', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "')";
+                        sqlCommand = "INSERT INTO SYS_CONFIG (ID, NO_FAKTUR, BRANCH_ID, LOCATION_ID, HQ_IP4, STORE_NAME, STORE_ADDRESS, STORE_PHONE, STORE_EMAIL) " +
+                                            "VALUES (2, '', '" + branchID + "', '" + locationID +"', '" + HQIP + "', '" + nama_toko + "', '" + alamat_toko + "', '" + telepon_toko + "', '" + email_toko + "')";
                         options = gutil.INS;
                         gutil.saveSystemDebugLog(0, "INSERT DATA ID 2 TO SYS_CONFIG");
 
@@ -393,6 +350,7 @@ namespace AlphaSoft
                     case 2:
                         sqlCommand = "UPDATE SYS_CONFIG SET " +
                                             "BRANCH_ID = " + branchID + ", " +
+                                            "LOCATION_ID = " + locationID + ", " +
                                             "HQ_IP4 = '" + HQIP + "', " +
                                             "STORE_NAME = '" + nama_toko + "', " +
                                             "STORE_ADDRESS = '" + alamat_toko + "', " +
@@ -604,9 +562,12 @@ namespace AlphaSoft
             });
         }
 
-        private void SetApplicationForm_Deactivate(object sender, EventArgs e)
+        private void locationID_Enter(object sender, EventArgs e)
         {
-            unregisterGlobalHotkey();
+            BeginInvoke((Action)delegate
+            {
+                BranchIDTextbox.SelectAll();
+            });
         }
 
         private void ip1Textbox_KeyPress(object sender, KeyPressEventArgs e)

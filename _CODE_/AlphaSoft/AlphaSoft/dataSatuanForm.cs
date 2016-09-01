@@ -11,8 +11,6 @@ using System.Windows.Forms;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataSatuanForm : Form
@@ -24,13 +22,6 @@ namespace AlphaSoft
         private dataProdukDetailForm parentForm;
 
         Data_Access DS = new Data_Access();
-
-        dataSatuanDetailForm displaySatuanDetailForm = null;
-        dataSatuanDetailForm editSatuanDetailForm = null;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-        private bool navKeyRegistered = false;
 
         public dataSatuanForm()
         {
@@ -44,59 +35,10 @@ namespace AlphaSoft
             parentForm = thisForm;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
-        }
-
         private void newButton_Click(object sender, EventArgs e)
         {
-            if (null == displaySatuanDetailForm || displaySatuanDetailForm.IsDisposed)
-                    displaySatuanDetailForm = new dataSatuanDetailForm(globalConstants.NEW_UNIT);
-
-            displaySatuanDetailForm.Show();
-            displaySatuanDetailForm.WindowState = FormWindowState.Normal;
+            dataSatuanDetailForm displayedForm = new dataSatuanDetailForm(globalConstants.NEW_UNIT);
+            displayedForm.ShowDialog(this);
         }
 
         private void loadUnitData()
@@ -142,8 +84,6 @@ namespace AlphaSoft
             {
                 loadUnitData();
             }
-
-            registerGlobalHotkey();
         }
         
         private void unitNameTextBox_TextChanged(object sender, EventArgs e)
@@ -168,12 +108,9 @@ namespace AlphaSoft
                     this.Close();
                     break;
 
-                default:           
-                    if (null == editSatuanDetailForm || editSatuanDetailForm.IsDisposed)
-                            editSatuanDetailForm = new dataSatuanDetailForm(globalConstants.EDIT_UNIT, selectedUnitID);
-
-                    editSatuanDetailForm.Show();
-                    editSatuanDetailForm.WindowState = FormWindowState.Normal;
+                default:                    
+                    dataSatuanDetailForm displayedForm = new dataSatuanDetailForm(globalConstants.EDIT_UNIT, selectedUnitID);
+                    displayedForm.ShowDialog(this);
                     break;
             }
         }
@@ -196,6 +133,7 @@ namespace AlphaSoft
         private void dataSatuanForm_Load(object sender, EventArgs e)
         {
             gutil.reArrangeTabOrder(this);
+            unitNameTextBox.Select();
         }
 
         private void dataUnitGridView_KeyDown(object sender, KeyEventArgs e)
@@ -203,24 +141,6 @@ namespace AlphaSoft
             if (dataUnitGridView.Rows.Count > 0)
                 if (e.KeyCode == Keys.Enter)
                     displaySpecificForm();
-        }
-
-        private void dataSatuanForm_Deactivate(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataUnitGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataUnitGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
         }
     }
 }

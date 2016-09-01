@@ -41,7 +41,7 @@ namespace AlphaSoft {
         
         public override string FullResourceName {
             get {
-                return "AlphaSoft.ReportSalesReturn.rpt";
+                return "BinangTimur.ReportSalesReturn.rpt";
             }
             set {
                 // Do nothing

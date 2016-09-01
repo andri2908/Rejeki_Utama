@@ -12,8 +12,6 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Globalization;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataSalesInvoice : Form
@@ -25,59 +23,15 @@ namespace AlphaSoft
 
         private int originModuleID = 0;
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-        private bool navKeyRegistered = false;
-
         public dataSalesInvoice()
         {
             InitializeComponent();
         }
 
-        private void captureAll(Keys key)
+        public dataSalesInvoice(int moduleID)
         {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
+            InitializeComponent();
+            originModuleID = moduleID;
         }
 
         private void fillInCustomerCombo()
@@ -116,29 +70,61 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-           
-           sqlClause1 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
-                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
-                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID";
+            if (originModuleID == globalConstants.SALES_QUOTATION)
+            {
+                sqlClause1  = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', '')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                                       "FROM SALES_QUOTATION_HEADER SQ, MASTER_CUSTOMER MC " +
+                                       "WHERE SQ.CUSTOMER_ID = MC.CUSTOMER_ID";
 
-           sqlClause2 = "SELECT ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                sqlClause2 = "SELECT IF(SQ_APPROVED = 1, 'APPROVED', IF(SQ_APPROVED = -1, 'REJECTED', '')) AS STATUS, ID, SQ_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SQ_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SQ_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL', SQ_APPROVED " +
+                                       "FROM SALES_QUOTATION_HEADER SQ " +
+                                       "WHERE SQ.CUSTOMER_ID = 0";
+            }
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
+            {
+                sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+
+                sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
                                        "FROM SALES_HEADER SH " +
-                                       "WHERE SH.CUSTOMER_ID = 0";
-           
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0 AND SH.SALES_ACTIVE = 1";
+            }
+            else if (originModuleID == globalConstants.DELIVERY_ORDER)
+            {
+                sqlClause1 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH, MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0";
+
+                sqlClause2 = "SELECT REV_NO, ID, SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE', (SALES_TOTAL - SALES_DISCOUNT_FINAL) AS 'TOTAL' " +
+                                       "FROM SALES_HEADER SH " +
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
+            }
+
             if (!showAllCheckBox.Checked)
             {
                 if (noInvoiceTextBox.Text.Length > 0)
                 {
+                    noInvoiceParam = MySqlHelper.EscapeString(noInvoiceTextBox.Text);
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                         whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
                 }
 
                 dateFrom = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_1.Value));
                 dateTo = String.Format(culture, "{0:yyyyMMdd}", Convert.ToDateTime(PODtPicker_2.Value));
 
-                whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
+                if (originModuleID == globalConstants.SALES_QUOTATION)
+                    whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                    whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
@@ -159,7 +145,13 @@ namespace AlphaSoft
                     dt.Load(rdr);
                     dataPenerimaanBarang.DataSource = dt;
                     dataPenerimaanBarang.Columns["ID"].Visible = false;
-                    
+
+                    if (originModuleID == globalConstants.SALES_QUOTATION)
+                        dataPenerimaanBarang.Columns["SQ_APPROVED"].Visible = false;
+
+                    if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                        dataPenerimaanBarang.Columns["REV_NO"].Visible = false;
+
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["CUSTOMER"].Width = 200;
@@ -173,16 +165,29 @@ namespace AlphaSoft
         private void dataSalesInvoice_Load(object sender, EventArgs e)
         {
             int userAccessOption = 0;
-            Button[] arrButton = new Button[1];
+            Button[] arrButton = new Button[2];
 
             PODtPicker_1.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             PODtPicker_2.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             fillInCustomerCombo();
 
+            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_SALES_QUOTATION, gUtil.getUserGroupID());
+
+            if (userAccessOption == 1)
+                newButton.Visible = true;
+            else
+                newButton.Visible = false;
+
+            if (originModuleID == globalConstants.DELIVERY_ORDER)
+                newButton.Visible = false;
+
             arrButton[0] = displayButton;
+            arrButton[1] = newButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
+
+            noInvoiceTextBox.Select();
         }
 
         private void displayButton_Click(object sender, EventArgs e)
@@ -195,10 +200,127 @@ namespace AlphaSoft
             customerID = Convert.ToInt32(customerHiddenCombo.Items[customerCombo.SelectedIndex].ToString());
         }
 
+        private void printOutDeliveryOrder(string SONo, string revNo, int salesActiveStatus)
+        {
+            string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
+                                        "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
+                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
+
+            DS.writeXML(sqlCommandx, globalConstants.deliveryOrderXML);
+            deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
+            displayForm.ShowDialog(this);
+        }
+
+        private bool processSalesOrderToDO(string noInvoice, string revNo, int salesActiveStatus)
+        {
+            bool result = false;
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+            int locationID = 0;
+            MySqlDataReader rdr;
+            List<string> productIDList = new List<string>();
+            List<string> productIDQty = new List<string>();
+
+            if (salesActiveStatus == 0)
+                return true;
+
+            DS.beginTransaction();
+
+            try
+            {
+                DS.mySqlConnect();
+
+                // UPDATE SALES HEADER SET SALES ACTIVE TO 0
+                sqlCommand = "UPDATE SALES_HEADER SET SALES_ACTIVE = 0 WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
+                // GET LIST OF PRODUCT ID
+                productIDList.Clear();
+                productIDQty.Clear();
+
+                sqlCommand = "SELECT PRODUCT_ID, PRODUCT_QTY FROM SALES_DETAIL WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            productIDList.Add(rdr.GetString("PRODUCT_ID"));
+                            productIDQty.Add(rdr.GetString("PRODUCT_QTY"));
+                        }
+                    }
+                }
+                rdr.Close();
+
+                locationID = gUtil.loadlocationID(2);
+
+                for (int i =0;i<productIDList.Count;i++)
+                {
+                    // REDUCE STOCK AT MASTER STOCK
+                    sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    // REDUCE STOCK AT PRODUCT LOCATION
+                    sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "' AND LOCATION_ID = " + locationID;
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+
+                DS.commit();
+                result = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
+        private void displaySpecificForm(string noInvoice, string revNo = "")
+        {
+            int salesActiveStatus = 0;
+            string dialogMessage = "";
+            switch(originModuleID)
+            {
+                case globalConstants.SALES_QUOTATION:
+                        cashierForm displayedForm = new cashierForm(globalConstants.EDIT_SALES_QUOTATION, noInvoice);
+                        displayedForm.ShowDialog(this);
+                    break;
+                case globalConstants.SALES_ORDER_REVISION:
+                        cashierForm cashierFormDisplay= new cashierForm(noInvoice, revNo);
+                        cashierFormDisplay.ShowDialog(this);
+                    break;
+                case globalConstants.DELIVERY_ORDER:
+                    salesActiveStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT SALES_ACTIVE FROM SALES_HEADER WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'"));
+                    if (salesActiveStatus == 1)
+                    {
+                        dialogMessage = "TERBITKAN DELIVERY ORDER ?";
+                    }
+                    else
+                    {
+                        dialogMessage = "TERBITKAN COPY DELIVERY ORDER ?";
+                    }
+
+                    if (DialogResult.Yes == MessageBox.Show(dialogMessage, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+                        // UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
+                        if (processSalesOrderToDO(noInvoice, revNo, salesActiveStatus))
+                            printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
+                    }
+                    break;
+
+            }
+        }
+
         private void dataPenerimaanBarang_DoubleClick(object sender, EventArgs e)
         {
             string noInvoice = "";
-            
+            string revNo = "";
+            string status = "";
+
             if (dataPenerimaanBarang.Rows.Count <= 0)
                 return;
 
@@ -206,60 +328,59 @@ namespace AlphaSoft
             DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
             noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
-            cashierForm cashierFormDisplay = new cashierForm(noInvoice);
-            cashierFormDisplay.ShowDialog(this);
+            if (originModuleID == globalConstants.SALES_QUOTATION)
+            {
+                status = selectedRow.Cells["SQ_APPROVED"].Value.ToString();
+
+                if (status == "0")
+                    displaySpecificForm(noInvoice);
+            }
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+            {
+                revNo = selectedRow.Cells["REV_NO"].Value.ToString();
+                displaySpecificForm(noInvoice, revNo);
+            }
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
         {
+            string noInvoice = "";
+            string status = "";
+            string revNo = "";
+
             if (e.KeyCode == Keys.Enter)
             {
-                string noInvoice = "";
-
-                if (dataPenerimaanBarang.Rows.Count <= 0)
-                    return;
-
                 int rowSelectedIndex = (dataPenerimaanBarang.SelectedCells[0].RowIndex);
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
-                cashierForm cashierFormDisplay = new cashierForm(noInvoice);
-                cashierFormDisplay.ShowDialog(this);
+                if (originModuleID == globalConstants.SALES_QUOTATION)
+                {
+                    status = selectedRow.Cells["SQ_APPROVED"].Value.ToString();
+
+                    if (status == "0")
+                        displaySpecificForm(noInvoice);
+                }
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                {
+                    revNo = selectedRow.Cells["REV_NO"].Value.ToString();
+                    displaySpecificForm(noInvoice, revNo);
+                }
             }
         }
 
-        private void genericControl_Leave(object sender, EventArgs e)
+        private void newButton_Click(object sender, EventArgs e)
         {
-            registerGlobalHotkey();
-        }
-
-        private void genericControl_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataSalesInvoice_Activated(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
-        }
-
-        private void dataSalesInvoice_Deactivate(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataPenerimaanBarang_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterGlobalHotkey();
-        }
-
-        private void dataPenerimaanBarang_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerGlobalHotkey();
+            if (originModuleID == globalConstants.SALES_QUOTATION)
+            { 
+                cashierForm displayedForm = new cashierForm(originModuleID, true);
+                displayedForm.ShowDialog(this);
+            }
+            else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
+            {
+                cashierForm cashierDisplayForm = new cashierForm(1);
+                cashierDisplayForm.ShowDialog(this);
+            }
         }
     }
 }

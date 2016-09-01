@@ -31,34 +31,20 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_F8;
         private Hotkeys.GlobalHotkey ghk_F9;
         private Hotkeys.GlobalHotkey ghk_F11;
-        private Hotkeys.GlobalHotkey ghk_DEL;
 
         private Hotkeys.GlobalHotkey ghk_CTRL_DEL;
         private Hotkeys.GlobalHotkey ghk_CTRL_ENTER;
 
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
-
         Button[] arrButton = new Button[3];
+        int locationID = 0;
 
         private List<string> detailRequestQty = new List<string>();
         private List<string> detailHpp = new List<string>();
-        private List<string> subtotalList = new List<string>();
-
-        private bool forceUpOneLevel = false;
-        private bool navKeyRegistered = false;
-        private bool delKeyRegistered = false;
-
         string previousInput = "";
 
         globalUtilities gUtil = new globalUtilities();
         Data_Access DS = new Data_Access();
         private CultureInfo culture = new CultureInfo("id-ID");
-
-        dataPOForm browsePOForm = null;
-        dataMutasiBarangForm browseMutasiForm = null;
-        barcodeForm displayBarcodeForm = null;
-        dataProdukForm browseProdukForm = null;
 
         public penerimaanBarangForm()
         {
@@ -76,20 +62,13 @@ namespace AlphaSoft
 
                 case Keys.F2:
                     if (detailGridView.ReadOnly == false)
-                    {
-                        PRDtPicker.Focus();
+                    { 
+                        barcodeForm displayBarcodeForm = new barcodeForm(this, globalConstants.PENERIMAAN_BARANG);
 
-                        if (null == displayBarcodeForm || displayBarcodeForm.IsDisposed)
-                        { 
-                            displayBarcodeForm = new barcodeForm(this, globalConstants.PENERIMAAN_BARANG);
+                        displayBarcodeForm.Top = this.Top + 5;
+                        displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
 
-                            displayBarcodeForm.Top = this.Top + 5;
-                            displayBarcodeForm.Left = this.Left + 5;//(Screen.PrimaryScreen.Bounds.Width / 2) - (displayBarcodeForm.Width / 2);
-                        }
-
-                        displayBarcodeForm.Show();
-                        displayBarcodeForm.WindowState = FormWindowState.Normal;
-                        //detailGridView.Focus();
+                        displayBarcodeForm.ShowDialog(this);
                     }
                     break;
 
@@ -108,33 +87,10 @@ namespace AlphaSoft
 
                 case Keys.F11:
                     if (detailGridView.ReadOnly == false)
-                    {
-                        PRDtPicker.Focus();
-                        if (null == browseProdukForm || browseProdukForm.IsDisposed)
-                                browseProdukForm = new dataProdukForm(globalConstants.PENERIMAAN_BARANG, this);
-
-                        browseProdukForm.Show();
-                        browseProdukForm.WindowState = FormWindowState.Normal;
-                        //detailGridView.Focus();
+                    { 
+                        dataProdukForm displayProdukForm = new dataProdukForm(globalConstants.PENERIMAAN_BARANG, this);
+                        displayProdukForm.ShowDialog(this);
                     }
-                    break;
-
-                case Keys.Delete:
-                    if (detailGridView.Rows.Count > 1)
-                        if (detailGridView.ReadOnly == false)
-                                if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
-                                {
-                                    deleteCurrentRow();
-                                    calculateTotal();
-                                }
-                    break;
-
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
                     break;
             }
         }
@@ -185,8 +141,8 @@ namespace AlphaSoft
             ghk_F1 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F1, this);
             ghk_F1.Register();
 
-            ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
-            ghk_F2.Register();
+            //ghk_F2 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F2, this);
+            //ghk_F2.Register();
 
             ghk_F8 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F8, this);
             ghk_F8.Register();
@@ -197,65 +153,25 @@ namespace AlphaSoft
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
 
-            //ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            //ghk_DEL.Register();
 
-            //ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
-            //ghk_CTRL_DEL.Register();
+            ghk_CTRL_DEL = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Delete, this);
+            ghk_CTRL_DEL.Register();
 
             ghk_CTRL_ENTER = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
             ghk_CTRL_ENTER.Register();
 
-            registerNavigationKey();
         }
 
         private void unregisterGlobalHotkey()
         {
             ghk_F1.Unregister();
-            ghk_F2.Unregister();
+            //ghk_F2.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
             ghk_F11.Unregister();
-            //ghk_DEL.Unregister();
 
-            // ghk_CTRL_DEL.Unregister();
+            ghk_CTRL_DEL.Unregister();
             ghk_CTRL_ENTER.Unregister();
-
-            unregisterNavigationKey();
-        }
-
-        private void registerNavigationKey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-
-            navKeyRegistered = true;
-        }
-
-        private void unregisterNavigationKey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-
-            navKeyRegistered = false;
-        }
-
-        private void registerDelKey()
-        {
-            ghk_DEL = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Delete, this);
-            ghk_DEL.Register();
-
-            delKeyRegistered = true;
-        }
-
-        private void unregisterDelKey()
-        {
-            ghk_DEL.Unregister();
-
-            delKeyRegistered = false;
         }
 
         public void addNewRow()
@@ -265,7 +181,7 @@ namespace AlphaSoft
 
             for (int i=0;i<detailGridView.Rows.Count && allowToAdd;i++)
             {
-                if (null != detailGridView.Rows[i].Cells["productID"].Value )
+                if (null != detailGridView.Rows[i].Cells["productID"].Value)
                 {
                     if (!gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString()))
                     {
@@ -313,9 +229,7 @@ namespace AlphaSoft
             // CHECK FOR EXISTING SELECTED ITEM
             for (i = 0; i < detailGridView.Rows.Count && !found && !foundEmptyRow; i++)
             {
-                if (null != detailGridView.Rows[i].Cells["productName"].Value &&
-                    null != detailGridView.Rows[i].Cells["productID"].Value &&
-                    gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString()))
+                if (null != detailGridView.Rows[i].Cells["productName"].Value)
                 { 
                     if (detailGridView.Rows[i].Cells["productName"].Value.ToString() == productName)
                     {
@@ -336,7 +250,6 @@ namespace AlphaSoft
                 {
                     detailRequestQty[emptyRowIndex] = "0";
                     detailHpp[emptyRowIndex] = "0";
-                    subtotalList[emptyRowIndex] = "0";
                     rowSelectedIndex = emptyRowIndex;
                 }
                 else
@@ -344,7 +257,6 @@ namespace AlphaSoft
                     detailGridView.Rows.Add();
                     detailRequestQty.Add("0");
                     detailHpp.Add("0");
-                    subtotalList.Add("0");
                     rowSelectedIndex = detailGridView.Rows.Count - 1;
                 }
             }
@@ -366,11 +278,10 @@ namespace AlphaSoft
                 detailRequestQty[rowSelectedIndex] = currQty.ToString();
             }
 
-            hpp = Convert.ToDouble(detailHpp[rowSelectedIndex]);
+            hpp = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
 
             subTotal = Math.Round((hpp * currQty), 2);
-            selectedRow.Cells["subtotal"].Value = subTotal.ToString();
-            subtotalList[rowSelectedIndex] = subTotal.ToString();
+            selectedRow.Cells["subtotal"].Value = subTotal;
 
             calculateTotal();
 
@@ -399,12 +310,6 @@ namespace AlphaSoft
             durationTextBox.Visible = true;
             label1.Visible = true;
             isLoading = false;
-
-            if (selectedInvoice.Length > 0)
-            {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PO INVOICE TO RECEIVE [" + selectedInvoice + "]");
-                supplierCombo.Enabled = false;
-            }
         }
 
         public void setSelectedMutasi(string mutasiNo)
@@ -430,12 +335,6 @@ namespace AlphaSoft
             durationTextBox.Visible = false;
             label1.Visible = false;
             isLoading = false;
-
-            if (selectedMutasi.Length > 0)
-            {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "NO MUTASI TO RECEIVE [" + selectedMutasi + "]");
-                supplierCombo.Enabled = false;
-            }
         }
 
         private void initializeScreen()
@@ -536,7 +435,6 @@ namespace AlphaSoft
         {
             MySqlDataReader rdr;
             string sqlCommand = "";
-            double tempVal = 0;
 
             switch (originModuleId)
             {
@@ -551,9 +449,8 @@ namespace AlphaSoft
                             {
                                 detailGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PM_SUBTOTAL"));
 
-                                detailRequestQty[detailGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_QTY");
-                                detailHpp[detailGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_BASE_PRICE");
-                                subtotalList[detailGridView.Rows.Count - 2] = rdr.GetString("PM_SUBTOTAL");
+                                detailRequestQty.Add(rdr.GetString("PRODUCT_QTY"));
+                                detailHpp.Add(rdr.GetString("PRODUCT_BASE_PRICE"));
                             }
                         }
                     }
@@ -570,9 +467,8 @@ namespace AlphaSoft
                             {
                                 detailGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PRODUCT_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PURCHASE_SUBTOTAL"));
 
-                                detailRequestQty[detailGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_QTY");
-                                detailHpp[detailGridView.Rows.Count - 2] = rdr.GetString("PRODUCT_PRICE");
-                                subtotalList[detailGridView.Rows.Count - 2] = rdr.GetString("PURCHASE_SUBTOTAL");
+                                detailRequestQty.Add(rdr.GetString("PRODUCT_QTY"));
+                                detailHpp.Add(rdr.GetString("PRODUCT_PRICE"));
                             }
                         }
                     }
@@ -642,11 +538,11 @@ namespace AlphaSoft
             productID_textBox.DefaultCellStyle.BackColor = Color.LightBlue;
             detailGridView.Columns.Add(productID_textBox);
 
-            namaProduct_textBox.Name = "productName";
-            namaProduct_textBox.HeaderText = "NAMA PRODUK";
-            namaProduct_textBox.ReadOnly = true;
-            namaProduct_textBox.Width = 200;
-            detailGridView.Columns.Add(namaProduct_textBox);
+                namaProduct_textBox.Name = "productName";
+                namaProduct_textBox.HeaderText = "NAMA PRODUK";
+                namaProduct_textBox.ReadOnly = true;
+                namaProduct_textBox.Width = 200;
+                detailGridView.Columns.Add(namaProduct_textBox);
 
 
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
@@ -661,7 +557,6 @@ namespace AlphaSoft
             {
                 detailRequestQty.Add("0");
                 detailHpp.Add("0");
-                subtotalList.Add("0");
             }
 
             hpp_textBox.Name = "hpp";
@@ -688,6 +583,13 @@ namespace AlphaSoft
             errorLabel.Text = "";
             PRDtPicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
             int userAccessOption = 0;
+
+            locationID = gUtil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
 
             //initializeScreen();
             labelTotal.Visible = false;
@@ -719,11 +621,6 @@ namespace AlphaSoft
             
             gUtil.reArrangeTabOrder(this);
 
-            detailHpp.Add("0");
-            detailRequestQty.Add("0");
-            subtotalList.Add("0");
-
-            prInvoiceTextBox.Select();
         }
 
         private double getHPPValue(string productID)
@@ -762,7 +659,6 @@ namespace AlphaSoft
 
             rdr.Close();
         }
-
         private void detailGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if ((detailGridView.CurrentCell.OwningColumn.Name == "hpp" || detailGridView.CurrentCell.OwningColumn.Name == "qtyReceived") && e.Control is TextBox)
@@ -771,7 +667,6 @@ namespace AlphaSoft
                 textBox.TextChanged += TextBox_TextChanged;
                 textBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
-                textBox.KeyUp += Textbox_KeyUp; 
             }
 
             if ((detailGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
@@ -793,7 +688,6 @@ namespace AlphaSoft
             selectedRow.Cells["hpp"].Value = "0";
             detailHpp[rowSelectedIndex] = "0";
             selectedRow.Cells["subtotal"].Value = "0";
-            subtotalList[rowSelectedIndex] = "0";
             if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
             { 
                 selectedRow.Cells["qtyRequest"].Value = "0";
@@ -845,14 +739,13 @@ namespace AlphaSoft
 
                 hpp = getHPPValue(selectedProductID);
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [" + hpp + "]");
-                selectedRow.Cells["hpp"].Value = hpp;
+                selectedRow.Cells["hpp"].Value = hpp.ToString();
                 detailHpp[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qtyReceived"].Value = 0;
                 detailRequestQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subtotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total");
 
@@ -883,22 +776,11 @@ namespace AlphaSoft
                 {
                     updateSomeRowContents(selectedRow, rowSelectedIndex, currentValue);
                     detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
-                    forceUpOneLevel = true;
                 }
                 else
                 {
                     clearUpSomeRowContents(selectedRow, rowSelectedIndex);
                 }
-            }
-        }
-
-        private void Textbox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (forceUpOneLevel)
-            {
-                int pos = detailGridView.CurrentCell.RowIndex;
-                detailGridView.CurrentCell = detailGridView.Rows[pos - 1].Cells["qty"];
-                forceUpOneLevel = false;
             }
         }
 
@@ -928,7 +810,6 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subTotal"].Value = 0;
-                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailRequestQty.Count >= rowSelectedIndex + 1)
                     if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
@@ -1002,19 +883,18 @@ namespace AlphaSoft
                 {
                     //changes on hpp
                     hppValue = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
-                    productQty = Convert.ToDouble(detailRequestQty[rowSelectedIndex]);
+                    productQty = Convert.ToDouble(selectedRow.Cells["qtyReceived"].Value);
                 }
                 else
                 {
                     //changes on qty
                     productQty = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
-                    hppValue = Convert.ToDouble(detailHpp[rowSelectedIndex]);
+                    hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
                 }
 
                 subTotal = Math.Round((hppValue * productQty), 2);
 
                 selectedRow.Cells["subtotal"].Value = subTotal;
-                subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                 calculateTotal();
             }
@@ -1030,13 +910,13 @@ namespace AlphaSoft
         private void calculateTotal()
         {
             double total = 0;
-            for (int i =0;i<detailGridView.Rows.Count-1;i++)
+            for (int i =0;i<detailGridView.Rows.Count;i++)
             {
-                total = total + Convert.ToDouble(subtotalList[i]);
+                total = total + Convert.ToDouble(detailGridView.Rows[i].Cells["subtotal"].Value);
             }
 
             globalTotalValue = total;
-            labelAcceptValue.Text = globalTotalValue.ToString("C0", culture);
+            labelAcceptValue.Text = globalTotalValue.ToString("c", culture);
         }
 
         private bool isNoPRExist()
@@ -1082,22 +962,22 @@ namespace AlphaSoft
 
             if (detailGridView.Rows.Count <= 0)
             {
-                errorLabel.Text = "TIDAK ADA PRODUCT YANG DITERIMA";
+                errorLabel.Text = "TIDAK ADA PRODUK YANG DITERIMA";
                 return false;
             }
 
-            //for (i = 0; i < detailGridView.Rows.Count && dataExist; i ++)
-            //{
-            //    if (null != detailGridView.Rows[i].Cells["productID"].Value)
-            //        dataExist = gUtil.isProductIDExist(detailGridView.Rows[i].Cells["productID"].Value.ToString());
-            //    else
-            //        dataExist = false;
-            //}
-            //if (!dataExist)
-            //{
-            //    errorLabel.Text = "PRODUCT ID PADA BARIS ["+ i +"] INVALID";
-            //    return false;
-            //}
+            for (i = 0; i < detailGridView.Rows.Count && dataExist; i ++)
+            {
+                if (null != detailGridView.Rows[i].Cells["productName"].Value)
+                    dataExist = gUtil.isProductNameExist(detailGridView.Rows[i].Cells["productName"].Value.ToString());
+                else
+                    dataExist = false;
+            }
+            if (!dataExist)
+            {
+                errorLabel.Text = "NAMA PRODUK PADA BARIS ["+ i +"] INVALID";
+                return false;
+            }
 
             if (globalTotalValue <= 0)
             {
@@ -1253,7 +1133,7 @@ namespace AlphaSoft
                 }
 
                 // SAVE DETAIL TABLE
-                for (int i = 0; i < detailGridView.Rows.Count-1; i++)
+                for (int i = 0; i < detailGridView.Rows.Count; i++)
                 {
                     if (null != detailGridView.Rows[i].Cells["productID"].Value)
                     {
@@ -1289,6 +1169,12 @@ namespace AlphaSoft
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                             throw internalEX;
                         
+                        // UPDATE TO PRODUCT LOCATION
+                        sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY + " + Convert.ToDouble(detailGridView.Rows[i].Cells["qtyReceived"].Value) + " WHERE PRODUCT_ID = '" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "' AND LOCATION_ID = "+ locationID;
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "UPDATE PRODUCT LOCATION DATA [" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "'" + locationID + "]");
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
+
                         // UPDATE TO MASTER PRODUCT
                         sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_BASE_PRICE = " + newHPP + ", PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY + " + Convert.ToDouble(detailGridView.Rows[i].Cells["qtyReceived"].Value) + " WHERE PRODUCT_ID = '" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "UPDATE MASTER PRODUCT DATA [" + detailGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
@@ -1486,6 +1372,12 @@ namespace AlphaSoft
             bool result = false;
             //Data_Access DS_HQ = new Data_Access();
 
+            if (gUtil.checkLocalIPAddressFound(DS.getHQ_IPServer()) || DS.getHQ_IPServer() == "127.0.0.1")
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "HQ IP AND LOCAL IP ARE THE SAME");
+                return true;
+            }
+
             //if (saveData()) // SAVE TO LOCAL DATABASE FIRST
             {
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "ATTEMPT TO CREATE CONNECTION TO HQ");
@@ -1598,23 +1490,12 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailGridView.Rows[rowSelectedIndex];
-                detailGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                if (null != selectedRow && rowSelectedIndex != detailGridView.Rows.Count - 1)
+                if (null != selectedRow)
                 {
-                    for (int i = rowSelectedIndex; i < detailGridView.Rows.Count - 1; i++)
-                    {
-                        detailRequestQty[i] = detailRequestQty[i + 1];
-                        detailHpp[i] = detailHpp[i + 1];
-                        subtotalList[i] = subtotalList[i + 1];
-                    }
-
                     isLoading = true;
-                    if (selectedRow.Index >= 0)
-                    { 
-                        detailGridView.Rows.Remove(detailGridView.Rows[rowSelectedIndex]);
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
-                    }
+                    detailGridView.Rows.Remove(selectedRow);
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "deleteCurrentRow [" + rowSelectedIndex + "]");
                     isLoading = false;
                 }
             }
@@ -1624,23 +1505,28 @@ namespace AlphaSoft
         {
             gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "GET PO INVOICE TO RECEIVE");
 
-            if (null == browsePOForm || browsePOForm.IsDisposed)
-                browsePOForm = new dataPOForm(globalConstants.PENERIMAAN_BARANG_DARI_PO, this);
+            dataPOForm displayedForm = new dataPOForm(globalConstants.PENERIMAAN_BARANG_DARI_PO, this);
+            displayedForm.ShowDialog(this);
 
-            browsePOForm.Show();
-            browsePOForm.WindowState = FormWindowState.Normal;
-
+            if (selectedInvoice.Length > 0)
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PO INVOICE TO RECEIVE [" + selectedInvoice + "]");
+                supplierCombo.Enabled = false;
+            }
         }
 
         private void searchMutasiButton_Click(object sender, EventArgs e)
         {
             gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "GET NO MUTASI TO RECEIVE");
 
-            if (null == browseMutasiForm || browseMutasiForm.IsDisposed)
-                    browseMutasiForm = new dataMutasiBarangForm(globalConstants.PENERIMAAN_BARANG, this);
+            dataMutasiBarangForm displayedForm = new dataMutasiBarangForm(globalConstants.PENERIMAAN_BARANG, this);
+            displayedForm.ShowDialog(this);
 
-            browseMutasiForm.Show();
-            browseMutasiForm.WindowState = FormWindowState.Normal;
+            if (selectedMutasi.Length > 0)
+            {
+                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "NO MUTASI TO RECEIVE [" + selectedMutasi + "]");
+                supplierCombo.Enabled = false;
+            }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -1696,12 +1582,6 @@ namespace AlphaSoft
 
         private void detailGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            detailHpp.Add("0");
-            detailRequestQty.Add("0");
-            subtotalList.Add("0");
-
-            if (navKeyRegistered)
-                unregisterNavigationKey();
         }
 
         private void durationTextBox_Enter(object sender, EventArgs e)
@@ -1715,17 +1595,11 @@ namespace AlphaSoft
         private void penerimaanBarangForm_Activated(object sender, EventArgs e)
         {
             registerGlobalHotkey();
-
-            if (detailGridView.Focused)
-                registerDelKey();
         }
 
         private void penerimaanBarangForm_Deactivate(object sender, EventArgs e)
         {
             unregisterGlobalHotkey();
-
-            if (delKeyRegistered)
-                unregisterDelKey();
         }
 
         private void reprintButton_Click(object sender, EventArgs e)
@@ -1762,38 +1636,6 @@ namespace AlphaSoft
                     }
                 }
             }
-        }
-
-        private void detailGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (
-              (detailGridView.Columns[e.ColumnIndex].Name == "hpp" ||
-              detailGridView.Columns[e.ColumnIndex].Name == "qtyReceived" ||
-              detailGridView.Columns[e.ColumnIndex].Name == "qtyRequest" ||
-              detailGridView.Columns[e.ColumnIndex].Name == "subtotal")
-             && e.RowIndex != this.detailGridView.NewRowIndex && null != e.Value)
-            {
-                isLoading = true;
-                double d = double.Parse(e.Value.ToString());
-                e.Value = d.ToString(globalUtilities.CELL_FORMATTING_NUMERIC_FORMAT);
-                isLoading = false;
-            }
-        }
-
-        private void detailGridView_Enter(object sender, EventArgs e)
-        {
-            if (navKeyRegistered)
-                unregisterNavigationKey();
-
-            registerDelKey();
-        }
-
-        private void detailGridView_Leave(object sender, EventArgs e)
-        {
-            if (!navKeyRegistered)
-                registerNavigationKey();
-
-            unregisterDelKey();
         }
     }
 }

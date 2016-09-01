@@ -48,7 +48,7 @@ namespace AlphaSoft
                     {
                         if ((s = sr.ReadLine()) != null)
                         {
-                            configFileConnectionString = "server=" + s + ";uid=SYS_POS_ADMIN;pwd=pass123;database=SYS_POS;";
+                            configFileConnectionString = "server=" + s + ";uid="+userName+";pwd="+password+";database="+databaseName+";";
                             ipServer = s;
                         }
                     }
@@ -140,7 +140,7 @@ namespace AlphaSoft
                     BranchconfigFileConnectionString = BranchconnectionString;
                     return true;
                 }
-                catch (Exception ex)
+                catch (MySql.Data.MySqlClient.MySqlException ex)
                 {
                     return false;
                 }
@@ -439,6 +439,7 @@ namespace AlphaSoft
 
             return result;
         }
+
 
     }
 }

@@ -13,7 +13,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace AlphaSoft
+namespace RoyalPetz_ADMIN
 {
     public partial class ReportFinanceInForm : Form
     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -39,73 +39,6 @@ namespace AlphaSoft
         private Hotkeys.GlobalHotkey ghk_F9;
 
         private Hotkeys.GlobalHotkey ghk_Ctrl_Enter;
-
-        // MANAJEMEN MENU
-        changePasswordForm displayChangePasswordForm = null;
-        dataGroupForm tambahHapusGroupForm = null;
-        dataGroupForm pengaturanGrupAksesForm = null;
-        dataUserForm tambahHapusUserForm = null;
-        dataCabangForm tambahHapusCabangForm = null;
-        sinkronisasiInformasiForm displaySinkronisasiForm = null;
-        backupRestoreDatabaseForm displayBackupRestoreForm = null;
-        SetPrinterForm displaySetPrinterForm = null;
-        SetApplicationForm displaySetApplicationForm = null;
-
-        // GUDANG MENU
-        dataProdukForm tambahHapusProdukForm = null;
-        pengaturanProdukForm pengaturanHargaForm = null;
-        pengaturanProdukForm pengaturanLimitForm = null;
-        pengaturanProdukForm pengaturanRakForm = null;
-        dataKategoriProdukForm pengaturanKategoriForm = null;
-        dataProdukForm displayStokPecahBarangForm = null;
-
-        dataKategoriProdukForm tambahHapusKategoriForm = null;
-        dataSatuanForm tambahHapusSatuanForm = null;
-        konversiSatuanForm displayKonversiSatuanForm = null;
-
-        exportStockOpnameForm displayExportStockOpnameForm = null;
-        importDataCSVForm displayImportDataCSVForm = null;
-        dataProdukForm penyesuaianStokForm = null;
-
-        dataMutasiBarangForm mutasibarangForm = null;
-        dataPermintaanForm cekPermintaanBarangForm = null;
-
-        dataPenerimaanBarangForm penerimaanBarangForm = null;
-
-        // PEMBELIAN MENU
-        dataSupplierForm tambahHapusSupplierForm = null;
-
-        dataPermintaanForm requestOrderForm = null;
-        dataPOForm purchaseOrderForm = null;
-        dataPOForm reprintPOForm = null;
-
-        dataReturForm returPembelianSupplierForm = null;
-        dataReturForm returPermintaanForm = null;
-
-        dataReturPermintaanForm shortCutReturPembelianSupplierForm = null;
-
-        // PENJUALAN MENU
-        dataPelangganForm tambahHapusPelangganForm = null;
-
-        cashierForm displayCashierForm = null;
-        setNoFakturForm displaySetNoFakturForm = null;
-        dataSalesInvoice copyNotaForm = null;
-
-        dataInvoiceForm returPenjualanInvoiceForm = null;
-        dataPelangganForm returPenjualanStockForm = null;
-        dataReturForm reprintReturForm = null;
-
-        // KEUANGAN MENU
-        dataNomorAkun displayNoAkunForm = null;
-        dataTransaksiJurnalHarianDetailForm transaksiJurnalHarianForm = null;
-        dataInvoiceForm pembayaranPiutangInvoiceForm = null;
-        dataPelangganForm pembayaranPiutangCustomerForm = null;
-
-        dataCabangForm pembayaranPiutangMutasiForm = null;
-        dataPOForm pembayaranHutangInvoiceForm = null;
-        dataSupplierForm pembayaranHutangSupplierForm = null;
-
-        pengaturanLimitPajakForm displayPengaturanLimitPajakForm = null;
 
         private class MyRenderer : ToolStripProfessionalRenderer
         {
@@ -158,9 +91,9 @@ namespace AlphaSoft
             switch (key)
             {
                 case Keys.F1:
-                    if (0 !=
+                    if (0 != 
                             (
-                            DS.getUserAccessRight(globalConstants.MENU_PRODUK, gutil.getUserGroupID()) *
+                            DS.getUserAccessRight(globalConstants.MENU_PRODUK, gutil.getUserGroupID()) * 
                             DS.getUserAccessRight(globalConstants.MENU_PURCHASE_ORDER, gutil.getUserGroupID()) *
                             DS.getUserAccessRight(globalConstants.MENU_PENJUALAN, gutil.getUserGroupID()) *
                             DS.getUserAccessRight(globalConstants.MENU_PEMBAYARAN_PIUTANG, gutil.getUserGroupID()) *
@@ -171,7 +104,7 @@ namespace AlphaSoft
                             DS.getUserAccessRight(globalConstants.MENU_MODULE_MESSAGING, gutil.getUserGroupID())
                             )
                         )
-                    {
+                    { 
                         adminHelpForm displayHelp = new adminHelpForm();
                         displayHelp.ShowDialog(this);
                     }
@@ -256,7 +189,7 @@ namespace AlphaSoft
                         {
                             messagingForm displayForm = new messagingForm();
                             displayForm.ShowDialog(this);
-                        }
+                       }
                     }
                     break;
             }
@@ -328,7 +261,7 @@ namespace AlphaSoft
             selectedUserGroupID = groupID;
             loadBGimage();
 
-
+            
             activateUserAccessRight();
         }
 
@@ -342,7 +275,7 @@ namespace AlphaSoft
             localDate = DateTime.Now;
             timeStampStatusLabel.Text = String.Format(culture, "{0:dddd, dd-MM-yyyy - HH:mm}", localDate);
         }
-
+        
         private void loadBGimage()
         {
 
@@ -355,13 +288,13 @@ namespace AlphaSoft
             try
             {
                 this.BackgroundImage = Image.FromFile(BG_IMAGE);
-            }
-            catch (Exception ex)
+             }
+            catch(Exception ex)
             {
 
             }
         }
-
+        
         private void adminForm_Load(object sender, EventArgs e)
         {
             gutil.saveSystemDebugLog(0, "adminForm Load");
@@ -376,15 +309,15 @@ namespace AlphaSoft
             //timer1.Start();
 
             welcomeLabel.Text = "WELCOME " + DS.getDataSingleValue("SELECT IFNULL(USER_FULL_NAME, 0) FROM MASTER_USER WHERE ID = " + selectedUserID).ToString();
-            MAINMENU_Strip.Renderer = new MyRenderer();
+            menuStrip1.Renderer = new MyRenderer();
             gutil.reArrangeTabOrder(this);
 
 
             //load last known paper size settings from DB
 
-            activateUserAccessRight();
+            //activateUserAccessRight();
 
-            loadBGimage();
+            //loadBGimage();
         }
 
         private void adminForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -398,217 +331,215 @@ namespace AlphaSoft
             updateLabel();
         }
 
+        private void jenisProdukToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataKategoriProdukForm displayedForm = new dataKategoriProdukForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void dataProdukToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataProdukForm displayedForm = new dataProdukForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void dataPelangganToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataPelangganForm displayedForm = new dataPelangganForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void dataSupplierToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataSupplierForm displayedForm = new dataSupplierForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void dataSalesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        //    dataSalesForm displayedForm = new dataSalesForm();
+        //    displayedForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            dataGroupForm displayedForm = new dataGroupForm();
+            displayedForm.ShowDialog(this);
+        }
+
+        private void dataUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataUserForm displayedForm = new dataUserForm();
+            displayedForm.ShowDialog(this);
+        }
+
         private void toolStripMenuItem53_Click(object sender, EventArgs e)
         {
-            if (null == displayStokPecahBarangForm || displayStokPecahBarangForm.IsDisposed)
-                displayStokPecahBarangForm = new dataProdukForm(globalConstants.STOK_PECAH_BARANG); // display dataProdukForm for browsing purpose only
+            dataProdukForm displayedForm = new dataProdukForm(globalConstants.STOK_PECAH_BARANG); // display dataProdukForm for browsing purpose only
+            displayedForm.ShowDialog(this);
+        }
 
-            displayStokPecahBarangForm.Show();
-            displayStokPecahBarangForm.WindowState = FormWindowState.Normal;
+        private void infoFolderDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void backupRestoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
         }
 
         private void toolStripMenuItem15_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusUserForm || tambahHapusUserForm.IsDisposed)
-                tambahHapusUserForm = new dataUserForm();
-
-            tambahHapusUserForm.MdiParent = this;
-            tambahHapusUserForm.Show();
-            tambahHapusUserForm.WindowState = FormWindowState.Normal;
-            //dataUserForm displayedForm = new dataUserForm();
-            //displayedForm.ShowDialog(this);
+            dataUserForm displayedForm = new dataUserForm();
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
         }
 
         private void toolStripMenuItem47_Click(object sender, EventArgs e)
         {
-            //dataGroupForm displayedForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_USER);
-            //displayedForm.ShowDialog(this);
-            if (null == tambahHapusGroupForm || tambahHapusGroupForm.IsDisposed)
-                tambahHapusGroupForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_USER);
+            dataGroupForm displayedForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_USER);
 
-            tambahHapusGroupForm.MdiParent = this;
-            tambahHapusGroupForm.Show();
-            tambahHapusGroupForm.WindowState = FormWindowState.Normal;
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
+        }
+
+        private void pilihPrinterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cplPath = System.IO.Path.Combine(Environment.SystemDirectory, "control.exe");
+            System.Diagnostics.Process.Start(cplPath, "/name Microsoft.DevicesAndPrinters");
         }
 
         private void toolStripMenuItem32_Click(object sender, EventArgs e)
         {
-            if (null == pengaturanGrupAksesForm || pengaturanGrupAksesForm.IsDisposed)
-                pengaturanGrupAksesForm = new dataGroupForm(globalConstants.PENGATURAN_GRUP_AKSES);
-
-            pengaturanGrupAksesForm.MdiParent = this;
-            pengaturanGrupAksesForm.Show();
-            pengaturanGrupAksesForm.WindowState = FormWindowState.Normal;
-            //dataGroupForm displayedForm = new dataGroupForm(globalConstants.PENGATURAN_GRUP_AKSES);
-            //displayedForm.ShowDialog(this);
+            dataGroupForm displayedForm = new dataGroupForm(globalConstants.PENGATURAN_GRUP_AKSES);
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
         }
-
+       
         private void toolStripMenuItem55_Click(object sender, EventArgs e)
         {
-            if (null == displaySinkronisasiForm || displaySinkronisasiForm.IsDisposed)
-                displaySinkronisasiForm = new sinkronisasiInformasiForm();
-
-            displaySinkronisasiForm.MdiParent = this;
-            displaySinkronisasiForm.Show();
-            displaySinkronisasiForm.WindowState = FormWindowState.Normal;
-            //sinkronisasiInformasiForm displayedForm = new sinkronisasiInformasiForm();
-            //displayedForm.ShowDialog(this);
+            sinkronisasiInformasiForm displayedForm = new sinkronisasiInformasiForm();
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
         }
+
+        //private void toolStripMenuItem16_Click(object sender, EventArgs e)
+        //{
+        //    IPPusatForm displayedForm = new IPPusatForm();
+        //    displayedForm.ShowDialog(this);
+        //}
 
         private void toolStripMenuItem48_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusCabangForm || tambahHapusCabangForm.IsDisposed)
-                tambahHapusCabangForm = new dataCabangForm();
-
-            tambahHapusCabangForm.MdiParent = this;
-            tambahHapusCabangForm.Show();
-            tambahHapusCabangForm.WindowState = FormWindowState.Normal;
-            //dataCabangForm displayedForm = new dataCabangForm();
-            //displayedForm.ShowDialog(this);
+            dataCabangForm displayedForm = new dataCabangForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusProdukForm || tambahHapusProdukForm.IsDisposed)
-                tambahHapusProdukForm = new dataProdukForm();
-
-            tambahHapusProdukForm.Show();
-            tambahHapusProdukForm.WindowState = FormWindowState.Normal;
+            dataProdukForm displayedForm = new dataProdukForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem14_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusPelangganForm || tambahHapusPelangganForm.IsDisposed)
-                tambahHapusPelangganForm = new dataPelangganForm();
-
-            tambahHapusPelangganForm.Show();
-            tambahHapusPelangganForm.WindowState = FormWindowState.Normal;
+            dataPelangganForm displayedForm = new dataPelangganForm();
+            displayedForm.ShowDialog(this);
         }
+
+        private void toolStripMenuItem11_Click(object sender, EventArgs e)
+        {
+            dataGroupForm displayedForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_PELANGGAN);
+            displayedForm.ShowDialog(this);
+        }
+
+        //private void toolStripMenuItem12_Click(object sender, EventArgs e)
+        //{
+        //    dataGroupForm displayedForm = new dataGroupForm(globalConstants.PENGATURAN_POTONGAN_HARGA);
+        //    displayedForm.ShowDialog(this);
+        //}
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusSupplierForm || tambahHapusSupplierForm.IsDisposed)
-                tambahHapusSupplierForm = new dataSupplierForm();
-
-            tambahHapusSupplierForm.Show();
-            tambahHapusSupplierForm.WindowState = FormWindowState.Normal;
+            dataSupplierForm displayedForm = new dataSupplierForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusKategoriForm || tambahHapusKategoriForm.IsDisposed)
-                tambahHapusKategoriForm = new dataKategoriProdukForm();
-
-            tambahHapusKategoriForm.Show();
-            tambahHapusKategoriForm.WindowState = FormWindowState.Normal;
+            dataKategoriProdukForm displayedForm = new dataKategoriProdukForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem61_Click(object sender, EventArgs e)
         {
-            if (null == displayExportStockOpnameForm || displayExportStockOpnameForm.IsDisposed)
-                displayExportStockOpnameForm = new exportStockOpnameForm();
-
-            displayExportStockOpnameForm.Show();
-            displayExportStockOpnameForm.WindowState = FormWindowState.Normal;
+            exportStockOpnameForm displayedForm = new exportStockOpnameForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem10_Click(object sender, EventArgs e)
         {
-            if (null == pengaturanHargaForm || pengaturanHargaForm.IsDisposed)
-                pengaturanHargaForm = new pengaturanProdukForm(globalConstants.PENGATURAN_HARGA_JUAL);
-
-            pengaturanHargaForm.Show();
-            pengaturanHargaForm.WindowState = FormWindowState.Normal;
+            pengaturanProdukForm displayedForm = new pengaturanProdukForm(globalConstants.PENGATURAN_HARGA_JUAL);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem51_Click(object sender, EventArgs e)
         {
-            if (null == pengaturanLimitForm || pengaturanLimitForm.IsDisposed)
-                pengaturanLimitForm = new pengaturanProdukForm(globalConstants.PENGATURAN_LIMIT_STOK);
-
-            pengaturanLimitForm.Show();
-            pengaturanLimitForm.WindowState = FormWindowState.Normal;
+            pengaturanProdukForm displayedForm = new pengaturanProdukForm(globalConstants.PENGATURAN_LIMIT_STOK);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem54_Click(object sender, EventArgs e)
         {
-            if (null == pengaturanRakForm || pengaturanRakForm.IsDisposed)
-                pengaturanRakForm = new pengaturanProdukForm(globalConstants.PENGATURAN_NOMOR_RAK);
-
-            pengaturanRakForm.Show();
-            pengaturanRakForm.WindowState = FormWindowState.Normal;
+            pengaturanProdukForm displayedForm = new pengaturanProdukForm(globalConstants.PENGATURAN_NOMOR_RAK);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem57_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusSatuanForm || tambahHapusSatuanForm.IsDisposed)
-                tambahHapusSatuanForm = new dataSatuanForm();
-
-            tambahHapusSatuanForm.Show();
-            tambahHapusSatuanForm.WindowState = FormWindowState.Normal;
+            dataSatuanForm displayedForm = new dataSatuanForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem60_Click(object sender, EventArgs e)
         {
-            if (null == displayKonversiSatuanForm || displayKonversiSatuanForm.IsDisposed)
-                displayKonversiSatuanForm = new konversiSatuanForm();
-
-            displayKonversiSatuanForm.Show();
-            displayKonversiSatuanForm.WindowState = FormWindowState.Normal;
+            konversiSatuanForm displayedForm = new konversiSatuanForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem62_Click(object sender, EventArgs e)
         {
-            if (null == penyesuaianStokForm || penyesuaianStokForm.IsDisposed)
-                penyesuaianStokForm = new dataProdukForm(globalConstants.PENYESUAIAN_STOK);
-
-            penyesuaianStokForm.Show();
-            penyesuaianStokForm.WindowState = FormWindowState.Normal;
+            dataProdukForm displayedForm = new dataProdukForm(globalConstants.PENYESUAIAN_STOK);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem65_Click(object sender, EventArgs e)
         {
-            if (null == requestOrderForm || requestOrderForm.IsDisposed)
-                requestOrderForm = new dataPermintaanForm(globalConstants.PERMINTAAN_BARANG);
-
-            requestOrderForm.Show();
-            requestOrderForm.WindowState = FormWindowState.Normal;
+            dataPermintaanForm displayedForm = new dataPermintaanForm(globalConstants.PERMINTAAN_BARANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem63_Click(object sender, EventArgs e)
         {
-            if (null == cekPermintaanBarangForm || cekPermintaanBarangForm.IsDisposed)
-                cekPermintaanBarangForm = new dataPermintaanForm(globalConstants.CEK_DATA_MUTASI);
-
-            cekPermintaanBarangForm.Show();
-            cekPermintaanBarangForm.WindowState = FormWindowState.Normal;
+            dataPermintaanForm displayedForm = new dataPermintaanForm(globalConstants.CEK_DATA_MUTASI);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem67_Click(object sender, EventArgs e)
         {
-            if (null == reprintPOForm || reprintPOForm.IsDisposed)
-                reprintPOForm= new dataPOForm(globalConstants.REPRINT_PURCHASE_ORDER);
-
-            reprintPOForm.Show();
-            reprintPOForm.WindowState = FormWindowState.Normal;
+            dataPOForm displayedForm = new dataPOForm(globalConstants.REPRINT_PURCHASE_ORDER);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem52_Click(object sender, EventArgs e)
         {
-            if (null == pengaturanKategoriForm || pengaturanKategoriForm.IsDisposed)
-                pengaturanKategoriForm = new dataKategoriProdukForm(globalConstants.PENGATURAN_KATEGORI_PRODUK);
-
-            pengaturanKategoriForm.Show();
-            pengaturanKategoriForm.WindowState = FormWindowState.Normal;
+            dataKategoriProdukForm displayedForm = new dataKategoriProdukForm(globalConstants.PENGATURAN_KATEGORI_PRODUK);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem19_Click(object sender, EventArgs e)
         {
-            if (null == displaySetNoFakturForm || displaySetNoFakturForm.IsDisposed)
-                displaySetNoFakturForm = new setNoFakturForm();
-
-            displaySetNoFakturForm.Show();
-            displaySetNoFakturForm.WindowState = FormWindowState.Normal;
+            setNoFakturForm displayedForm = new setNoFakturForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void pengaturanPrinterToolStripMenuItem_Click(object sender, EventArgs e)
@@ -666,128 +597,92 @@ namespace AlphaSoft
 
         private void toolStripMenuItem23_Click(object sender, EventArgs e)
         {
-            if (null == returPenjualanStockForm || returPenjualanStockForm.IsDisposed)
-                returPenjualanStockForm = new dataPelangganForm(globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT);
-
-            returPenjualanStockForm.Show();
-            returPenjualanStockForm.WindowState = FormWindowState.Normal;
+            //dataReturPenjualanStokAdjustmentForm displayedForm = new dataReturPenjualanStokAdjustmentForm();
+            dataPelangganForm displayedForm = new dataPelangganForm(globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
         {
-            if (null == returPembelianSupplierForm || returPembelianSupplierForm.IsDisposed)
-                returPembelianSupplierForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
-
-            returPembelianSupplierForm.Show();
-            returPembelianSupplierForm.WindowState = FormWindowState.Normal;
+            //dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            //displayedForm.ShowDialog(this);
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
+            displayedForm.ShowDialog(this);
         }
 
         private void accountJurnalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (null == displayNoAkunForm || displayNoAkunForm.IsDisposed)
-                    displayNoAkunForm = new dataNomorAkun();
-
-            displayNoAkunForm.Show();
-            displayNoAkunForm.WindowState = FormWindowState.Normal;
+            dataNomorAkun displayedForm = new dataNomorAkun();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem22_Click(object sender, EventArgs e)
         {
-            if (null == returPenjualanInvoiceForm || returPenjualanInvoiceForm.IsDisposed)
-                returPenjualanInvoiceForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
-
-            returPenjualanInvoiceForm.Show();
-            returPenjualanInvoiceForm.WindowState = FormWindowState.Normal;
+            dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem70_Click(object sender, EventArgs e)
         {
-            if (null == displayPengaturanLimitPajakForm || displayPengaturanLimitPajakForm.IsDisposed)
-                    displayPengaturanLimitPajakForm = new pengaturanLimitPajakForm();
-
-            displayPengaturanLimitPajakForm.Show();
-            displayPengaturanLimitPajakForm.WindowState = FormWindowState.Normal;
+            pengaturanLimitPajakForm displayedForm = new pengaturanLimitPajakForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            if (null == tambahHapusProdukForm || tambahHapusProdukForm.IsDisposed)
-                tambahHapusProdukForm = new dataProdukForm();
-
-            tambahHapusProdukForm.Show();
-            tambahHapusProdukForm.WindowState = FormWindowState.Normal;
+            dataProdukForm displayedForm = new dataProdukForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
-            if (null == purchaseOrderForm || purchaseOrderForm.IsDisposed)
-                purchaseOrderForm = new dataPOForm();
-
-            purchaseOrderForm.Show();
-            purchaseOrderForm.WindowState = FormWindowState.Normal;
+            //permintaanProdukForm displayedForm = new permintaanProdukForm();
+            dataPOForm displayedForm = new dataPOForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            if (null == displayCashierForm || displayCashierForm.IsDisposed)
-                displayCashierForm = new cashierForm(1);
-
-            displayCashierForm.Show();
-            displayCashierForm.WindowState = FormWindowState.Normal;
+            cashierForm displayedForm = new cashierForm(1);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            if (null == pembayaranPiutangInvoiceForm || pembayaranPiutangInvoiceForm.IsDisposed)
-                pembayaranPiutangInvoiceForm = new dataInvoiceForm(globalConstants.PEMBAYARAN_PIUTANG);
-
-            pembayaranPiutangInvoiceForm.Show();
-            pembayaranPiutangInvoiceForm.WindowState = FormWindowState.Normal;
+            dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.PEMBAYARAN_PIUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            if (null == pembayaranHutangInvoiceForm || pembayaranHutangInvoiceForm.IsDisposed)
-                pembayaranHutangInvoiceForm = new dataPOForm(globalConstants.PEMBAYARAN_HUTANG);
-
-            pembayaranHutangInvoiceForm.Show();
-            pembayaranHutangInvoiceForm.WindowState = FormWindowState.Normal;
+            //dataPermintaanForm displayedForm = new dataPermintaanForm(globalConstants.PEMBAYARAN_HUTANG);
+            dataPOForm displayedForm = new dataPOForm(globalConstants.PEMBAYARAN_HUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem24_Click(object sender, EventArgs e)
         {
-            if (null == transaksiJurnalHarianForm || transaksiJurnalHarianForm.IsDisposed)
-                transaksiJurnalHarianForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ,selectedUserID);
-
-            transaksiJurnalHarianForm.Show();
-            transaksiJurnalHarianForm.WindowState = FormWindowState.Normal;
+            dataTransaksiJurnalHarianDetailForm displayedForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ,selectedUserID);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
-            if (null == transaksiJurnalHarianForm || transaksiJurnalHarianForm.IsDisposed)
-                transaksiJurnalHarianForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ, selectedUserID);
-
-            transaksiJurnalHarianForm.Show();
-            transaksiJurnalHarianForm.WindowState = FormWindowState.Normal;
+            dataTransaksiJurnalHarianDetailForm displayedForm = new dataTransaksiJurnalHarianDetailForm(globalConstants.NEW_DJ, selectedUserID);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            if (null == shortCutReturPembelianSupplierForm || shortCutReturPembelianSupplierForm.IsDisposed)
-                shortCutReturPembelianSupplierForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
-
-            shortCutReturPembelianSupplierForm.Show();
-            shortCutReturPembelianSupplierForm.WindowState = FormWindowState.Normal;
+            //dataReturPermintaanForm displayedForm = new dataReturPermintaanForm();
+            dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_SUPPLIER);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
-            if (null == returPenjualanInvoiceForm || returPenjualanInvoiceForm.IsDisposed)
-                    returPenjualanInvoiceForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
-
-            returPenjualanInvoiceForm.Show();
-            returPenjualanInvoiceForm.WindowState = FormWindowState.Normal;
+            dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.RETUR_PENJUALAN);
+            displayedForm.ShowDialog(this);
         }
 
         private void logInToolStripMenuItem_Click(object sender, EventArgs e)
@@ -798,12 +693,10 @@ namespace AlphaSoft
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (null == displayChangePasswordForm || displayChangePasswordForm.IsDisposed)
-                displayChangePasswordForm = new changePasswordForm(selectedUserID);
+            changePasswordForm displayedForm = new changePasswordForm(selectedUserID);
 
-            displayChangePasswordForm.MdiParent = this;
-            displayChangePasswordForm.Show();
-            //displayChangePasswordForm.WindowState = FormWindowState.Normal;
+            displayedForm.MdiParent = this;
+            displayedForm.ShowDialog(this);
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -813,11 +706,13 @@ namespace AlphaSoft
 
         private void toolStripMenuItem18_Click(object sender, EventArgs e)
         {
-            if (null == displayCashierForm || displayCashierForm.IsDisposed)
-                displayCashierForm = new cashierForm(1);
+            cashierForm displayedForm = new cashierForm(1);
+            displayedForm.ShowDialog(this);
+        }
 
-            displayCashierForm.Show();
-            displayCashierForm.WindowState = FormWindowState.Normal;
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
 
         private void adminForm_Deactivate(object sender, EventArgs e)
@@ -836,11 +731,8 @@ namespace AlphaSoft
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            if (null == mutasibarangForm || mutasibarangForm.IsDisposed)
-                mutasibarangForm = new dataMutasiBarangForm(globalConstants.CEK_DATA_MUTASI);
-
-            mutasibarangForm.Show();
-            mutasibarangForm.WindowState = FormWindowState.Normal;
+            dataMutasiBarangForm displayForm = new dataMutasiBarangForm(globalConstants.CEK_DATA_MUTASI);
+            displayForm.ShowDialog(this); 
         }
 
         private void developerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -851,11 +743,8 @@ namespace AlphaSoft
 
         private void toolStripMenuItem36_Click(object sender, EventArgs e)
         {
-            if (null == purchaseOrderForm || purchaseOrderForm.IsDisposed)
-                purchaseOrderForm = new dataPOForm();
-
-            purchaseOrderForm.Show();
-            purchaseOrderForm.WindowState = FormWindowState.Normal;
+            dataPOForm displayedForm = new dataPOForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void fileToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
@@ -910,22 +799,22 @@ namespace AlphaSoft
 
         private void toolStripMenuItem25_DropDownClosed(object sender, EventArgs e)
         {
-            MENU_DevTools.ForeColor = Color.FloralWhite;
+            toolStripMenuItem25.ForeColor = Color.FloralWhite;
         }
 
         private void toolStripMenuItem25_DropDownOpened(object sender, EventArgs e)
         {
-            MENU_DevTools.ForeColor = Color.Black;
+            toolStripMenuItem25.ForeColor = Color.Black;
         }
 
         private void toolStripMenuItem74_DropDownClosed(object sender, EventArgs e)
         {
-            DUMMY_TaxModule.ForeColor = Color.FloralWhite;
+            MAINMENU_TaxModule.ForeColor = Color.FloralWhite;
         }
 
         private void toolStripMenuItem74_DropDownOpened(object sender, EventArgs e)
         {
-            DUMMY_TaxModule.ForeColor = Color.Black;
+            MAINMENU_TaxModule.ForeColor = Color.Black;
         }
 
         private void informasiToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
@@ -940,29 +829,22 @@ namespace AlphaSoft
 
         private void toolStripMenuItem37_Click(object sender, EventArgs e)
         {
-            if (null == returPermintaanForm || returPermintaanForm.IsDisposed)
-                returPermintaanForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
-
-            returPermintaanForm.Show();
-            returPermintaanForm.WindowState = FormWindowState.Normal;
+            //dataReturPermintaanForm displayedForm = new dataReturPermintaanForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            //displayedForm.ShowDialog(this);
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PEMBELIAN_KE_PUSAT);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem39_Click(object sender, EventArgs e)
         {
-            if (null == pembayaranPiutangMutasiForm || pembayaranPiutangMutasiForm.IsDisposed)
-                pembayaranPiutangMutasiForm = new dataCabangForm(globalConstants.DATA_PIUTANG_MUTASI);
-
-            pembayaranPiutangMutasiForm.Show();
-            pembayaranPiutangMutasiForm.WindowState = FormWindowState.Normal;
+            dataCabangForm displayedForm = new dataCabangForm(globalConstants.DATA_PIUTANG_MUTASI);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem40_Click(object sender, EventArgs e)
         {
-            if (null == displayImportDataCSVForm || displayImportDataCSVForm.IsDisposed)
-                displayImportDataCSVForm = new importDataCSVForm();
-
-            displayImportDataCSVForm.Show();
-            displayImportDataCSVForm.WindowState = FormWindowState.Normal;
+            importDataCSVForm displayedForm = new importDataCSVForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void setAccessibility(int moduleID, ToolStripMenuItem  menuItem)
@@ -1005,8 +887,6 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_SINKRONISASI_INFORMASI, MENU_sinkronisasiInformasi);
             setAccessibility(globalConstants.MENU_PENGATURAN_PRINTER, MENU_pengaturanPrinter);
             setAccessibility(globalConstants.MENU_PENGATURAN_GAMBAR_LATAR, MENU_pengaturanGambarLatar);
-
-            setAccessibility(globalConstants.MENU_USB_UTILITY_MODULE, uSBToolStripMenuItem);
 
             // SET ACCESSIBILITY FOR GUDANG MAIN MENU
             // SUB MENU PRODUK
@@ -1091,43 +971,31 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_PEMBAYARAN_HUTANG_SUPPLIER, SHORTCUT_hutang);
             // SUB MENU PENGATURAN LIMIT PAJAK
             setAccessibility(globalConstants.MENU_PENGATURAN_LIMIT_PAJAK, MENU_pengaturanLimitPajak);
-            setAccessibility(globalConstants.MENU_TAX_MODULE, DUMMY_TaxModule);
+            setAccessibility(globalConstants.MENU_TAX_MODULE, MAINMENU_TaxModule);
         }
 
         private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
         {
-            if (null == pembayaranHutangInvoiceForm || pembayaranHutangInvoiceForm.IsDisposed)
-                    pembayaranHutangInvoiceForm = new dataPOForm(globalConstants.PEMBAYARAN_HUTANG);
-
-            pembayaranHutangInvoiceForm.Show();
-            pembayaranHutangInvoiceForm.WindowState = FormWindowState.Normal;
+            dataPOForm displayedForm = new dataPOForm(globalConstants.PEMBAYARAN_HUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            if (null == pembayaranHutangSupplierForm || pembayaranHutangSupplierForm.IsDisposed)
-                    pembayaranHutangSupplierForm = new dataSupplierForm(globalConstants.PEMBAYARAN_HUTANG);
-
-            pembayaranHutangSupplierForm.Show();
-            pembayaranHutangSupplierForm.WindowState = FormWindowState.Normal;
+            dataSupplierForm displayedForm = new dataSupplierForm(globalConstants.PEMBAYARAN_HUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem3_Click_1(object sender, EventArgs e)
         {
-            if (null == pembayaranPiutangInvoiceForm || pembayaranPiutangInvoiceForm.IsDisposed)
-                    pembayaranPiutangInvoiceForm = new dataInvoiceForm(globalConstants.PEMBAYARAN_PIUTANG);
-
-            pembayaranPiutangInvoiceForm.Show();
-            pembayaranPiutangInvoiceForm.WindowState = FormWindowState.Normal;
+            dataInvoiceForm displayedForm = new dataInvoiceForm(globalConstants.PEMBAYARAN_PIUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem4_Click_1(object sender, EventArgs e)
         {
-            if (null == pembayaranPiutangCustomerForm || pembayaranPiutangCustomerForm.IsDisposed)
-                    pembayaranPiutangCustomerForm = new dataPelangganForm(globalConstants.PEMBAYARAN_PIUTANG);
-
-            pembayaranPiutangCustomerForm.Show();
-            pembayaranPiutangCustomerForm.WindowState = FormWindowState.Normal;
+            dataPelangganForm displayedForm = new dataPelangganForm(globalConstants.PEMBAYARAN_PIUTANG);
+            displayedForm.ShowDialog(this);
         }
 
         private void generatorXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1193,34 +1061,23 @@ namespace AlphaSoft
 
         private void pengaturanSistemAplikasiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (null == displaySetApplicationForm || displaySetApplicationForm.IsDisposed)
-                displaySetApplicationForm = new SetApplicationForm();
+            SetApplicationForm displayedForm = new SetApplicationForm();
 
-            displaySetApplicationForm.MdiParent = this;
-            displaySetApplicationForm.Show();
-            displaySetApplicationForm.WindowState = FormWindowState.Normal;
+            displayedForm.MdiParent = this;
+            displayedForm.ShowDialog(this);
         }
 
         private void backUpRestoreDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (null == displayBackupRestoreForm || displayBackupRestoreForm.IsDisposed)
-                displayBackupRestoreForm = new backupRestoreDatabaseForm();
-
-            displayBackupRestoreForm.MdiParent = this;
-            displayBackupRestoreForm.Show();
-            displayBackupRestoreForm.WindowState = FormWindowState.Normal;
-
-            //backupRestoreDatabaseForm displayedForm = new backupRestoreDatabaseForm();
-            //displayedForm.ShowDialog(this);
+            backupRestoreDatabaseForm displayedForm = new backupRestoreDatabaseForm();
+            displayedForm.MdiParent = this;
+            displayedForm.ShowDialog(this);
         }
 
         private void MENU_penerimaanBarang_Click(object sender, EventArgs e)
         {
-            if (null == penerimaanBarangForm || penerimaanBarangForm.IsDisposed)
-                penerimaanBarangForm = new dataPenerimaanBarangForm();
-
-            penerimaanBarangForm.Show();
-            penerimaanBarangForm.WindowState = FormWindowState.Normal;
+            dataPenerimaanBarangForm displayedForm = new dataPenerimaanBarangForm();
+            displayedForm.ShowDialog(this);
         }
 
         private void timerMessage_Tick(object sender, EventArgs e)
@@ -1232,10 +1089,9 @@ namespace AlphaSoft
             {
                 newMessageFormExist = true;
                 newMessageForm newMsgForm = new newMessageForm((Form) this);
-                //newMsgForm.Top = Screen.PrimaryScreen.Bounds.Height - newMsgForm.Height;
-                //newMsgForm.Left = Screen.PrimaryScreen.Bounds.Width- newMsgForm.Width;
+                newMsgForm.Top = Screen.PrimaryScreen.Bounds.Height - newMsgForm.Height;
+                newMsgForm.Left = Screen.PrimaryScreen.Bounds.Width- newMsgForm.Width;
 
-                newMsgForm.MdiParent = this;
                 newMsgForm.Show();
 
                 //  ALlow main UI thread to properly display please wait form.
@@ -1466,52 +1322,77 @@ namespace AlphaSoft
 
         private void toolStripMenuItem9_Click_1(object sender, EventArgs e)
         {
-            if (null == reprintReturForm || reprintReturForm.IsDisposed)
-                reprintReturForm = new dataReturForm(globalConstants.RETUR_PENJUALAN);
+            dataReturForm displayedForm = new dataReturForm(globalConstants.RETUR_PENJUALAN);
+            displayedForm.ShowDialog(this);
+        }
 
-            reprintReturForm.Show();
-            reprintReturForm.WindowState = FormWindowState.Normal;
+        private void MENU_SalesQuotation_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SALES_QUOTATION);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_SORevision_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.SALES_ORDER_REVISION);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_SalesTarget_Click(object sender, EventArgs e)
+        {
+            membershipPointForm displayedForm = new membershipPointForm(globalConstants.SALES_COMMISSION);
+            displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem10_Click_1(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = "USBLib.exe";
-            p.StartInfo.Arguments = "runAdmin";
-            p.Start();
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.DELIVERY_ORDER);
+            displayedForm.ShowDialog(this);
         }
 
-        private void labaRugiBulananToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadDummyReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReportFinanceSearchForm displayedForm = new ReportFinanceSearchForm(globalConstants.REPORT_MONTHLY_BALANCE);
+            crReportContainer dummyCR = new crReportContainer();
+            dummyCR.ShowDialog();
+        }
+
+        private void MENU_membership_Click(object sender, EventArgs e)
+        {
+            membershipPointForm displayedForm = new membershipPointForm(globalConstants.MEMBERSHIP_POINT);
+            displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_returPenjualan_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem74_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MENU_tambahRegion_Click(object sender, EventArgs e)
+        {
+            dataRegion displayedForm = new dataRegion();
             displayedForm.ShowDialog(this);
         }
 
         private void toolStripMenuItem11_Click_1(object sender, EventArgs e)
         {
-            if (null == copyNotaForm || copyNotaForm.IsDisposed)
-                copyNotaForm = new dataSalesInvoice();
-
-            copyNotaForm.Show();
-            copyNotaForm.WindowState = FormWindowState.Normal;
+            stokTransferForm displayedForm = new stokTransferForm();
+            displayedForm.ShowDialog(this);
         }
 
-        private void laporanToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        private void toolStripMenuItem12_Click(object sender, EventArgs e)
         {
-            laporanToolStripMenuItem.ForeColor = Color.Black;
-        }
-
-        private void laporanToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
-        {
-            laporanToolStripMenuItem.ForeColor = Color.FloralWhite;
-        }
-
-        private void uSBToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Process p = new Process();
-            p.StartInfo.FileName = "USBLib.exe";
-            p.StartInfo.Arguments = "runAdmin";
-            p.Start();
+            ReportSalesSummaryRegionSearchForm displayedForm = new ReportSalesSummaryRegionSearchForm();
+            displayedForm.ShowDialog(this);
         }
     }
 }

@@ -20,6 +20,7 @@ namespace AlphaSoft
         private globalUtilities gutil = new globalUtilities();
         private Data_Access DS = new Data_Access();
         private CultureInfo culture = new CultureInfo("id-ID");
+        private int locationID = 0;
 
         public exportStockOpnameForm()
         {
@@ -134,6 +135,13 @@ namespace AlphaSoft
 
         private void exportStockOpnameForm_Load(object sender, EventArgs e)
         {
+            locationID = gutil.loadlocationID(2);
+            if (locationID <= 0)
+            {
+                MessageBox.Show("LOCATION ID BELUM DI SET");
+                this.Close();
+            }
+
             newButton.Focus();
             gutil.reArrangeTabOrder(this);
         }

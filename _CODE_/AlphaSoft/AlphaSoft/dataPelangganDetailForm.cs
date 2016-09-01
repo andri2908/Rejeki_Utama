@@ -13,14 +13,13 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
 
-using Hotkeys;
-
 namespace AlphaSoft
 {
     public partial class dataPelangganDetailForm : Form
     {
         private int originModuleID = 0;
         private int selectedCustomerID = 0;
+        private string selectedRegionID = "0";
 
         private string previousInput = "";
         private string previousInputPhone = "";
@@ -32,9 +31,7 @@ namespace AlphaSoft
         private Data_Access DS = new Data_Access();
         private globalUtilities gUtil = new globalUtilities();
         private int options = 0;
-
-        private Hotkeys.GlobalHotkey ghk_UP;
-        private Hotkeys.GlobalHotkey ghk_DOWN;
+        
 
         public dataPelangganDetailForm()
         {
@@ -56,56 +53,21 @@ namespace AlphaSoft
             selectedCustomerID = customerID;
         }
 
-        private void captureAll(Keys key)
-        {
-            switch (key)
-            {
-                case Keys.Up:
-                    SendKeys.Send("+{TAB}");
-                    break;
-                case Keys.Down:
-                    SendKeys.Send("{TAB}");
-                    break;
-            }
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == Constants.WM_HOTKEY_MSG_ID)
-            {
-                Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                int modifier = (int)m.LParam & 0xFFFF;
-
-                if (modifier == Constants.NOMOD)
-                    captureAll(key);
-            }
-
-            base.WndProc(ref m);
-        }
-
-        private void registerGlobalHotkey()
-        {
-            ghk_UP = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Up, this);
-            ghk_UP.Register();
-
-            ghk_DOWN = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.Down, this);
-            ghk_DOWN.Register();
-        }
-
-        private void unregisterGlobalHotkey()
-        {
-            ghk_UP.Unregister();
-            ghk_DOWN.Unregister();
-        }
-
         private void loadCustomerData()
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
+            string sqlCommand = "";
+
+            sqlCommand = "SELECT REGION_ID, CUSTOMER_JOINED_DATE, CUSTOMER_FULL_NAME, IFNULL(CUSTOMER_ADDRESS1, '') AS CUSTOMER_ADDRESS1, " +
+                                   "IFNULL(CUSTOMER_ADDRESS2, '') AS CUSTOMER_ADDRESS2, IFNULL(CUSTOMER_ADDRESS_CITY, '') AS CUSTOMER_ADDRESS_CITY, " +
+                                   "IFNULL(CUSTOMER_PHONE, '') AS CUSTOMER_PHONE, IFNULL(CUSTOMER_FAX, '') AS CUSTOMER_FAX, IFNULL(CUSTOMER_EMAIL, '') AS CUSTOMER_EMAIL, " +
+                                   "IFNULL(CUSTOMER_TOTAL_SALES_COUNT, '0') AS CUSTOMER_TOTAL_SALES_COUNT, IFNULL(CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, CUSTOMER_ACTIVE " +
+                                   "FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedCustomerID;
 
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT * FROM MASTER_CUSTOMER WHERE CUSTOMER_ID =  " + selectedCustomerID))
+            using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
                 {
@@ -128,9 +90,41 @@ namespace AlphaSoft
                             nonAktifCheckbox.Checked = false;
                         else
                             nonAktifCheckbox.Checked = true;
+
+                        regionCombo.Text = regionCombo.Items[rdr.GetInt32("REGION_ID")].ToString();
+                        regionHiddenCombo.SelectedIndex = rdr.GetInt32("REGION_ID");
                     }
                 }
             }
+        }
+
+        private void loadRegionData()
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+            string sqlCommand = "";
+
+            sqlCommand = "SELECT ID, REGION_NAME FROM MASTER_REGION WHERE REGION_ACTIVE = 1";
+
+            regionCombo.Items.Clear();
+            regionHiddenCombo.Items.Clear();
+
+            regionCombo.Items.Add("-");
+            regionHiddenCombo.Items.Add("0");
+
+            selectedRegionID = "0";
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    while (rdr.Read())
+                    {
+                        regionCombo.Items.Add(rdr.GetString("REGION_NAME"));
+                        regionHiddenCombo.Items.Add(rdr.GetString("ID"));
+                    }
+                }
+            }
+            regionCombo.Text = regionCombo.Items[0].ToString();
         }
 
         private void dataPelangganDetailForm_Load(object sender, EventArgs e)
@@ -157,6 +151,8 @@ namespace AlphaSoft
                     gUtil.setReadOnlyAllControls(this);
                 }
             }
+
+            loadRegionData();
 
             arrButton[0] = saveButton;
             arrButton[1] = resetbutton;
@@ -187,10 +183,12 @@ namespace AlphaSoft
             bool result = false;
             string sqlCommand = "";
             MySqlException internalEX = null;
+            int custBlocked = 0;
 
             string selectedDate = dateJoinedDateTimePicked.Value.ToShortDateString();
             string custJoinedDate = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
             string custName = MySqlHelper.EscapeString(custNameTextBox.Text.Trim());
+            double maxCreditAmount = 0;
 
             string custAddress1 = custAddress1TextBox.Text.Trim();
             if (custAddress1.Equals(""))
@@ -241,6 +239,12 @@ namespace AlphaSoft
             else
                 custStatus = 1;
 
+            if (maxCredit.Text.Length > 0)
+                maxCreditAmount = Convert.ToDouble(maxCredit.Text);
+
+            if (blockedCustomer.Checked)
+                custBlocked = 1;
+
             DS.beginTransaction();
 
             try
@@ -251,8 +255,8 @@ namespace AlphaSoft
                 {
                     case globalConstants.NEW_CUSTOMER:
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
-                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP) " +
-                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity+ "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', "+custStatus+", STR_TO_DATE('"+custJoinedDate+"', '%d-%m-%Y'), "+custTotalSales+", "+custGroup+")";
+                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED, REGION_ID) " +
+                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ", " + selectedRegionID +")";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
@@ -268,7 +272,10 @@ namespace AlphaSoft
                                             "CUSTOMER_ACTIVE = " + custStatus + ", " +
                                             "CUSTOMER_JOINED_DATE = STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " +
                                             "CUSTOMER_TOTAL_SALES_COUNT = " + custTotalSales + ", " +
-                                            "CUSTOMER_GROUP = " + custGroup + " " +
+                                            "CUSTOMER_GROUP = " + custGroup + ", " +
+                                            "MAX_CREDIT = " + maxCreditAmount + ", " +
+                                            "CUSTOMER_BLOCKED = " + custBlocked + ", " +
+                                            "REGION_ID = " + selectedRegionID + " " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;
@@ -407,22 +414,23 @@ namespace AlphaSoft
                     options = gUtil.UPD;
                     break;
             }
-            registerGlobalHotkey();
         }
 
-        private void dataPelangganDetailForm_Deactivate(object sender, EventArgs e)
+        private void maxCredit_TextChanged(object sender, EventArgs e)
         {
-            unregisterGlobalHotkey();
+            if (gUtil.matchRegEx(maxCredit.Text, globalUtilities.REGEX_NUMBER_ONLY))
+            {
+                previousInput = maxCredit.Text;
+            }
+            else
+            {
+                maxCredit.Text = previousInput;
+            }
         }
 
-        private void dateJoinedDateTimePicked_Enter(object sender, EventArgs e)
+        private void regionCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            unregisterGlobalHotkey();
-        }
-
-        private void dateJoinedDateTimePicked_Leave(object sender, EventArgs e)
-        {
-            registerGlobalHotkey();
+            selectedRegionID = regionHiddenCombo.Items[regionCombo.SelectedIndex].ToString();
         }
     }
 }

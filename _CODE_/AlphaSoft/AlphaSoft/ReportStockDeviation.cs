@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AlphaSoft {
+namespace BintangTimur {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -41,7 +41,7 @@ namespace AlphaSoft {
         
         public override string FullResourceName {
             get {
-                return "AlphaSoft.ReportStockDeviation.rpt";
+                return "BintangTimur.ReportStockDeviation.rpt";
             }
             set {
                 // Do nothing
