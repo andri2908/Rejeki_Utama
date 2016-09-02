@@ -946,6 +946,9 @@ namespace AlphaSoft
 
                 gUtil.ResetAllControls(this);
 
+                currentSelectedKategoriID.Clear();
+                produkKategoriTextBox.Clear();
+
                 stokAwalTextBox.Text = "0";
                 limitStokTextBox.Text = "0";
                 hppTextBox.Text = "0";
