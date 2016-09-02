@@ -601,12 +601,11 @@ namespace AlphaSoft
             
             fillInSupplierCombo();
 
-
-            userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PENERIMAAN_BARANG_DARI_MUTASI, gUtil.getUserGroupID());
-            if (userAccessOption == 1)
-                searchMutasiButton.Visible = true;
-            else
-                searchMutasiButton.Visible = false;
+            //userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PENERIMAAN_BARANG_DARI_MUTASI, gUtil.getUserGroupID());
+            //if (userAccessOption == 1)
+            //    searchMutasiButton.Visible = true;
+            //else
+            //    searchMutasiButton.Visible = false;
 
             userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PENERIMAAN_BARANG_DARI_PO, gUtil.getUserGroupID());
             if (userAccessOption == 1)
@@ -659,6 +658,7 @@ namespace AlphaSoft
 
             rdr.Close();
         }
+
         private void detailGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if ((detailGridView.CurrentCell.OwningColumn.Name == "hpp" || detailGridView.CurrentCell.OwningColumn.Name == "qtyReceived") && e.Control is TextBox)

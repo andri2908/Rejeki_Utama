@@ -172,19 +172,19 @@ namespace AlphaSoft
             if (originModuleID == globalConstants.PEMBAYARAN_HUTANG)
                 label2.Text = "Jatuh Tempo";
 
-            if (originModuleID == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleID == globalConstants.PEMBAYARAN_HUTANG)
-            {
-                newButton.Visible = false;
-                showAllCheckBox.Visible = false;
-            }
-
             userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PURCHASE_ORDER, gUtil.getUserGroupID());
 
             if (userAccessOption == 2 || userAccessOption == 6)
                 newButton.Visible = true;
             else
                 newButton.Visible = false;
-            
+
+            if (originModuleID == globalConstants.PENERIMAAN_BARANG_DARI_PO || originModuleID == globalConstants.PEMBAYARAN_HUTANG)
+            {
+                newButton.Visible = false;
+                showAllCheckBox.Visible = false;
+            }
+
             arrButton[0] = displayButton;
             arrButton[1] = newButton;
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);

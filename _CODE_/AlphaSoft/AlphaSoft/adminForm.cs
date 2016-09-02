@@ -1064,7 +1064,7 @@ namespace AlphaSoft
             SetApplicationForm displayedForm = new SetApplicationForm();
 
             displayedForm.MdiParent = this;
-            displayedForm.ShowDialog(this);
+            displayedForm.Show();
         }
 
         private void backUpRestoreDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
