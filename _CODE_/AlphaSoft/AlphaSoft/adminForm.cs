@@ -696,7 +696,7 @@ namespace AlphaSoft
             changePasswordForm displayedForm = new changePasswordForm(selectedUserID);
 
             displayedForm.MdiParent = this;
-            displayedForm.ShowDialog(this);
+            displayedForm.Show();
         }
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
