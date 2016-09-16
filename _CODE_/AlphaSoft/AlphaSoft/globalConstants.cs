@@ -82,6 +82,8 @@ namespace AlphaSoft
         public const int EDIT_RETUR_PEMBELIAN = 226;
         public const int NEW_REGION = 227;
         public const int EDIT_REGION = 228;
+        public const int NEW_LOCATION = 229;
+        public const int EDIT_LOCATION = 230;
 
 
         public const int NEW_AKUN = 501;  //start from 5

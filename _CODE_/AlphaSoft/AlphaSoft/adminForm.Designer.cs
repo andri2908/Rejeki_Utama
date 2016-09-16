@@ -51,6 +51,7 @@
             this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripSeparator();
             this.MENU_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_gudang = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_pengaturanGudang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_produk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanHarga = new System.Windows.Forms.ToolStripMenuItem();
@@ -399,6 +400,7 @@
             // 
             this.MAINMENU_gudang.BackColor = System.Drawing.Color.SteelBlue;
             this.MAINMENU_gudang.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MENU_pengaturanGudang,
             this.MENU_produk,
             this.MENU_kategori,
             this.MENU_satuan,
@@ -412,6 +414,16 @@
             this.MAINMENU_gudang.Text = "Gudang";
             this.MAINMENU_gudang.DropDownClosed += new System.EventHandler(this.toolStripMenuItem1_DropDownClosed);
             this.MAINMENU_gudang.DropDownOpened += new System.EventHandler(this.toolStripMenuItem1_DropDownOpened);
+            // 
+            // MENU_pengaturanGudang
+            // 
+            this.MENU_pengaturanGudang.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_pengaturanGudang.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_pengaturanGudang.Name = "MENU_pengaturanGudang";
+            this.MENU_pengaturanGudang.ShowShortcutKeys = false;
+            this.MENU_pengaturanGudang.Size = new System.Drawing.Size(254, 22);
+            this.MENU_pengaturanGudang.Text = "Pengaturan Lokasi";
+            this.MENU_pengaturanGudang.Click += new System.EventHandler(this.MENU_pengaturanGudang_Click);
             // 
             // MENU_produk
             // 
@@ -1979,6 +1991,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_tambahRegion;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanGudang;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

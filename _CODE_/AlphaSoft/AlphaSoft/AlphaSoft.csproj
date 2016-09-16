@@ -132,6 +132,18 @@
       <DependentUpon>creditPaymentPrintOut.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="dataLokasi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataLokasi.Designer.cs">
+      <DependentUpon>dataLokasi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataLokasiDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataLokasiDetail.Designer.cs">
+      <DependentUpon>dataLokasiDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="dataRegion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1158,6 +1170,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="crReportContainer.resx">
       <DependentUpon>crReportContainer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataLokasi.resx">
+      <DependentUpon>dataLokasi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataLokasiDetail.resx">
+      <DependentUpon>dataLokasiDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataRegion.resx">
       <DependentUpon>dataRegion.cs</DependentUpon>

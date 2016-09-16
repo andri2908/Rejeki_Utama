@@ -257,6 +257,8 @@ namespace AlphaSoft
         {
             InitializeComponent();
 
+            this.DoubleBuffered = true;
+
             selectedUserID = userID;
             selectedUserGroupID = groupID;
             loadBGimage();
@@ -1393,6 +1395,14 @@ namespace AlphaSoft
         {
             ReportSalesSummaryRegionSearchForm displayedForm = new ReportSalesSummaryRegionSearchForm();
             displayedForm.ShowDialog(this);
+        }
+
+        private void MENU_pengaturanGudang_Click(object sender, EventArgs e)
+        {
+            dataLokasi displayedForm = new dataLokasi();
+
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
         }
     }
 }

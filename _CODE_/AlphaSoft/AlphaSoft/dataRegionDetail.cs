@@ -159,14 +159,14 @@ namespace AlphaSoft
             {
                 switch (originModuleID)
                 {
-                    case globalConstants.NEW_GROUP_USER:
-                        gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_INSERT, "ADD NEW GROUP USER [" + namaGroupTextBox.Text + "]");
+                    case globalConstants.NEW_REGION:
+                        gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "ADD NEW REGION [" + namaGroupTextBox.Text + "]");
                         break;
-                    case globalConstants.EDIT_GROUP_USER:
+                    case globalConstants.EDIT_REGION:
                         if (nonAktifCheckbox.Checked)
-                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE GROUP USER [" + namaGroupTextBox.Text + "] GROUP STATUS NON-AKTIF");
+                            gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE REGION [" + namaGroupTextBox.Text + "] REGION NON-AKTIF");
                         else
-                            gutil.saveUserChangeLog(globalConstants.MENU_MANAJEMEN_USER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE GROUP USER [" + namaGroupTextBox.Text + "] GROUP STATUS AKTIF");
+                            gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_UPDATE, "UPDATE REGION [" + namaGroupTextBox.Text + "] REGION AKTIF");
                         break;
                 }
 
