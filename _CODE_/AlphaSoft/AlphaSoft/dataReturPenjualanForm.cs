@@ -494,7 +494,7 @@ namespace AlphaSoft
             if ((detailReturDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
-                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                //productIDTextBox.TextChanged -= TextBox_TextChanged;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -505,7 +505,7 @@ namespace AlphaSoft
             if (detailReturDataGridView.CurrentCell.OwningColumn.Name == "qty" && e.Control is TextBox)
             {
                 TextBox textBox = e.Control as TextBox;
-                textBox.TextChanged += TextBox_TextChanged;
+                //textBox.TextChanged += TextBox_TextChanged;
                 textBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -1870,23 +1870,23 @@ namespace AlphaSoft
 
         private void detailReturDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
-            DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
+            //var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productName")
-            {
-                if (null != cell.Value)
-                {
-                    if (cell.Value.ToString().Length > 0)
-                    {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
-                    }
-                    else
-                    {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
-                    }
-                }
-            }
+            //if (cell.OwningColumn.Name == "productName")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
 
         }
 
@@ -1895,6 +1895,144 @@ namespace AlphaSoft
             if (originModuleID != globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT && DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ?", "WARNING", MessageBoxButtons.YesNo))
             {
                 printReceipt();
+            }
+        }
+
+        private void detailReturDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            detailReturDataGridView.SuspendLayout();
+        }
+
+        private void detailReturDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            detailReturDataGridView.ResumeLayout();
+        }
+
+        private void detailReturDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            double subTotal = 0;
+            double productPrice = 0;
+            string previousInput = "";
+            string tempString = "";
+            string cellValue = "";
+            string columnName = "";
+            double soQTY = 0;
+            bool validQty = false;
+            var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
+            DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
+           
+            rowSelectedIndex = e.RowIndex;
+            columnName = cell.OwningColumn.Name;
+
+            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "RETUR PENJUALAN : detailReturDataGridView_CellValueChanged [" + columnName + "]");
+
+            if (null != selectedRow.Cells[columnName].Value)
+                cellValue = selectedRow.Cells[columnName].Value.ToString();
+            else
+                cellValue = "";
+
+            if (columnName == "productName")
+            {
+                if (cellValue.Length > 0)
+                {
+                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+
+                    //if (pos > 0)
+                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+
+                    //forceUpOneLevel = true;
+                }
+            }
+            else if (columnName == "qty")
+            { 
+                if (cellValue.Length <= 0)
+                {
+                    // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+                    isLoading = true;
+                    // reset subTotal Value and recalculate total
+                    selectedRow.Cells["subtotal"].Value = 0;
+
+                    if (returnQty.Count > rowSelectedIndex)
+                        returnQty[rowSelectedIndex] = "0";
+                    selectedRow.Cells[columnName].Value = "0";
+
+                    calculateTotal();
+
+                    return;
+                }
+
+                if (returnQty.Count > rowSelectedIndex)
+                    previousInput = returnQty[rowSelectedIndex];
+                else
+                    previousInput = "0";
+
+                if (previousInput == "0")
+                {
+                    tempString = cellValue;
+                    if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                        selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+                }
+
+                if (originModuleID == globalConstants.RETUR_PENJUALAN)
+                {
+                    if (null != selectedRow.Cells["SOqty"].Value)
+                        soQTY = Convert.ToDouble(selectedRow.Cells["SOqty"].Value);
+
+                    if (soQTY >= Convert.ToDouble(cellValue))
+                        validQty = true;
+                    else
+                        validQty = false;
+                }
+                else
+                    validQty = true;
+
+                if (gutil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (cellValue.Length > 0) && validQty
+                    )
+                {
+                    if (returnQty.Count > rowSelectedIndex)
+                        returnQty[rowSelectedIndex] = cellValue;
+                    else
+                        returnQty.Add(cellValue);
+                }
+                else
+                {
+                    selectedRow.Cells[columnName].Value = previousInput;
+                }
+
+                productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+
+                subTotal = Math.Round((productPrice * Convert.ToDouble(returnQty[rowSelectedIndex])), 2);
+
+                if (null != selectedRow.Cells["disc1"].Value)
+                {
+                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc1"].Value) / 100), 2);
+                }
+
+                if (null != selectedRow.Cells["disc2"].Value)
+                {
+                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc2"].Value) / 100), 2);
+                }
+
+                if (null != selectedRow.Cells["discRP"].Value)
+                {
+                    subTotal = subTotal - Convert.ToDouble(selectedRow.Cells["discRP"].Value);
+                }
+
+                selectedRow.Cells["subtotal"].Value = subTotal;
+
+                calculateTotal();
+
+            }
+        }
+
+        private void detailReturDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (detailReturDataGridView.IsCurrentCellDirty)
+            {
+                detailReturDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }

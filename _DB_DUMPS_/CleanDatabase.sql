@@ -445,6 +445,8 @@ CREATE TABLE `master_location` (
   `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `LOCATION_NAME` varchar(45) DEFAULT NULL,
   `LOCATION_TOTAL_QTY` double DEFAULT '0',
+  `LOCATION_DESCRIPTION` varchar(100) DEFAULT '',
+  `LOCATION_ACTIVE` tinyint(3) DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

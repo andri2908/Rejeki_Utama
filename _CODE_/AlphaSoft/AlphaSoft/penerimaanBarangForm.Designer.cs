@@ -547,7 +547,11 @@
             this.detailGridView.RowHeadersVisible = false;
             this.detailGridView.Size = new System.Drawing.Size(979, 299);
             this.detailGridView.TabIndex = 47;
+            this.detailGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailGridView_CellBeginEdit);
+            this.detailGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailGridView_CellEndEdit);
             this.detailGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailGridView_CellValidated);
+            this.detailGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailGridView_CellValueChanged);
+            this.detailGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailGridView_CurrentCellDirtyStateChanged);
             this.detailGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailGridView_RowsAdded);
             // 
             // saveButton

@@ -305,7 +305,11 @@
             this.detailPODataGridView.RowHeadersVisible = false;
             this.detailPODataGridView.Size = new System.Drawing.Size(888, 308);
             this.detailPODataGridView.TabIndex = 46;
+            this.detailPODataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailPODataGridView_CellBeginEdit);
+            this.detailPODataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailPODataGridView_CellEndEdit);
             this.detailPODataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailPODataGridView_CellValidated);
+            this.detailPODataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailPODataGridView_CellValueChanged);
+            this.detailPODataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailPODataGridView_CurrentCellDirtyStateChanged);
             this.detailPODataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailPODataGridView_RowsAdded);
             // 
             // label10

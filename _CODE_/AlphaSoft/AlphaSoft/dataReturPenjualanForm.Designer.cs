@@ -274,8 +274,12 @@
             this.detailReturDataGridView.RowHeadersVisible = false;
             this.detailReturDataGridView.Size = new System.Drawing.Size(888, 379);
             this.detailReturDataGridView.TabIndex = 51;
+            this.detailReturDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailReturDataGridView_CellBeginEdit);
+            this.detailReturDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellEndEdit);
             this.detailReturDataGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellEnter);
             this.detailReturDataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellValidated);
+            this.detailReturDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailReturDataGridView_CellValueChanged);
+            this.detailReturDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailReturDataGridView_CurrentCellDirtyStateChanged);
             this.detailReturDataGridView.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.detailReturDataGridView_RowsAdded);
             // 
             // tableLayoutPanel1

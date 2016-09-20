@@ -311,7 +311,6 @@ namespace AlphaSoft
                             printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
                     }
                     break;
-
             }
         }
 

@@ -445,7 +445,7 @@ namespace AlphaSoft
                 && e.Control is TextBox)
             {
                 TextBox textBox = e.Control as TextBox;
-                textBox.TextChanged += TextBox_TextChanged;
+                //textBox.TextChanged += TextBox_TextChanged;
                 textBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -453,7 +453,7 @@ namespace AlphaSoft
             if ((detailPODataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
-                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                //productIDTextBox.TextChanged -= TextBox_TextChanged;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -1342,25 +1342,140 @@ namespace AlphaSoft
 
         private void detailPODataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
+            //var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
+
+            //if (isLoading == true)
+            //    return;
+
+            //if (cell.OwningColumn.Name == "productName")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
+        }
+
+        private void detailPODataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            detailPODataGridView.SuspendLayout();
+        }
+
+        private void detailPODataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            detailPODataGridView.ResumeLayout();
+        }
+
+        private void detailPODataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            double productQty = 0;
+            double hppValue = 0;
+            double subTotal = 0;
+            string tempString = "";
+            string previousInput = "";
+            string cellValue = "";
+            string columnName = "";
             var cell = detailPODataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailPODataGridView.Rows[e.RowIndex];
 
-            if (isLoading == true)
-                return;
+            rowSelectedIndex = e.RowIndex;
+            columnName = cell.OwningColumn.Name;
 
-            if (cell.OwningColumn.Name == "productName")
+            gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "PURCHASE ORDER : detailPODataGridView_CellValueChanged [" + columnName + "]");
+
+            if (null != selectedRow.Cells[columnName].Value)
+                cellValue = selectedRow.Cells[columnName].Value.ToString();
+            else
+                cellValue = "";
+
+            if (columnName == "productName")
             {
-                if (null != cell.Value)
+                if (cellValue.Length > 0)
                 {
-                    if (cell.Value.ToString().Length > 0)
+                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+
+                    //if (pos > 0)
+                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+
+                    //forceUpOneLevel = true;
+                }
+            }
+            else if (columnName == "HPP" || columnName == "qty")
+            { 
+                if (cellValue.Length <= 0)
+                {
+                    // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+                    isLoading = true;
+                    // reset subTotal Value and recalculate total
+                    selectedRow.Cells["subtotal"].Value = 0;
+
+                    if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
+                        detailQty[rowSelectedIndex] = "0";
+                    else
+                        detailHpp[rowSelectedIndex] = "0";
+
+                    selectedRow.Cells[columnName].Value = "0";
+
+                    calculateTotal();
+
+                    return;
+                }
+
+                if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
+                    previousInput = detailQty[rowSelectedIndex];
+                else
+                    previousInput = detailHpp[rowSelectedIndex];
+
+                isLoading = true;
+                if (previousInput == "0")
+                {
+                    tempString = cellValue;
+                    if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                        selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+                }
+
+                if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                    && (cellValue.Length > 0))
+                {
+                    if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
                     {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                        detailQty[rowSelectedIndex] = cellValue;
                     }
                     else
                     {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                        detailHpp[rowSelectedIndex] = cellValue;
                     }
                 }
+                else
+                {
+                    selectedRow.Cells[columnName].Value = previousInput;
+                }
+
+                hppValue = Convert.ToDouble(detailHpp[rowSelectedIndex]);
+                productQty = Convert.ToDouble(detailQty[rowSelectedIndex]);
+                subTotal = Math.Round((hppValue * productQty), 2);
+
+                selectedRow.Cells["subtotal"].Value = subTotal;
+
+                calculateTotal();
+            }
+        }
+
+        private void detailPODataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (detailPODataGridView.IsCurrentCellDirty)
+            {
+                detailPODataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }

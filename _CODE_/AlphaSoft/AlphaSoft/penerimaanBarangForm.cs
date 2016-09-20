@@ -664,7 +664,7 @@ namespace AlphaSoft
             if ((detailGridView.CurrentCell.OwningColumn.Name == "hpp" || detailGridView.CurrentCell.OwningColumn.Name == "qtyReceived") && e.Control is TextBox)
             {
                 TextBox textBox = e.Control as TextBox;
-                textBox.TextChanged += TextBox_TextChanged;
+                //textBox.TextChanged += TextBox_TextChanged;
                 textBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -672,7 +672,7 @@ namespace AlphaSoft
             if ((detailGridView.CurrentCell.OwningColumn.Name == "productID") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
-                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                //productIDTextBox.TextChanged -= TextBox_TextChanged;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -1619,22 +1619,176 @@ namespace AlphaSoft
 
         private void detailGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
+            //var cell = detailGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailGridView.Rows[e.RowIndex];
+
+            //if (cell.OwningColumn.Name == "productID")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
+        }
+
+        private void detailGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            detailGridView.SuspendLayout();
+        }
+
+        private void detailGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            detailGridView.ResumeLayout();
+        }
+
+        private void detailGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            double productQty = 0;
+            double hppValue = 0;
+            double subTotal = 0;
+            string tempString = "";
+            string previousInput = "";
+            string cellValue = "";
+            string columnName = "";
             var cell = detailGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productID")
+            rowSelectedIndex = e.RowIndex;
+            columnName = cell.OwningColumn.Name;
+
+            gUtil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "RETUR PENJUALAN : detailGridView_CellValueChanged [" + columnName + "]");
+
+            if (null != selectedRow.Cells[columnName].Value)
+                cellValue = selectedRow.Cells[columnName].Value.ToString();
+            else
+                cellValue = "";
+
+            if (columnName == "productName")
             {
-                if (null != cell.Value)
+                if (cellValue.Length > 0)
                 {
-                    if (cell.Value.ToString().Length > 0)
+                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+
+                    //if (pos > 0)
+                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+
+                    //forceUpOneLevel = true;
+                }
+            }
+            else if (detailGridView.CurrentCell.OwningColumn.Name == "hpp" || detailGridView.CurrentCell.OwningColumn.Name == "qtyReceived")
+            { 
+                if (cellValue.Length <= 0)
+                {
+                    // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+                    isLoading = true;
+                    // reset subTotal Value and recalculate total
+                    selectedRow.Cells["subTotal"].Value = 0;
+
+                    if (detailRequestQty.Count >= rowSelectedIndex + 1)
+                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                            detailHpp[rowSelectedIndex] = "0";
+                        else
+                            detailRequestQty[rowSelectedIndex] = "0";
+
+                    selectedRow.Cells[columnName].Value = "0";
+
+                    calculateTotal();
+
+                    return;
+                }
+
+                if (detailRequestQty.Count >= rowSelectedIndex + 1)
+                    if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                        previousInput = detailHpp[rowSelectedIndex];
+                    else
+                        previousInput = detailRequestQty[rowSelectedIndex];
+                else
+                    previousInput = "0";
+
+                isLoading = true;
+                if (previousInput == "0")
+                {
+                    tempString = cellValue;
+                    if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                        selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+                }
+
+                if (detailRequestQty.Count < rowSelectedIndex + 1)
+                {
+                    if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                        && (cellValue.Length > 0))
                     {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                            detailHpp.Add(cellValue);
+                        else
+                            detailRequestQty.Add(cellValue);
                     }
                     else
                     {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                        selectedRow.Cells[columnName].Value = previousInput;
                     }
                 }
+                else
+                {
+                    if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL)
+                        && (cellValue.Length > 0))
+                    {
+                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                            detailHpp[rowSelectedIndex] = cellValue;
+                        else
+                            detailRequestQty[rowSelectedIndex] = cellValue;
+                    }
+                    else
+                    {
+                        if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                            selectedRow.Cells[columnName].Value = detailHpp[rowSelectedIndex];
+                        else
+                            selectedRow.Cells[columnName].Value = detailRequestQty[rowSelectedIndex];
+                    }
+                }
+
+                try
+                {
+                    if (detailGridView.CurrentCell.OwningColumn.Name == "hpp")
+                    {
+                        //changes on hpp
+                        hppValue = Convert.ToDouble(cellValue);
+                        productQty = Convert.ToDouble(selectedRow.Cells["qtyReceived"].Value);
+                    }
+                    else
+                    {
+                        //changes on qty
+                        productQty = Convert.ToDouble(cellValue);
+                        hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+                    }
+
+                    subTotal = Math.Round((hppValue * productQty), 2);
+
+                    selectedRow.Cells["subtotal"].Value = subTotal;
+
+                    calculateTotal();
+                }
+                catch (Exception ex)
+                {
+                    //dataGridViewTextBoxEditingControl.Text = previousInput;
+                }
+            }
+        }
+
+        private void detailGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (detailGridView.IsCurrentCellDirty)
+            {
+                detailGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }
