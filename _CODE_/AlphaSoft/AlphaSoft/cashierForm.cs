@@ -27,14 +27,18 @@ namespace AlphaSoft
         private DateTime localDate = DateTime.Now;
         private double globalTotalValue = 0;
         private double discValue = 0;
+        private double discPercentValue = 0;
         private int selectedPelangganID = 0;
+        private int selectedTechnicianID = 0;
         private int selectedPaymentMethod = 0;
         private bool isLoading = false;
+        private bool isLoadingDiscPercent = false;
         private double bayarAmount = 0;
         private double sisaBayar = 0;
         private int originModuleID = 0;
         private int custIsBlocked = 0;
         private double totalAfterDisc = 0;
+        private string discJualPersenValueText = "";
 
         private Data_Access DS = new Data_Access();
 
@@ -199,7 +203,10 @@ namespace AlphaSoft
                     MessageBox.Show("F10");
                     break;
                 case Keys.F12:
-                    MessageBox.Show("F12");
+                    //MessageBox.Show("F12");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
+                    dataTeknisiForm teknisiForm = new dataTeknisiForm(globalConstants.CASHIER_MODULE, this);
+                    teknisiForm.ShowDialog(this);
                     break;
             }
         }
@@ -448,6 +455,17 @@ namespace AlphaSoft
             }
         }
 
+        public void setTechnicianID(int ID)
+        {
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : SELECTED TECHNICIAN ID [" + ID + "]");
+
+            selectedTechnicianID = ID;
+
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : ATTEMPT TO SET CUSTOMER PROFILE");
+            setTechnicianProfile();
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : FINISHED SET CUSTOMER PROFILE");
+        }
+
         private void setCustomerProfile()
         {
             MySqlDataReader rdr;
@@ -469,6 +487,25 @@ namespace AlphaSoft
                     customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CUSTOMER GROUP [" + customerComboBox.Text + "]");
                     isLoading = false;
+                }
+            }
+            rdr.Close();
+        }
+
+        private void setTechnicianProfile()
+        {
+            MySqlDataReader rdr;
+            string sqlCommand = "";
+
+            //DS.mySqlConnect();
+            sqlCommand = "SELECT * FROM MASTER_TECHNICIAN WHERE ID = " + selectedTechnicianID;
+            using (rdr = DS.getData(sqlCommand))
+            {
+                if (rdr.HasRows)
+                {
+                    rdr.Read();
+
+                    teknisiTextbox.Text = rdr.GetString("TECHNICIAN_NAME");
                 }
             }
             rdr.Close();
@@ -1025,9 +1062,9 @@ namespace AlphaSoft
                     //pass thru to receipt generator
                     selectedsalesinvoice = salesInvoice;
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD) " +
+                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_DISC_PERCENT_FINAL) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ")";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(discJualPersenValueText)) + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1046,9 +1083,9 @@ namespace AlphaSoft
                         throw internalEX;
 
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE) " +
+                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, REV_NO, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SQ_INVOICE, SALES_DISC_PERCENT_FINAL) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "')";
+                                        "('" + salesInvoice + "', " + salesRevNo + ", " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", '" + selectedSQInvoice + "', " + gutil.validateDecimalNumericInput(Convert.ToDouble(discJualPersenValueText)) + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1061,9 +1098,9 @@ namespace AlphaSoft
                     //pass thru to receipt generator
                     selectedsalesinvoice = salesInvoice;
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED, SALESPERSON_ID) " +
+                    sqlCommand = "INSERT INTO SALES_QUOTATION_HEADER (SQ_INVOICE, CUSTOMER_ID, SQ_DATE, SQ_TOTAL, SALES_DISCOUNT_FINAL, SQ_TOP, SQ_TOP_DATE, SQ_APPROVED, SALESPERSON_ID, SALES_DISC_PERCENT_FINAL) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + gutil.getUserID() + ")";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), 0, " + gutil.getUserID() + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(discJualPersenValueText)) + ")";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES QUOTATION HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1076,6 +1113,7 @@ namespace AlphaSoft
                     sqlCommand = "UPDATE SALES_QUOTATION_HEADER SET CUSTOMER_ID = " + selectedPelangganID + ", " +
                                             "SQ_TOTAL = " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " +
                                             "SALES_DISCOUNT_FINAL = " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " +
+                                            "SALES_DISC_PERCENT_FINAL = " + gutil.validateDecimalNumericInput(Convert.ToDouble(discJualPersenValueText)) + ", " +
                                             "SQ_TOP = " + salesTop + ", " +
                                             "SQ_TOP_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y') " +
                                             "WHERE SQ_INVOICE = '" + salesInvoice + "'"; 
@@ -1483,6 +1521,7 @@ namespace AlphaSoft
         {
             double total = 0;
             double discJual = 0;
+            double discJualPercent = 0;
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : calculateTotal");
             for (int i = 0; i < cashierDataGridView.Rows.Count; i++)
@@ -1498,6 +1537,12 @@ namespace AlphaSoft
             totalLabel.Text = total.ToString("c2", culture);
 
             totalPenjualanTextBox.Text = total.ToString("c2", culture);
+
+            if (discJualPersenTextBox.Text.Length > 0)
+            {
+                discJualPercent = Convert.ToDouble(discJualPersenTextBox.Text);
+                totalAfterDisc = totalAfterDisc - Math.Round((totalAfterDisc * discJualPercent) / 100, 2);
+            }
 
             if (discJualMaskedTextBox.Text.Length > 0)
             {
@@ -2125,6 +2170,14 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid");
                 approvalButton.Visible = false;
             }
+            else if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            {
+                loadNoFaktur();
+                approvalButton.Visible = false;
+
+                labelTeknisi.Visible = true;
+                teknisiTextbox.Visible = true;
+            }
 
             addColumnToDataGrid();
 
@@ -2292,15 +2345,18 @@ namespace AlphaSoft
         private void discJualMaskedTextBox_Validating(object sender, CancelEventArgs e)
         {
             //double totalAfterDisc = 0;
+            double tempValue = 0;
+
+            tempValue = Math.Round((globalTotalValue * discPercentValue) /100);
 
             if (discJualMaskedTextBox.Text.Length > 0)
             {
-                totalAfterDisc = globalTotalValue - Convert.ToDouble(discJualMaskedTextBox.Text);
+                totalAfterDisc = globalTotalValue - tempValue - Convert.ToDouble(discJualMaskedTextBox.Text);
                 discValue = Convert.ToDouble(discJualMaskedTextBox.Text);
             }
             else
             { 
-                totalAfterDisc = globalTotalValue;
+                totalAfterDisc = globalTotalValue - tempValue;
                 discValue = 0;
             }
 
@@ -3230,6 +3286,81 @@ namespace AlphaSoft
             {
                 cashierDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+        }
+
+        private void discJualPersenTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string tempString;
+
+            if (isLoadingDiscPercent)
+                return;
+
+            isLoadingDiscPercent = true;
+            if (discJualPersenTextBox.Text.Length == 0)
+            {
+                // IF TEXTBOX IS EMPTY, SET THE VALUE TO 0 AND EXIT THE CHECKING
+                discJualPersenValueText = "0";
+                discJualPersenTextBox.Text = "0";
+
+                discJualPersenTextBox.SelectionStart = discJualPersenTextBox.Text.Length;
+                isLoadingDiscPercent = false;
+
+                return;
+            }
+            // CHECKING TO PREVENT PREFIX "0" IN A NUMERIC INPUT WHILE ALLOWING A DECIMAL VALUE STARTED WITH "0"
+            else if (discJualPersenTextBox.Text.IndexOf('0') == 0 && discJualPersenTextBox.Text.Length > 1 && discJualPersenTextBox.Text.IndexOf("0.") < 0)
+            {
+                tempString = discJualPersenTextBox.Text;
+                discJualPersenTextBox.Text = tempString.Remove(0, 1);
+            }
+
+            if (gutil.matchRegEx(discJualPersenTextBox.Text, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
+                discJualPersenValueText = discJualPersenTextBox.Text;
+            else
+                discJualPersenTextBox.Text = discJualPersenValueText;
+
+            discJualPersenTextBox.SelectionStart = discJualPersenTextBox.Text.Length;
+            isLoadingDiscPercent = false;
+
+            //double totalAfterDisc = 0;
+            double tempValue = 0;
+            double tempDiscRPValue = 0;
+
+            if (discJualMaskedTextBox.Text.Length > 0)
+                tempDiscRPValue = Convert.ToDouble(discJualMaskedTextBox.Text);
+            else
+                tempDiscRPValue = 0;
+
+            if (discJualPersenTextBox.Text.Length > 0)
+            {
+                discPercentValue = Convert.ToDouble(discJualPersenTextBox.Text);
+
+                tempValue = Math.Round((globalTotalValue * discPercentValue) / 100);
+                totalAfterDisc = globalTotalValue - tempValue - tempDiscRPValue;
+            }
+            else
+            {
+                totalAfterDisc = globalTotalValue - tempDiscRPValue;
+                discPercentValue = 0;
+            }
+
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [" + totalAfterDisc + "]");
+            totalAfterDiscTextBox.Text = totalAfterDisc.ToString("C2", culture);
+        }
+
+        private void discJualPersenTextBox_Validating(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void discJualPersenTextBox_Enter(object sender, EventArgs e)
+        {
+            discJualPersenTextBox.SelectionStart = discJualPersenTextBox.Text.Length;
+        }
+
+        private void discJualPersenTextBox_Click(object sender, EventArgs e)
+        {
+            discJualPersenTextBox.SelectionStart = discJualPersenTextBox.Text.Length;
         }
     }
 }

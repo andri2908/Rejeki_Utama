@@ -109,7 +109,11 @@
             this.detailRequestOrderDataGridView.RowHeadersVisible = false;
             this.detailRequestOrderDataGridView.Size = new System.Drawing.Size(892, 297);
             this.detailRequestOrderDataGridView.TabIndex = 39;
+            this.detailRequestOrderDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.detailRequestOrderDataGridView_CellBeginEdit);
+            this.detailRequestOrderDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailRequestOrderDataGridView_CellEndEdit);
             this.detailRequestOrderDataGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailRequestOrderDataGridView_CellValidated);
+            this.detailRequestOrderDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.detailRequestOrderDataGridView_CellValueChanged);
+            this.detailRequestOrderDataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.detailRequestOrderDataGridView_CurrentCellDirtyStateChanged);
             // 
             // label2
             // 

@@ -56,12 +56,13 @@
             this.customerComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.discJualPersenTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.bayarTextBox = new System.Windows.Forms.MaskedTextBox();
             this.discJualMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.uangKembaliTextBox = new System.Windows.Forms.TextBox();
             this.totalAfterDiscTextBox = new System.Windows.Forms.TextBox();
             this.totalPenjualanTextBox = new System.Windows.Forms.TextBox();
-            this.panel8 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -85,6 +86,8 @@
             this.dateTimeStampLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.teknisiTextbox = new System.Windows.Forms.TextBox();
+            this.labelTeknisi = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
@@ -184,7 +187,7 @@
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
-            this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
+            this.cashierDataGridView.Location = new System.Drawing.Point(2, 134);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
@@ -198,7 +201,7 @@
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.cashierDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.cashierDataGridView.Size = new System.Drawing.Size(983, 334);
+            this.cashierDataGridView.Size = new System.Drawing.Size(983, 307);
             this.cashierDataGridView.TabIndex = 8;
             this.cashierDataGridView.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.cashierDataGridView_CellBeginEdit);
             this.cashierDataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.cashierDataGridView_CellEndEdit);
@@ -209,6 +212,8 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.teknisiTextbox);
+            this.panel5.Controls.Add(this.labelTeknisi);
             this.panel5.Controls.Add(this.rejectButton);
             this.panel5.Controls.Add(this.approvalButton);
             this.panel5.Controls.Add(this.ChangePrinterButton);
@@ -226,16 +231,16 @@
             this.panel5.Controls.Add(this.panel6);
             this.panel5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel5.ForeColor = System.Drawing.Color.AntiqueWhite;
-            this.panel5.Location = new System.Drawing.Point(2, 477);
+            this.panel5.Location = new System.Drawing.Point(2, 447);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(982, 162);
+            this.panel5.Size = new System.Drawing.Size(982, 192);
             this.panel5.TabIndex = 9;
             // 
             // rejectButton
             // 
             this.rejectButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rejectButton.ForeColor = System.Drawing.Color.Black;
-            this.rejectButton.Location = new System.Drawing.Point(452, 107);
+            this.rejectButton.Location = new System.Drawing.Point(452, 122);
             this.rejectButton.Name = "rejectButton";
             this.rejectButton.Size = new System.Drawing.Size(131, 34);
             this.rejectButton.TabIndex = 39;
@@ -248,7 +253,7 @@
             // 
             this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.approvalButton.ForeColor = System.Drawing.Color.Black;
-            this.approvalButton.Location = new System.Drawing.Point(343, 107);
+            this.approvalButton.Location = new System.Drawing.Point(343, 122);
             this.approvalButton.Name = "approvalButton";
             this.approvalButton.Size = new System.Drawing.Size(158, 34);
             this.approvalButton.TabIndex = 38;
@@ -260,7 +265,7 @@
             // 
             this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 68);
+            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 83);
             this.ChangePrinterButton.Name = "ChangePrinterButton";
             this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
             this.ChangePrinterButton.TabIndex = 37;
@@ -275,7 +280,7 @@
             this.errorLabel.BackColor = System.Drawing.Color.White;
             this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(8, 137);
+            this.errorLabel.Location = new System.Drawing.Point(8, 168);
             this.errorLabel.Name = "errorLabel";
             this.errorLabel.Size = new System.Drawing.Size(23, 18);
             this.errorLabel.TabIndex = 36;
@@ -284,7 +289,7 @@
             // tempoMaskedTextBox
             // 
             this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 68);
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 88);
             this.tempoMaskedTextBox.Mask = "00000";
             this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
             this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
@@ -297,7 +302,7 @@
             // pelangganTextBox
             // 
             this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 10);
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 30);
             this.pelangganTextBox.Name = "pelangganTextBox";
             this.pelangganTextBox.ReadOnly = true;
             this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
@@ -308,7 +313,7 @@
             this.printoutCheckBox.AutoSize = true;
             this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.printoutCheckBox.Location = new System.Drawing.Point(11, 110);
+            this.printoutCheckBox.Location = new System.Drawing.Point(11, 126);
             this.printoutCheckBox.Name = "printoutCheckBox";
             this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
             this.printoutCheckBox.TabIndex = 8;
@@ -322,7 +327,7 @@
             "Cash",
             "Kartu Kredit",
             "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(154, 69);
+            this.paymentComboBox.Location = new System.Drawing.Point(154, 89);
             this.paymentComboBox.Name = "paymentComboBox";
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
@@ -334,7 +339,7 @@
             this.labelCaraBayar.AutoSize = true;
             this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 71);
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 91);
             this.labelCaraBayar.Name = "labelCaraBayar";
             this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
             this.labelCaraBayar.TabIndex = 6;
@@ -344,7 +349,7 @@
             // 
             this.creditRadioButton.AutoSize = true;
             this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(229, 41);
+            this.creditRadioButton.Location = new System.Drawing.Point(229, 61);
             this.creditRadioButton.Name = "creditRadioButton";
             this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
             this.creditRadioButton.TabIndex = 5;
@@ -357,7 +362,7 @@
             this.cashRadioButton.AutoSize = true;
             this.cashRadioButton.Checked = true;
             this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(154, 41);
+            this.cashRadioButton.Location = new System.Drawing.Point(154, 61);
             this.cashRadioButton.Name = "cashRadioButton";
             this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
             this.cashRadioButton.TabIndex = 4;
@@ -371,7 +376,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(9, 42);
+            this.label4.Location = new System.Drawing.Point(9, 62);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
@@ -384,7 +389,7 @@
             "P-UMUM [ECER]",
             "P-PARTAI",
             "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(343, 10);
+            this.customerComboBox.Location = new System.Drawing.Point(343, 26);
             this.customerComboBox.Name = "customerComboBox";
             this.customerComboBox.Size = new System.Drawing.Size(183, 26);
             this.customerComboBox.TabIndex = 2;
@@ -396,7 +401,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(9, 13);
+            this.label3.Location = new System.Drawing.Point(9, 33);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 1;
@@ -407,27 +412,55 @@
             this.panel6.BackColor = System.Drawing.Color.FloralWhite;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.discJualPersenTextBox);
+            this.panel6.Controls.Add(this.label2);
             this.panel6.Controls.Add(this.bayarTextBox);
             this.panel6.Controls.Add(this.discJualMaskedTextBox);
             this.panel6.Controls.Add(this.uangKembaliTextBox);
             this.panel6.Controls.Add(this.totalAfterDiscTextBox);
             this.panel6.Controls.Add(this.totalPenjualanTextBox);
-            this.panel6.Controls.Add(this.panel8);
             this.panel6.Controls.Add(this.panel7);
             this.panel6.Controls.Add(this.label13);
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.label11);
             this.panel6.Controls.Add(this.label10);
             this.panel6.Controls.Add(this.label9);
-            this.panel6.Location = new System.Drawing.Point(602, 0);
+            this.panel6.Location = new System.Drawing.Point(602, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(370, 161);
+            this.panel6.Size = new System.Drawing.Size(370, 186);
             this.panel6.TabIndex = 0;
+            // 
+            // discJualPersenTextBox
+            // 
+            this.discJualPersenTextBox.Location = new System.Drawing.Point(185, 30);
+            this.discJualPersenTextBox.MaxLength = 4;
+            this.discJualPersenTextBox.Name = "discJualPersenTextBox";
+            this.discJualPersenTextBox.Size = new System.Drawing.Size(60, 27);
+            this.discJualPersenTextBox.TabIndex = 20;
+            this.discJualPersenTextBox.Text = "0";
+            this.discJualPersenTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.discJualPersenTextBox.Click += new System.EventHandler(this.discJualPersenTextBox_Click);
+            this.discJualPersenTextBox.TextChanged += new System.EventHandler(this.discJualPersenTextBox_TextChanged);
+            this.discJualPersenTextBox.Enter += new System.EventHandler(this.discJualPersenTextBox_Enter);
+            this.discJualPersenTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.discJualPersenTextBox_Validating);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.FloralWhite;
+            this.label2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(5, 33);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(187, 18);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Disc [%]                  : ";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bayarTextBox
             // 
             this.bayarTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bayarTextBox.Location = new System.Drawing.Point(186, 102);
+            this.bayarTextBox.Location = new System.Drawing.Point(186, 126);
             this.bayarTextBox.Mask = "000000000000000";
             this.bayarTextBox.Name = "bayarTextBox";
             this.bayarTextBox.Size = new System.Drawing.Size(181, 27);
@@ -439,7 +472,7 @@
             // discJualMaskedTextBox
             // 
             this.discJualMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.discJualMaskedTextBox.Location = new System.Drawing.Point(184, 33);
+            this.discJualMaskedTextBox.Location = new System.Drawing.Point(185, 58);
             this.discJualMaskedTextBox.Mask = "000000000000000";
             this.discJualMaskedTextBox.Name = "discJualMaskedTextBox";
             this.discJualMaskedTextBox.Size = new System.Drawing.Size(181, 27);
@@ -452,7 +485,7 @@
             // uangKembaliTextBox
             // 
             this.uangKembaliTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uangKembaliTextBox.Location = new System.Drawing.Point(186, 131);
+            this.uangKembaliTextBox.Location = new System.Drawing.Point(186, 155);
             this.uangKembaliTextBox.Name = "uangKembaliTextBox";
             this.uangKembaliTextBox.ReadOnly = true;
             this.uangKembaliTextBox.Size = new System.Drawing.Size(181, 27);
@@ -463,7 +496,7 @@
             // totalAfterDiscTextBox
             // 
             this.totalAfterDiscTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalAfterDiscTextBox.Location = new System.Drawing.Point(185, 67);
+            this.totalAfterDiscTextBox.Location = new System.Drawing.Point(185, 97);
             this.totalAfterDiscTextBox.Name = "totalAfterDiscTextBox";
             this.totalAfterDiscTextBox.ReadOnly = true;
             this.totalAfterDiscTextBox.Size = new System.Drawing.Size(181, 27);
@@ -474,7 +507,7 @@
             // totalPenjualanTextBox
             // 
             this.totalPenjualanTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.totalPenjualanTextBox.Location = new System.Drawing.Point(184, 3);
+            this.totalPenjualanTextBox.Location = new System.Drawing.Point(185, 3);
             this.totalPenjualanTextBox.Name = "totalPenjualanTextBox";
             this.totalPenjualanTextBox.ReadOnly = true;
             this.totalPenjualanTextBox.Size = new System.Drawing.Size(181, 27);
@@ -482,22 +515,12 @@
             this.totalPenjualanTextBox.Text = "0";
             this.totalPenjualanTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // panel8
-            // 
-            this.panel8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panel8.BackColor = System.Drawing.Color.Black;
-            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel8.Location = new System.Drawing.Point(-1, 96);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(371, 5);
-            this.panel8.TabIndex = 11;
-            // 
             // panel7
             // 
             this.panel7.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel7.BackColor = System.Drawing.Color.Black;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Location = new System.Drawing.Point(-1, 60);
+            this.panel7.Location = new System.Drawing.Point(-1, 89);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(371, 5);
             this.panel7.TabIndex = 10;
@@ -508,7 +531,7 @@
             this.label13.BackColor = System.Drawing.Color.FloralWhite;
             this.label13.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(8, 135);
+            this.label13.Location = new System.Drawing.Point(8, 159);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(184, 18);
             this.label13.TabIndex = 6;
@@ -521,7 +544,7 @@
             this.label12.BackColor = System.Drawing.Color.FloralWhite;
             this.label12.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(5, 106);
+            this.label12.Location = new System.Drawing.Point(5, 130);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(182, 18);
             this.label12.TabIndex = 5;
@@ -534,7 +557,7 @@
             this.label11.BackColor = System.Drawing.Color.FloralWhite;
             this.label11.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.Black;
-            this.label11.Location = new System.Drawing.Point(2, 70);
+            this.label11.Location = new System.Drawing.Point(2, 100);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(184, 18);
             this.label11.TabIndex = 4;
@@ -547,11 +570,11 @@
             this.label10.BackColor = System.Drawing.Color.FloralWhite;
             this.label10.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(4, 36);
+            this.label10.Location = new System.Drawing.Point(5, 61);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(186, 18);
             this.label10.TabIndex = 3;
-            this.label10.Text = "Disc Penjualan [*] : ";
+            this.label10.Text = "Disc  [Rp]                : ";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label9
@@ -560,7 +583,7 @@
             this.label9.BackColor = System.Drawing.Color.FloralWhite;
             this.label9.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(3, 6);
+            this.label9.Location = new System.Drawing.Point(4, 6);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(187, 18);
             this.label9.TabIndex = 2;
@@ -572,7 +595,7 @@
             this.panel9.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panel9.BackColor = System.Drawing.Color.Black;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Location = new System.Drawing.Point(1, 465);
+            this.panel9.Location = new System.Drawing.Point(2, 438);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(983, 10);
             this.panel9.TabIndex = 10;
@@ -709,6 +732,28 @@
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
+            // teknisiTextbox
+            // 
+            this.teknisiTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teknisiTextbox.Location = new System.Drawing.Point(154, 0);
+            this.teknisiTextbox.Name = "teknisiTextbox";
+            this.teknisiTextbox.ReadOnly = true;
+            this.teknisiTextbox.Size = new System.Drawing.Size(181, 27);
+            this.teknisiTextbox.TabIndex = 41;
+            this.teknisiTextbox.Visible = false;
+            // 
+            // labelTeknisi
+            // 
+            this.labelTeknisi.AutoSize = true;
+            this.labelTeknisi.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTeknisi.ForeColor = System.Drawing.Color.FloralWhite;
+            this.labelTeknisi.Location = new System.Drawing.Point(9, 3);
+            this.labelTeknisi.Name = "labelTeknisi";
+            this.labelTeknisi.Size = new System.Drawing.Size(112, 18);
+            this.labelTeknisi.TabIndex = 40;
+            this.labelTeknisi.Text = "&Teknisi [?] : ";
+            this.labelTeknisi.Visible = false;
+            // 
             // cashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -766,7 +811,6 @@
         private System.Windows.Forms.Label labelCaraBayar;
         private System.Windows.Forms.ComboBox paymentComboBox;
         private System.Windows.Forms.CheckBox printoutCheckBox;
-        private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
@@ -801,6 +845,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.Button approvalButton;
         private System.Windows.Forms.Button rejectButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox discJualPersenTextBox;
+        private System.Windows.Forms.TextBox teknisiTextbox;
+        private System.Windows.Forms.Label labelTeknisi;
     }
 }
 

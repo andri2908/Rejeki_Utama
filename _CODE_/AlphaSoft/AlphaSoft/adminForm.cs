@@ -1404,5 +1404,13 @@ namespace AlphaSoft
             displayedForm.MdiParent = this;
             displayedForm.Show();
         }
+
+        private void MENU_PENGATURAN_TEKNISI_Click(object sender, EventArgs e)
+        {
+            dataTeknisiForm displayedForm = new dataTeknisiForm();
+
+            displayedForm.MdiParent = this;
+            displayedForm.Show();
+        }
     }
 }

@@ -432,7 +432,7 @@ namespace AlphaSoft
             if ((detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "productName") && e.Control is TextBox)
             {
                 TextBox productIDTextBox = e.Control as TextBox;
-                productIDTextBox.TextChanged -= TextBox_TextChanged;
+                //productIDTextBox.TextChanged -= TextBox_TextChanged;
                 productIDTextBox.PreviewKeyDown += TextBox_previewKeyDown;
                 productIDTextBox.CharacterCasing = CharacterCasing.Upper;
                 productIDTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -443,7 +443,7 @@ namespace AlphaSoft
             if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "qty" && e.Control is TextBox)
             {
                 TextBox textBox = e.Control as TextBox;
-                textBox.TextChanged += TextBox_TextChanged;
+                //textBox.TextChanged += TextBox_TextChanged;
                 textBox.PreviewKeyDown -= TextBox_previewKeyDown;
                 textBox.AutoCompleteMode = AutoCompleteMode.None;
             }
@@ -1706,22 +1706,168 @@ namespace AlphaSoft
 
         private void detailRequestOrderDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
+            //var cell = detailRequestOrderDataGridView[e.ColumnIndex, e.RowIndex];
+            //DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[e.RowIndex];
+
+            //if (cell.OwningColumn.Name == "productName")
+            //{
+            //    if (null != cell.Value)
+            //    {
+            //        if (cell.Value.ToString().Length > 0)
+            //        {
+            //            updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+            //        }
+            //        else
+            //        {
+            //            clearUpSomeRowContents(selectedRow, e.RowIndex);
+            //        }
+            //    }
+            //}
+        }
+
+        private void detailRequestOrderDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            detailRequestOrderDataGridView.SuspendLayout();
+        }
+
+        private void detailRequestOrderDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            detailRequestOrderDataGridView.ResumeLayout();
+        }
+
+        private void detailRequestOrderDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowSelectedIndex = 0;
+            double subTotal = 0;
+            string previousInput = "";
+            string tempString = "";
+            string cellValue = "";
+            string columnName = "";
+            double productQty = 0;
+            bool validInput = false;
+            double hppValue = 0;
             var cell = detailRequestOrderDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailRequestOrderDataGridView.Rows[e.RowIndex];
 
-            if (cell.OwningColumn.Name == "productName")
+            rowSelectedIndex = e.RowIndex;
+            columnName = cell.OwningColumn.Name;
+
+            gUtil.saveSystemDebugLog(globalConstants.MENU_MUTASI_BARANG, "MUTASI BARANG : detailRequestOrderDataGridView_CellValueChanged [" + columnName + "]");
+
+            if (null != selectedRow.Cells[columnName].Value)
+                cellValue = selectedRow.Cells[columnName].Value.ToString();
+            else
+                cellValue = "";
+
+            if (columnName == "productName")
             {
-                if (null != cell.Value)
+                if (cellValue.Length > 0)
                 {
-                    if (cell.Value.ToString().Length > 0)
+                    updateSomeRowContents(selectedRow, rowSelectedIndex, cellValue);
+                    //int pos = cashierDataGridView.CurrentCell.RowIndex;
+
+                    //if (pos > 0)
+                    //    cashierDataGridView.CurrentCell = cashierDataGridView.Rows[pos - 1].Cells["qty"];
+
+                    //forceUpOneLevel = true;
+                }
+            }
+            else if (detailRequestOrderDataGridView.CurrentCell.OwningColumn.Name == "qty")
+            {
+                // Condition to check
+                // - empty string
+                // - non numeric input
+                if (cellValue.Length <= 0)
+                {
+                    // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
+
+                    isLoading = true;
+                    // reset subTotal Value and recalculate total
+                    selectedRow.Cells["subTotal"].Value = 0;
+
+                    if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
+                        detailRequestQtyApproved[rowSelectedIndex] = "0";
+
+                    selectedRow.Cells[columnName].Value = "0";
+
+                    calculateTotal();
+
+                    return;
+                }
+
+                isLoading = true;
+                // get value for previous input
+                if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
+                {
+                    previousInput = detailRequestQtyApproved[rowSelectedIndex];
+                }
+                else
+                    previousInput = "0";
+
+                if (previousInput == "0")
+                {
+                    tempString = cellValue;
+                    if (tempString.IndexOf('0') == 0 && tempString.Length > 1 && tempString.IndexOf("0.") < 0)
+                        selectedRow.Cells[columnName].Value = tempString.Remove(tempString.IndexOf('0'), 1);
+                }
+
+                if (gUtil.matchRegEx(cellValue, globalUtilities.REGEX_NUMBER_WITH_2_DECIMAL))
+                {
+                    // if input match RegEx
+                    try
                     {
-                        updateSomeRowContents(selectedRow, e.RowIndex, cell.Value.ToString());
+                        productQty = Convert.ToDouble(cellValue);
+
+                        // check if there's a product ID for that particular row
+                        if (null != selectedRow.Cells["productID"].Value)
+                            if (stockIsEnough(selectedRow.Cells["productID"].Value.ToString(), productQty))
+                                validInput = true;
+
+                        // input match RegEx, and Stock is enough
+                        if (validInput)
+                        {
+                            errorLabel.Text = "";
+                            // check whether it's a new row or not
+                            if (detailRequestQtyApproved.Count < rowSelectedIndex + 1)
+                                detailRequestQtyApproved.Add(cellValue); // NEW ROW
+                            else
+                                detailRequestQtyApproved[rowSelectedIndex] = cellValue; // EXISTING ROW
+
+                            previousInput = cellValue;
+
+                            hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+                            subTotal = Math.Round((hppValue * productQty), 2);
+
+                            selectedRow.Cells["subTotal"].Value = subTotal;
+
+                            calculateTotal();
+                        }
+                        else
+                        {
+                            // if stock is not enough
+                            selectedRow.Cells[columnName].Value = previousInput;
+                            if (null != selectedRow.Cells["productID"].Value)
+                                errorLabel.Text = "JUMLAH STOK TIDAK MENCUKUPI";
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        clearUpSomeRowContents(selectedRow, e.RowIndex);
+                        selectedRow.Cells[columnName].Value = previousInput;
                     }
                 }
+                else
+                {
+                    // if input doesn't match RegEx
+                    selectedRow.Cells[columnName].Value = previousInput;
+                }
+            }
+        }
+
+        private void detailRequestOrderDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (detailRequestOrderDataGridView.IsCurrentCellDirty)
+            {
+                detailRequestOrderDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }

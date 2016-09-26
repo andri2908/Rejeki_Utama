@@ -174,6 +174,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dataReturPermintaanPrintOut.rpt</DependentUpon>
     </Compile>
+    <Compile Include="dataServiceACDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataServiceACDetailForm.Designer.cs">
+      <DependentUpon>dataServiceACDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataServiceACForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataServiceACForm.Designer.cs">
+      <DependentUpon>dataServiceACForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataTeknisiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataTeknisiForm.Designer.cs">
+      <DependentUpon>dataTeknisiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataTeknisiDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataTeknisiDetailForm.Designer.cs">
+      <DependentUpon>dataTeknisiDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="dummyReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1193,6 +1217,15 @@
     <EmbeddedResource Include="dataReturPermintaanPrintOut.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>dataReturPermintaanPrintOut.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataServiceACDetailForm.resx">
+      <DependentUpon>dataServiceACDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataTeknisiDetailForm.resx">
+      <DependentUpon>dataTeknisiDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataTeknisiForm.resx">
+      <DependentUpon>dataTeknisiForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dummyReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

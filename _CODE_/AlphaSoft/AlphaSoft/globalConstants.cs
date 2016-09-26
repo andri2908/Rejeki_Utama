@@ -84,7 +84,8 @@ namespace AlphaSoft
         public const int EDIT_REGION = 228;
         public const int NEW_LOCATION = 229;
         public const int EDIT_LOCATION = 230;
-
+        public const int NEW_TECHNICIAN = 231;
+        public const int EDIT_TECHNICIAN = 232;
 
         public const int NEW_AKUN = 501;  //start from 5
         public const int EDIT_AKUN = 502;
@@ -92,6 +93,11 @@ namespace AlphaSoft
         public const int EDIT_DJ = 504;
         public const int SALES_COMMISSION = 505;
         public const int MEMBERSHIP_POINT = 506;
+
+        // REJEKI_UTAMA SPECIFIC
+        public const int SERVICE_AC = 701;
+        public const int TUGAS_PEMASANGAN_BARU = 702;
+
 
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE

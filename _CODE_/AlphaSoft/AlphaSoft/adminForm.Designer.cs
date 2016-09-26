@@ -52,6 +52,7 @@
             this.MENU_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_gudang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanGudang = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_PENGATURAN_TEKNISI = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_produk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_tambahProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanHarga = new System.Windows.Forms.ToolStripMenuItem();
@@ -188,6 +189,8 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.MENU_ServiceAC = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_PEMASANGAN_BARU = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -401,6 +404,7 @@
             this.MAINMENU_gudang.BackColor = System.Drawing.Color.SteelBlue;
             this.MAINMENU_gudang.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_pengaturanGudang,
+            this.MENU_PENGATURAN_TEKNISI,
             this.MENU_produk,
             this.MENU_kategori,
             this.MENU_satuan,
@@ -424,6 +428,16 @@
             this.MENU_pengaturanGudang.Size = new System.Drawing.Size(254, 22);
             this.MENU_pengaturanGudang.Text = "Pengaturan Lokasi";
             this.MENU_pengaturanGudang.Click += new System.EventHandler(this.MENU_pengaturanGudang_Click);
+            // 
+            // MENU_PENGATURAN_TEKNISI
+            // 
+            this.MENU_PENGATURAN_TEKNISI.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_PENGATURAN_TEKNISI.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_PENGATURAN_TEKNISI.Name = "MENU_PENGATURAN_TEKNISI";
+            this.MENU_PENGATURAN_TEKNISI.ShowShortcutKeys = false;
+            this.MENU_PENGATURAN_TEKNISI.Size = new System.Drawing.Size(254, 22);
+            this.MENU_PENGATURAN_TEKNISI.Text = "Pengaturan Teknisi";
+            this.MENU_PENGATURAN_TEKNISI.Click += new System.EventHandler(this.MENU_PENGATURAN_TEKNISI_Click);
             // 
             // MENU_produk
             // 
@@ -787,7 +801,9 @@
             this.toolStripMenuItem10,
             this.MENU_SalesCommission,
             this.MENU_modulKasir,
-            this.MENU_setNoFaktur});
+            this.MENU_setNoFaktur,
+            this.MENU_ServiceAC,
+            this.MENU_PEMASANGAN_BARU});
             this.MENU_transaksiPenjualan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_transaksiPenjualan.Name = "MENU_transaksiPenjualan";
             this.MENU_transaksiPenjualan.Size = new System.Drawing.Size(221, 22);
@@ -1795,6 +1811,22 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // MENU_ServiceAC
+            // 
+            this.MENU_ServiceAC.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_ServiceAC.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_ServiceAC.Name = "MENU_ServiceAC";
+            this.MENU_ServiceAC.Size = new System.Drawing.Size(225, 22);
+            this.MENU_ServiceAC.Text = "Service AC";
+            // 
+            // MENU_PEMASANGAN_BARU
+            // 
+            this.MENU_PEMASANGAN_BARU.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_PEMASANGAN_BARU.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_PEMASANGAN_BARU.Name = "MENU_PEMASANGAN_BARU";
+            this.MENU_PEMASANGAN_BARU.Size = new System.Drawing.Size(225, 22);
+            this.MENU_PEMASANGAN_BARU.Text = "Pemasangan Baru";
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1992,6 +2024,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanGudang;
+        private System.Windows.Forms.ToolStripMenuItem MENU_PENGATURAN_TEKNISI;
+        private System.Windows.Forms.ToolStripMenuItem MENU_ServiceAC;
+        private System.Windows.Forms.ToolStripMenuItem MENU_PEMASANGAN_BARU;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }
