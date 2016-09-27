@@ -174,18 +174,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dataReturPermintaanPrintOut.rpt</DependentUpon>
     </Compile>
-    <Compile Include="dataServiceACDetailForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataServiceACDetailForm.Designer.cs">
-      <DependentUpon>dataServiceACDetailForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="dataServiceACForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="dataServiceACForm.Designer.cs">
-      <DependentUpon>dataServiceACForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="dataTeknisiForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1149,6 +1137,18 @@
     <Compile Include="stokTransferForm.Designer.cs">
       <DependentUpon>stokTransferForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="suratTugas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>suratTugas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="suratTugasPrintOutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="suratTugasPrintOutForm.Designer.cs">
+      <DependentUpon>suratTugasPrintOutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TabOrderManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1217,9 +1217,6 @@
     <EmbeddedResource Include="dataReturPermintaanPrintOut.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>dataReturPermintaanPrintOut.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="dataServiceACDetailForm.resx">
-      <DependentUpon>dataServiceACDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="dataTeknisiDetailForm.resx">
       <DependentUpon>dataTeknisiDetailForm.cs</DependentUpon>
@@ -1738,6 +1735,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="stokTransferForm.resx">
       <DependentUpon>stokTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="suratTugas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>suratTugas.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="suratTugasPrintOutForm.resx">
+      <DependentUpon>suratTugasPrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TabSchemeProvider.resx" />
     <EmbeddedResource Include="XMLGeneratorForm.resx">

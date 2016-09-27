@@ -1412,5 +1412,19 @@ namespace AlphaSoft
             displayedForm.MdiParent = this;
             displayedForm.Show();
         }
+
+        private void MENU_ServiceAC_Click(object sender, EventArgs e)
+        {
+            cashierForm displayedForm = new cashierForm(globalConstants.SERVICE_AC, false);
+
+            displayedForm.Show();
+        }
+
+        private void MENU_PEMASANGAN_BARU_Click(object sender, EventArgs e)
+        {
+            cashierForm displayedForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, false);
+
+            displayedForm.Show();
+        }
     }
 }

@@ -1,2 +1,0 @@
-D:\Project\Rejeki_Utama\_CODE_\AlphaSoft\AlphaSoft\bin\Debug\AlphaSoft.exe
-D:\Project\Rejeki_Utama\_CODE_\AlphaSoft\AlphaSoft\obj\Debug\AlphaSoft.exe

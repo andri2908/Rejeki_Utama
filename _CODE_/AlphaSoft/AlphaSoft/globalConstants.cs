@@ -267,6 +267,7 @@ namespace AlphaSoft
         public const string creditPaymentXML = "creditPaymentPrintOut.xml";
         public const string returPenjualanXML = "dataReturPenjualanPrintOut.xml";
         public const string penjualanRegionXML = "penjualanByRegion.xml";
+        public const string suratTugasXML = "suratTugas.xml";
 
         public const string allSalesCommissionXML = "SalesCommission_ALL.xml";
         public const string salesCommissionXML = "SalesCommission.xml";

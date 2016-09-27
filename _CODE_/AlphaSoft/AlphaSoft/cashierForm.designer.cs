@@ -41,6 +41,13 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panelSuratTugas = new System.Windows.Forms.Panel();
+            this.finishedTimeMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.finishedDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.teknisiTextbox = new System.Windows.Forms.TextBox();
+            this.labelTeknisi = new System.Windows.Forms.Label();
             this.rejectButton = new System.Windows.Forms.Button();
             this.approvalButton = new System.Windows.Forms.Button();
             this.ChangePrinterButton = new System.Windows.Forms.Button();
@@ -86,11 +93,10 @@
             this.dateTimeStampLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.teknisiTextbox = new System.Windows.Forms.TextBox();
-            this.labelTeknisi = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).BeginInit();
             this.panel5.SuspendLayout();
+            this.panelSuratTugas.SuspendLayout();
             this.panel6.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -212,6 +218,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.panelSuratTugas);
             this.panel5.Controls.Add(this.teknisiTextbox);
             this.panel5.Controls.Add(this.labelTeknisi);
             this.panel5.Controls.Add(this.rejectButton);
@@ -235,6 +242,89 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 192);
             this.panel5.TabIndex = 9;
+            // 
+            // panelSuratTugas
+            // 
+            this.panelSuratTugas.BackColor = System.Drawing.Color.FloralWhite;
+            this.panelSuratTugas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.panelSuratTugas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSuratTugas.Controls.Add(this.finishedTimeMaskedTextBox);
+            this.panelSuratTugas.Controls.Add(this.finishedDateTimePicker);
+            this.panelSuratTugas.Controls.Add(this.label5);
+            this.panelSuratTugas.Controls.Add(this.label15);
+            this.panelSuratTugas.Location = new System.Drawing.Point(602, 4);
+            this.panelSuratTugas.Name = "panelSuratTugas";
+            this.panelSuratTugas.Size = new System.Drawing.Size(370, 69);
+            this.panelSuratTugas.TabIndex = 21;
+            this.panelSuratTugas.Visible = false;
+            // 
+            // finishedTimeMaskedTextBox
+            // 
+            this.finishedTimeMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishedTimeMaskedTextBox.Location = new System.Drawing.Point(185, 37);
+            this.finishedTimeMaskedTextBox.Mask = "90:00";
+            this.finishedTimeMaskedTextBox.Name = "finishedTimeMaskedTextBox";
+            this.finishedTimeMaskedTextBox.Size = new System.Drawing.Size(60, 27);
+            this.finishedTimeMaskedTextBox.TabIndex = 20;
+            this.finishedTimeMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.finishedTimeMaskedTextBox.ValidatingType = typeof(System.DateTime);
+            // 
+            // finishedDateTimePicker
+            // 
+            this.finishedDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.finishedDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.finishedDateTimePicker.Location = new System.Drawing.Point(186, 5);
+            this.finishedDateTimePicker.Name = "finishedDateTimePicker";
+            this.finishedDateTimePicker.Size = new System.Drawing.Size(152, 27);
+            this.finishedDateTimePicker.TabIndex = 18;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.FloralWhite;
+            this.label5.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(3, 38);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(186, 18);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Jam Selesai             : ";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.FloralWhite;
+            this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(3, 9);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(186, 18);
+            this.label15.TabIndex = 2;
+            this.label15.Text = "Tanggal Selesai      : ";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // teknisiTextbox
+            // 
+            this.teknisiTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teknisiTextbox.Location = new System.Drawing.Point(154, 8);
+            this.teknisiTextbox.Name = "teknisiTextbox";
+            this.teknisiTextbox.ReadOnly = true;
+            this.teknisiTextbox.Size = new System.Drawing.Size(181, 27);
+            this.teknisiTextbox.TabIndex = 41;
+            this.teknisiTextbox.Visible = false;
+            // 
+            // labelTeknisi
+            // 
+            this.labelTeknisi.AutoSize = true;
+            this.labelTeknisi.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelTeknisi.ForeColor = System.Drawing.Color.FloralWhite;
+            this.labelTeknisi.Location = new System.Drawing.Point(9, 11);
+            this.labelTeknisi.Name = "labelTeknisi";
+            this.labelTeknisi.Size = new System.Drawing.Size(132, 18);
+            this.labelTeknisi.TabIndex = 40;
+            this.labelTeknisi.Text = "&Teknisi [F12] : ";
+            this.labelTeknisi.Visible = false;
             // 
             // rejectButton
             // 
@@ -289,7 +379,7 @@
             // tempoMaskedTextBox
             // 
             this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 88);
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 96);
             this.tempoMaskedTextBox.Mask = "00000";
             this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
             this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
@@ -302,7 +392,7 @@
             // pelangganTextBox
             // 
             this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 30);
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 38);
             this.pelangganTextBox.Name = "pelangganTextBox";
             this.pelangganTextBox.ReadOnly = true;
             this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
@@ -313,7 +403,7 @@
             this.printoutCheckBox.AutoSize = true;
             this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.printoutCheckBox.Location = new System.Drawing.Point(11, 126);
+            this.printoutCheckBox.Location = new System.Drawing.Point(11, 134);
             this.printoutCheckBox.Name = "printoutCheckBox";
             this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
             this.printoutCheckBox.TabIndex = 8;
@@ -327,7 +417,7 @@
             "Cash",
             "Kartu Kredit",
             "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(154, 89);
+            this.paymentComboBox.Location = new System.Drawing.Point(154, 97);
             this.paymentComboBox.Name = "paymentComboBox";
             this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
             this.paymentComboBox.TabIndex = 7;
@@ -339,7 +429,7 @@
             this.labelCaraBayar.AutoSize = true;
             this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 91);
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 99);
             this.labelCaraBayar.Name = "labelCaraBayar";
             this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
             this.labelCaraBayar.TabIndex = 6;
@@ -349,7 +439,7 @@
             // 
             this.creditRadioButton.AutoSize = true;
             this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(229, 61);
+            this.creditRadioButton.Location = new System.Drawing.Point(229, 69);
             this.creditRadioButton.Name = "creditRadioButton";
             this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
             this.creditRadioButton.TabIndex = 5;
@@ -362,7 +452,7 @@
             this.cashRadioButton.AutoSize = true;
             this.cashRadioButton.Checked = true;
             this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(154, 61);
+            this.cashRadioButton.Location = new System.Drawing.Point(154, 69);
             this.cashRadioButton.Name = "cashRadioButton";
             this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
             this.cashRadioButton.TabIndex = 4;
@@ -376,7 +466,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(9, 62);
+            this.label4.Location = new System.Drawing.Point(9, 70);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(145, 18);
             this.label4.TabIndex = 3;
@@ -389,7 +479,7 @@
             "P-UMUM [ECER]",
             "P-PARTAI",
             "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(343, 26);
+            this.customerComboBox.Location = new System.Drawing.Point(343, 38);
             this.customerComboBox.Name = "customerComboBox";
             this.customerComboBox.Size = new System.Drawing.Size(183, 26);
             this.customerComboBox.TabIndex = 2;
@@ -401,7 +491,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(9, 33);
+            this.label3.Location = new System.Drawing.Point(9, 41);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(151, 18);
             this.label3.TabIndex = 1;
@@ -732,28 +822,6 @@
             this.toolStripStatusLabel3.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel3.Text = "toolStripStatusLabel3";
             // 
-            // teknisiTextbox
-            // 
-            this.teknisiTextbox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teknisiTextbox.Location = new System.Drawing.Point(154, 0);
-            this.teknisiTextbox.Name = "teknisiTextbox";
-            this.teknisiTextbox.ReadOnly = true;
-            this.teknisiTextbox.Size = new System.Drawing.Size(181, 27);
-            this.teknisiTextbox.TabIndex = 41;
-            this.teknisiTextbox.Visible = false;
-            // 
-            // labelTeknisi
-            // 
-            this.labelTeknisi.AutoSize = true;
-            this.labelTeknisi.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTeknisi.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelTeknisi.Location = new System.Drawing.Point(9, 3);
-            this.labelTeknisi.Name = "labelTeknisi";
-            this.labelTeknisi.Size = new System.Drawing.Size(112, 18);
-            this.labelTeknisi.TabIndex = 40;
-            this.labelTeknisi.Text = "&Teknisi [?] : ";
-            this.labelTeknisi.Visible = false;
-            // 
             // cashierForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -784,6 +852,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.cashierDataGridView)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panelSuratTugas.ResumeLayout(false);
+            this.panelSuratTugas.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -849,6 +919,11 @@
         private System.Windows.Forms.TextBox discJualPersenTextBox;
         private System.Windows.Forms.TextBox teknisiTextbox;
         private System.Windows.Forms.Label labelTeknisi;
+        private System.Windows.Forms.Panel panelSuratTugas;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.MaskedTextBox finishedTimeMaskedTextBox;
+        private System.Windows.Forms.DateTimePicker finishedDateTimePicker;
     }
 }
 
