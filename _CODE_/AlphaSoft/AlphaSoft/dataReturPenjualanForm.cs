@@ -314,6 +314,7 @@ namespace AlphaSoft
             calculateTotal();
 
             detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailReturDataGridView.Select();
         }
 
         private void addDataGridColumn()

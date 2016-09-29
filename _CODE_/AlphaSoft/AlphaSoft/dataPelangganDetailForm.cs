@@ -59,7 +59,7 @@ namespace AlphaSoft
             DataTable dt = new DataTable();
             string sqlCommand = "";
 
-            sqlCommand = "SELECT REGION_ID, CUSTOMER_JOINED_DATE, CUSTOMER_FULL_NAME, IFNULL(CUSTOMER_ADDRESS1, '') AS CUSTOMER_ADDRESS1, " +
+            sqlCommand = "SELECT CUSTOMER_BLOCKED, REGION_ID, CUSTOMER_JOINED_DATE, CUSTOMER_FULL_NAME, IFNULL(CUSTOMER_ADDRESS1, '') AS CUSTOMER_ADDRESS1, " +
                                    "IFNULL(CUSTOMER_ADDRESS2, '') AS CUSTOMER_ADDRESS2, IFNULL(CUSTOMER_ADDRESS_CITY, '') AS CUSTOMER_ADDRESS_CITY, " +
                                    "IFNULL(CUSTOMER_PHONE, '') AS CUSTOMER_PHONE, IFNULL(CUSTOMER_FAX, '') AS CUSTOMER_FAX, IFNULL(CUSTOMER_EMAIL, '') AS CUSTOMER_EMAIL, " +
                                    "IFNULL(CUSTOMER_TOTAL_SALES_COUNT, '0') AS CUSTOMER_TOTAL_SALES_COUNT, IFNULL(CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, CUSTOMER_ACTIVE " +
@@ -90,6 +90,12 @@ namespace AlphaSoft
                             nonAktifCheckbox.Checked = false;
                         else
                             nonAktifCheckbox.Checked = true;
+
+                        if (rdr.GetString("CUSTOMER_BLOCKED").Equals("1"))
+                            blockedCustomer.Checked = true;
+                        else
+                            blockedCustomer.Checked = false;
+
 
                         regionCombo.Text = regionCombo.Items[rdr.GetInt32("REGION_ID")].ToString();
                         regionHiddenCombo.SelectedIndex = rdr.GetInt32("REGION_ID");

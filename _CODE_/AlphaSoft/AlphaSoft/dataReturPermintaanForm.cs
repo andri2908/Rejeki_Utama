@@ -370,6 +370,7 @@ namespace AlphaSoft
             calculateTotal();
 
             detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailReturDataGridView.Select();
         }
 
         private double getHPPValue(string productID)
@@ -389,7 +390,8 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
             {
-                total = total + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value);
+                if (null != detailReturDataGridView.Rows[i].Cells["subTotal"].Value)
+                    total = total + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
             globalTotalValue = total;

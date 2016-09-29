@@ -55,7 +55,7 @@ namespace AlphaSoft
                         namaGroupTextBox.Text = rdr.GetString("TECHNICIAN_NAME");
                         deskripsiTextBox.Text = rdr.GetString("DESCRIPTION");
 
-                        if (rdr.GetInt32("LOCATION_ACTIVE") == 1)
+                        if (rdr.GetInt32("TECHNICIAN_ACTIVE") == 1)
                             nonAktifCheckbox.Checked = false;
                         else
                             nonAktifCheckbox.Checked = true;

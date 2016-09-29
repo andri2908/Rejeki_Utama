@@ -105,7 +105,7 @@ namespace AlphaSoft
             DataGridViewRow selectedRow = dataSupplierDataGridView.Rows[selectedrowindex];
             selectedTeknisiID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
             
-            if (originModuleID == globalConstants.SERVICE_AC )
+            if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
             {
                 parentCashierForm.setTechnicianID(selectedTeknisiID);
                 this.Close();
@@ -144,8 +144,16 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataSupplierDataGridView.Rows[selectedrowindex];
                 selectedTeknisiID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
 
-                dataTeknisiDetailForm displayedForm = new dataTeknisiDetailForm(globalConstants.EDIT_TECHNICIAN, selectedTeknisiID);
-                displayedForm.ShowDialog(this);
+                if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                {
+                    parentCashierForm.setTechnicianID(selectedTeknisiID);
+                    this.Close();
+                }
+                else
+                { 
+                    dataTeknisiDetailForm displayedForm = new dataTeknisiDetailForm(globalConstants.EDIT_TECHNICIAN, selectedTeknisiID);
+                    displayedForm.ShowDialog(this);
+                }
             }
         }
     }

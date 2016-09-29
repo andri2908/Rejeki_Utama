@@ -210,13 +210,14 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F10:
-                    MessageBox.Show("F10");
+                    //MessageBox.Show("F10");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
+                    dataTeknisiForm teknisiForm = new dataTeknisiForm(originModuleID, this);
+                    teknisiForm.ShowDialog(this);
                     break;
+
                 case Keys.F12:
                     //MessageBox.Show("F12");
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
-                    dataTeknisiForm teknisiForm = new dataTeknisiForm(globalConstants.CASHIER_MODULE, this);
-                    teknisiForm.ShowDialog(this);
                     break;
             }
         }
@@ -315,6 +316,9 @@ namespace AlphaSoft
             ghk_F9 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F9, this);
             ghk_F9.Register();
 
+            ghk_F10 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F10, this);
+            ghk_F10.Register();
+
             ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
             ghk_F11.Register();
 
@@ -332,14 +336,8 @@ namespace AlphaSoft
 
             ghk_CTRL_Enter = new Hotkeys.GlobalHotkey(Constants.CTRL, Keys.Enter, this);
             ghk_CTRL_Enter.Register();
-            
 
 
-            //ghk_F10 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F10, this);
-            //ghk_F10.Register();
-
-            //ghk_F11 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F11, this);
-            //ghk_F11.Register();
 
             //// ## F12 doesn't work yet ##
             ////ghk_F12 = new Hotkeys.GlobalHotkey(Constants.NOMOD, Keys.F12, this);
@@ -370,6 +368,7 @@ namespace AlphaSoft
             ghk_F7.Unregister();
             ghk_F8.Unregister();
             ghk_F9.Unregister();
+            ghk_F10.Unregister();
             ghk_F11.Unregister();
 
             if (originModuleID != globalConstants.SALES_QUOTATION)
@@ -383,7 +382,6 @@ namespace AlphaSoft
             ghk_CTRL_Enter.Unregister();
 
 
-            //ghk_F10.Unregister();
             ////ghk_F12.Unregister();
 
 
@@ -743,9 +741,11 @@ namespace AlphaSoft
 
             selectedRow.Cells["jumlah"].Value = calculateSubTotal(rowSelectedIndex, Convert.ToDouble(selectedRow.Cells["productPrice"].Value));
             calculateTotal();
+
             cashierDataGridView.CurrentCell = selectedRow.Cells["qty"];
             //comboSelectedIndexChangeMethod(rowSelectedIndex, i, selectedRow);
             //cashierDataGridView.CurrentCell = cashierDataGridView.Rows[rowSelectedIndex].Cells["qty"];
+            cashierDataGridView.Select();
         }
 
         private bool productIDValid(string productID)
@@ -845,13 +845,16 @@ namespace AlphaSoft
                     return false;
                 }
 
-                if (
-                    ((null == cashierDataGridView.Rows[i].Cells["jumlah"].Value) ||
-                    (0 >= Convert.ToDouble(cashierDataGridView.Rows[i].Cells["jumlah"].Value))
-                    ) && null != cashierDataGridView.Rows[i].Cells["productID"].Value)
-                {
-                    errorLabel.Text = "PEMBELIAN DI BARIS " + (i+1) + " TIDAK VALID";
-                    return false;
+                if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
+                { 
+                    if (
+                        ((null == cashierDataGridView.Rows[i].Cells["jumlah"].Value) ||
+                        (0 >= Convert.ToDouble(cashierDataGridView.Rows[i].Cells["jumlah"].Value))
+                        ) && null != cashierDataGridView.Rows[i].Cells["productID"].Value)
+                    {
+                        errorLabel.Text = "PEMBELIAN DI BARIS " + (i+1) + " TIDAK VALID";
+                        return false;
+                    }
                 }
 
                 if (null == cashierDataGridView.Rows[i].Cells["productID"].Value)
@@ -968,6 +971,8 @@ namespace AlphaSoft
             int taxLimitType = 0; // 0 - percentage, 1 - amount
             string salesDateValue = "";
             bool addToTaxTable = false;
+            string jobFinishedDate = "";
+            string jobFinishedTime = "";
 
             int salesPersonID = 0;
             double commissionPercentage = 0;
@@ -1158,10 +1163,14 @@ namespace AlphaSoft
                     salesInvoice = getSalesInvoiceID();
                     //pass thru to receipt generator
                     selectedsalesinvoice = salesInvoice;
+
+                    jobFinishedDate = gutil.getCustomStringFormatDate(finishedDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+                    jobFinishedTime = finishedTimeMaskedTextBox.Text;
+
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_DISC_PERCENT_FINAL, TECHNICIAN_ID, IS_SURAT_TUGAS) " +
+                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_DISC_PERCENT_FINAL, TECHNICIAN_ID, IS_SURAT_TUGAS, JOB_FINISHED_DATE, JOB_FINISHED_TIME) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", " + gutil.validateDecimalNumericInput(discPercentValue) + ", " + selectedTechnicianID + ", 1)";
+                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", " + gutil.validateDecimalNumericInput(discPercentValue) + ", " + selectedTechnicianID + ", 1, STR_TO_DATE('" + jobFinishedDate + "', '%d-%m-%Y %H:%i'), '"+jobFinishedTime+"')";
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -1376,7 +1385,7 @@ namespace AlphaSoft
         {
             string message = "";
 
-            if (printoutCheckBox.Checked == true)
+            if (printoutCheckBox.Checked == false)
                 message = "SAVE AND PRINT OUT ?";
             else
                 message = "SAVE DATA ?";
@@ -1392,7 +1401,7 @@ namespace AlphaSoft
 
                     gutil.saveUserChangeLog(globalConstants.MENU_PENJUALAN, globalConstants.CHANGE_LOG_INSERT, "NEW TRANSAKSI PENJUALAN [" + selectedsalesinvoice + "]");
 
-                    if (printoutCheckBox.Checked == true)
+                    if (printoutCheckBox.Checked == false)
                     { 
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "PRINT OUT INVOICE");
                         PrintReceipt();
@@ -2548,7 +2557,7 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == globalUtilities.PAPER_POS_RECEIPT) //kertas POS
+            if (papermode == globalUtilities.PAPER_POS_RECEIPT && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU) //kertas POS
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
                 //width, height
@@ -2587,10 +2596,10 @@ namespace AlphaSoft
                 else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
                 {
                     // PRINT OUT SURAT TUGAS
-                    sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
+                    sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
                     "FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
                     "UNION " +
-                    "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
+                    "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
                     "FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else

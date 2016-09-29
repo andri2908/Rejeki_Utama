@@ -299,6 +299,7 @@ namespace AlphaSoft
             calculateTotal();
 
             detailPODataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailPODataGridView.Select();
         }
 
         private void fillInSupplierCombo()
@@ -479,7 +480,8 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
             {
-                total = total + Convert.ToDouble(detailPODataGridView.Rows[i].Cells["subTotal"].Value);
+                if (null != detailPODataGridView.Rows[i].Cells["subTotal"].Value)
+                    total = total + Convert.ToDouble(detailPODataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
             globalTotalValue = total;

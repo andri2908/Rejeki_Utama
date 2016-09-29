@@ -286,6 +286,7 @@ namespace AlphaSoft
             calculateTotal();
 
             detailGridView.CurrentCell = selectedRow.Cells["qtyReceived"];
+            detailGridView.Select();
         }
 
         public void setSelectedInvoice(string invoiceNo)
@@ -912,7 +913,8 @@ namespace AlphaSoft
             double total = 0;
             for (int i =0;i<detailGridView.Rows.Count;i++)
             {
-                total = total + Convert.ToDouble(detailGridView.Rows[i].Cells["subtotal"].Value);
+                if (null != detailGridView.Rows[i].Cells["subtotal"].Value)
+                    total = total + Convert.ToDouble(detailGridView.Rows[i].Cells["subtotal"].Value);
             }
 
             globalTotalValue = total;

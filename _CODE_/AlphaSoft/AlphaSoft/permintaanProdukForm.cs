@@ -285,6 +285,7 @@ namespace AlphaSoft
             calculateTotal();
 
             detailRequestOrderDataGridView.CurrentCell = selectedRow.Cells["qty"];
+            detailRequestOrderDataGridView.Select();
         }
 
         private void loadDataHeaderRO()
@@ -348,7 +349,8 @@ namespace AlphaSoft
 
             for (int i = 0; i<detailRequestOrderDataGridView.Rows.Count;i++)
             {
-                total = total + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value);
+                if (null != detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value)
+                    total = total + Convert.ToDouble(detailRequestOrderDataGridView.Rows[i].Cells["subTotal"].Value);
             }
 
             globalTotalValue = total;
