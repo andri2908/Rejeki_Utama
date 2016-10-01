@@ -97,7 +97,7 @@ namespace AlphaSoft
         // REJEKI_UTAMA SPECIFIC
         public const int SERVICE_AC = 701;
         public const int TUGAS_PEMASANGAN_BARU = 702;
-
+        public const int EDIT_TUGAS_PEMASANGAN_BARU = 703;
 
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE

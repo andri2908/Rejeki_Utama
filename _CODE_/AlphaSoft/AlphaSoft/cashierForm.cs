@@ -39,6 +39,7 @@ namespace AlphaSoft
         private int custIsBlocked = 0;
         private double totalAfterDisc = 0;
         private string discJualPersenValueText = "0";
+        private int isJobFinished = 0;
 
         private Data_Access DS = new Data_Access();
 
@@ -111,6 +112,12 @@ namespace AlphaSoft
             InitializeComponent();
             originModuleID = moduleID;
             selectedsalesinvoice = noInvoice;
+
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            {
+                posTitle = "REJEKI UTAMA - SURAT TUGAS";
+            }
+
             titleLabel.Text = posTitle;
         }
 
@@ -157,12 +164,18 @@ namespace AlphaSoft
 
                 case Keys.F4:
                     //MessageBox.Show("F4");
+                    if (isJobFinished == 1)
+                        return;
+
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
                     dataPelangganForm pelangganForm = new dataPelangganForm(globalConstants.CASHIER_MODULE, this);
                     pelangganForm.ShowDialog(this);
                     break;
 
                 case Keys.F5:
+                    if (isJobFinished == 1)
+                        return;
+
                     if (DialogResult.Yes == MessageBox.Show("HAPUS DATA DATA DI LAYAR ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                         clearUpScreen();
                     break;
@@ -174,12 +187,17 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F8:
+                    if (isJobFinished == 1)
+                        return;
+
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED");
 
                     addNewRow();
                     break;
 
                 case Keys.F9:
+                    if (isJobFinished == 1)
+                        return;
 
                     if (custIsBlocked == 0)
                     { 
@@ -194,6 +212,9 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
+                    if (isJobFinished == 1)
+                        return;
+
                     totalAfterDiscTextBox.Focus();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO OPEN PRODUK SEARCH FORM PRESSED");
 
@@ -210,6 +231,9 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F10:
+                    if (isJobFinished == 1)
+                        return;
+
                     //MessageBox.Show("F10");
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
                     dataTeknisiForm teknisiForm = new dataTeknisiForm(originModuleID, this);
@@ -822,7 +846,7 @@ namespace AlphaSoft
 
         private bool dataValidated()
         {
-            if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && globalTotalValue <= 0)
+            if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU && globalTotalValue <= 0)
             {
                 errorLabel.Text = "NILAI TRANSAKSI 0";
                 return false;
@@ -845,7 +869,7 @@ namespace AlphaSoft
                     return false;
                 }
 
-                if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
+                if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 { 
                     if (
                         ((null == cashierDataGridView.Rows[i].Cells["jumlah"].Value) ||
@@ -889,7 +913,7 @@ namespace AlphaSoft
                     }
                 }
 
-                if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU) // NORMAL TRANSACTION AND SALES ORDER REVISION
+                if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU) // NORMAL TRANSACTION AND SALES ORDER REVISION
                 {
                     string currentInvoiceID = "";
                     if (originModuleID == globalConstants.SALES_QUOTATION)
@@ -905,7 +929,7 @@ namespace AlphaSoft
             }
 
             if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION
-                && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
+                && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
             { 
                 if (cashRadioButton.Checked)
                 {
@@ -941,6 +965,64 @@ namespace AlphaSoft
             return true;
         }
 
+        private bool setJobAsFinished()
+        {
+            bool result = true;
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+
+            string jobFinishedDate = "";
+            string jobFinishedTime = "";
+            isJobFinished = 1;
+
+            DS.beginTransaction();
+
+            try
+            {
+                DS.mySqlConnect();
+                jobFinishedDate = gutil.getCustomStringFormatDate(finishedDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+                jobFinishedTime = finishedTimeMaskedTextBox.Text;
+
+                // UPDATE HEADER TABLE
+                sqlCommand = "UPDATE SURAT_TUGAS_HEADER SET " +
+                                       "CUSTOMER_ID = " + selectedPelangganID + ", " +
+                                       "TECHNICIAN_ID = " + selectedTechnicianID + ", " +
+                                       "JOB_FINISHED_DATE = STR_TO_DATE('" + jobFinishedDate + "', '%d-%m-%Y %H:%i'), " +
+                                       "JOB_FINISHED_TIME  = '" + jobFinishedTime + "', " +
+                                       "IS_JOB_FINISHED = 1 " +
+                                       "WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE JOB FINISHED SURAT TUGAS [" + selectedsalesinvoice + "]");
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+            }
+            catch (Exception ex)
+            {
+                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "EXCEPTION THROWN [" + ex.Message + "]");
+
+                try
+                {
+                    DS.rollBack(ref internalEX);
+                }
+                catch (MySqlException e)
+                {
+                    if (DS.getMyTransConnection() != null)
+                    {
+                        gutil.showDBOPError(e, "ROLLBACK");
+                    }
+                }
+
+                gutil.showDBOPError(ex, "INSERT");
+                result = false;
+            }
+            finally
+            {
+                DS.mySqlClose();
+            }
+
+            return result;
+        }
+
         private bool saveDataTransaction()
         {
             bool result = false;
@@ -971,6 +1053,8 @@ namespace AlphaSoft
             int taxLimitType = 0; // 0 - percentage, 1 - amount
             string salesDateValue = "";
             bool addToTaxTable = false;
+            string jobScheduledDate = "";
+            string jobScheduledTime = "";
             string jobFinishedDate = "";
             string jobFinishedTime = "";
 
@@ -1062,7 +1146,7 @@ namespace AlphaSoft
                     }
                 }
             }
-            else if (originModuleID == globalConstants.DUMMY_TRANSACTION_TAX)
+            else if (originModuleID == globalConstants.DUMMY_TRANSACTION_TAX || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 addToTaxTable = true;
             // ----------------------------------------------------------------------
 
@@ -1144,35 +1228,49 @@ namespace AlphaSoft
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
-                else if (originModuleID == globalConstants.SERVICE_AC)
-                {
-                    salesInvoice = getSalesInvoiceID();
-                    //pass thru to receipt generator
-                    selectedsalesinvoice = salesInvoice;
-                    // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_DISC_PERCENT_FINAL, TECHNICIAN_ID, IS_SERVICE) " +
-                                        "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", " + gutil.validateDecimalNumericInput(discPercentValue) + ", " +selectedTechnicianID + ", 1)";
-
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
-                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                        throw internalEX;
-                }
                 else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
                 {
-                    salesInvoice = getSalesInvoiceID();
-                    //pass thru to receipt generator
-                    selectedsalesinvoice = salesInvoice;
+                    jobScheduledDate = gutil.getCustomStringFormatDate(jobStartDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+                    jobScheduledTime = jobStartTimeMaskedTextBox.Text;
 
                     jobFinishedDate = gutil.getCustomStringFormatDate(finishedDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
                     jobFinishedTime = finishedTimeMaskedTextBox.Text;
 
                     // SAVE HEADER TABLE
-                    sqlCommand = "INSERT INTO SALES_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, SALES_TOTAL, SALES_DISCOUNT_FINAL, SALES_TOP, SALES_TOP_DATE, SALES_PAID, SALES_PAYMENT, SALES_PAYMENT_CHANGE, SALES_PAYMENT_METHOD, SALES_DISC_PERCENT_FINAL, TECHNICIAN_ID, IS_SURAT_TUGAS, JOB_FINISHED_DATE, JOB_FINISHED_TIME) " +
+                    sqlCommand = "INSERT INTO SURAT_TUGAS_HEADER (SALES_INVOICE, CUSTOMER_ID, SALES_DATE, TECHNICIAN_ID, JOB_SCHEDULED_DATE, JOB_SCHEDULED_TIME, JOB_FINISHED_DATE, JOB_FINISHED_TIME, IS_JOB_FINISHED) " +
                                         "VALUES " +
-                                        "('" + salesInvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(salesDiscountFinal)) + ", " + salesTop + ", STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + salesPaid + ", " + gutil.validateDecimalNumericInput(bayarAmount) + ", " + gutil.validateDecimalNumericInput(sisaBayar) + ", " + selectedPaymentMethod + ", " + gutil.validateDecimalNumericInput(discPercentValue) + ", " + selectedTechnicianID + ", 1, STR_TO_DATE('" + jobFinishedDate + "', '%d-%m-%Y %H:%i'), '"+jobFinishedTime+"')";
+                                        "('" + selectedsalesinvoice + "', " + selectedPelangganID + ", STR_TO_DATE('" + SODateTime + "', '%d-%m-%Y %H:%i'), " + selectedTechnicianID +
+                                        ", STR_TO_DATE('" + jobScheduledDate + "', '%d-%m-%Y %H:%i'), '" + jobScheduledTime + "', STR_TO_DATE('" + jobFinishedDate + "', '%d-%m-%Y %H:%i'), '" + jobFinishedTime + "', 0)";
 
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SALES HEADER [" + salesInvoice + "]");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SURAT TUGAS HEADER [" + selectedsalesinvoice + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+                else if (originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                {
+                    jobScheduledDate = gutil.getCustomStringFormatDate(jobStartDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+                    jobScheduledTime = jobStartTimeMaskedTextBox.Text;
+
+                    jobFinishedDate = gutil.getCustomStringFormatDate(finishedDateTimePicker.Value);//String.Format(culture, "{0:dd-MM-yyyy HH:mm}", DateTime.Now);
+                    jobFinishedTime = finishedTimeMaskedTextBox.Text;
+
+                    // UPDATE HEADER TABLE
+                    sqlCommand = "UPDATE SURAT_TUGAS_HEADER SET " +
+                                           "CUSTOMER_ID = "+ selectedPelangganID + ", " +
+                                           "TECHNICIAN_ID = " + selectedTechnicianID + ", " +
+                                           "JOB_SCHEDULED_DATE = STR_TO_DATE('" + jobScheduledDate + "', '%d-%m-%Y %H:%i'), " +
+                                           "JOB_SCHEDULED_TIME  = '" + jobScheduledTime + "', " +
+                                           "JOB_FINISHED_DATE = STR_TO_DATE('" + jobFinishedDate + "', '%d-%m-%Y %H:%i'), " +
+                                           "JOB_FINISHED_TIME  = '" + jobFinishedTime + "' " +
+                                        "WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE SURAT TUGAS [" + selectedsalesinvoice + "]");
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    // DELETE DETAIL TABLE CONTENT
+                    sqlCommand = "DELETE FROM SURAT_TUGAS_DETAIL WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CLEAR SURAT TUGAS [" + selectedsalesinvoice + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
@@ -1201,7 +1299,7 @@ namespace AlphaSoft
                         discRP = Convert.ToDouble(cashierDataGridView.Rows[i].Cells["discRP"].Value);
                         productID = cashierDataGridView.Rows[i].Cells["productID"].Value.ToString();
 
-                        if (originModuleID == 0 || originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU) // NORMAL TRANSACTION
+                        if (originModuleID == 0 || originModuleID == globalConstants.SERVICE_AC) // NORMAL TRANSACTION
                         {
                             sqlCommand = "INSERT INTO SALES_DETAIL (SALES_INVOICE, PRODUCT_ID, PRODUCT_PRICE, PRODUCT_SALES_PRICE, PRODUCT_QTY, PRODUCT_DISC1, PRODUCT_DISC2, PRODUCT_DISC_RP, SALES_SUBTOTAL) " +
                                                 "VALUES " +
@@ -1253,20 +1351,20 @@ namespace AlphaSoft
                                 throw internalEX;
                         }
 
-                        if (originModuleID == 0 || originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)  // NORMAL TRANSACTION
+                        if (originModuleID == 0 || originModuleID == globalConstants.SERVICE_AC)  // NORMAL TRANSACTION
                         {
                             //// REDUCE STOCK QTY AT MASTER PRODUCT
-                            int locationID = gutil.loadlocationID(2);
+                            //int locationID = gutil.loadlocationID(2);
 
-                            // REDUCE STOCK AT MASTER STOCK
-                            sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + cashierDataGridView.Rows[i].Cells["qty"].Value.ToString() + " WHERE PRODUCT_ID = '" + productID + "'";
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                            //// REDUCE STOCK AT MASTER STOCK
+                            //sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + cashierDataGridView.Rows[i].Cells["qty"].Value.ToString() + " WHERE PRODUCT_ID = '" + productID + "'";
+                            //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            //    throw internalEX;
 
-                            // REDUCE STOCK AT PRODUCT LOCATION
-                            sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + cashierDataGridView.Rows[i].Cells["qty"].Value.ToString() + " WHERE PRODUCT_ID = '" + productID + "' AND LOCATION_ID = " + locationID;
-                            if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
-                                throw internalEX;
+                            //// REDUCE STOCK AT PRODUCT LOCATION
+                            //sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + cashierDataGridView.Rows[i].Cells["qty"].Value.ToString() + " WHERE PRODUCT_ID = '" + productID + "' AND LOCATION_ID = " + locationID;
+                            //if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            //    throw internalEX;
 
                             // SAVE OR UPDATE TO CUSTOMER_PRODUCT_DISC
                             if (selectedPelangganID != 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
@@ -1289,6 +1387,18 @@ namespace AlphaSoft
                                     throw internalEX;
                             }
                         }
+                    }
+
+                    if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                    {
+                        sqlCommand = "INSERT INTO SURAT_TUGAS_DETAIL (SALES_INVOICE, PRODUCT_ID, PRODUCT_QTY) " +
+                                                "VALUES " +
+                                                "('" + selectedsalesinvoice + "', '" + productID + "', " + gutil.validateDecimalNumericInput(Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value)) + ")";
+
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT INTO SURAT TUGAS DETAIL[" + productID + ", " + gutil.validateDecimalNumericInput(Convert.ToDouble(cashierDataGridView.Rows[i].Cells["qty"].Value)) + "]");
+
+                        if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                            throw internalEX;
                     }
                 }
 
@@ -2043,6 +2153,7 @@ namespace AlphaSoft
             int TOPDuration;
             MySqlDataReader rdr;
             int rowPos = 0;
+            int numRow = 0;
 
             salesQty.Clear();
             isLoading = true;
@@ -2051,6 +2162,118 @@ namespace AlphaSoft
                 case globalConstants.SERVICE_AC:
                     break;
                 case globalConstants.TUGAS_PEMASANGAN_BARU:
+                    // CHECK WHETHER SURAT TUGAS HAS BEEN GENERATED PREVIOUSLY
+                    sqlCommand = "SELECT COUNT(1) AS 'NUM' FROM SURAT_TUGAS_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
+
+                    rdr = DS.getData(sqlCommand);
+                    rdr.Read();
+                    numRow = rdr.GetInt32("NUM");
+                    rdr.Close();
+
+                    if (numRow > 0)
+                    {
+                        // SURAT TUGAS HAS BEEN GENERATED PREVIOUSLY, PULL DATA FROM SURAT_TUGAS
+                        originModuleID = globalConstants.EDIT_TUGAS_PEMASANGAN_BARU;
+
+                        // PULL HEADER DATA
+                        sqlCommand = "SELECT SH.IS_JOB_FINISHED, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.TECHNICIAN_ID, IFNULL(MT.TECHNICIAN_NAME, '') AS 'TECHNICIAN_NAME', SH.JOB_SCHEDULED_DATE, IFNULL(SH.JOB_SCHEDULED_TIME, '') AS JOB_SCHEDULED_TIME, SH.JOB_FINISHED_DATE, IFNULL(SH.JOB_FINISHED_TIME, '') AS JOB_FINISHED_TIME " +
+                                               "FROM SURAT_TUGAS_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) LEFT OUTER JOIN MASTER_TECHNICIAN MT ON (SH.TECHNICIAN_ID = MT.ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "'";
+
+                        rdr = DS.getData(sqlCommand);
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                pelangganTextBox.Text = rdr.GetString("NAMA");
+                                noFakturLabel.Text = rdr.GetString("NO_INVOICE");
+
+                                customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
+                                customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
+                                selectedPelangganID = rdr.GetInt32("PELANGGAN_ID");
+
+                                selectedTechnicianID = rdr.GetInt32("TECHNICIAN_ID");
+                                teknisiTextbox.Text = rdr.GetString("TECHNICIAN_NAME");
+
+                                jobStartDateTimePicker.Value = rdr.GetDateTime("JOB_SCHEDULED_DATE");
+                                jobStartTimeMaskedTextBox.Text = rdr.GetString("JOB_SCHEDULED_TIME");
+
+                                finishedDateTimePicker.Value = rdr.GetDateTime("JOB_FINISHED_DATE");
+                                finishedTimeMaskedTextBox.Text = rdr.GetString("JOB_FINISHED_TIME");
+
+                                isJobFinished = rdr.GetInt32("IS_JOB_FINISHED");
+                            }
+                        }
+                        rdr.Close();
+
+                        // PULL DETAIL DATA
+                        sqlCommand = "SELECT M.PRODUCT_ID AS KODE_PRODUK, M.PRODUCT_NAME AS NAMA_PRODUK, SD.PRODUCT_QTY AS QTY " +
+                                               "FROM SURAT_TUGAS_DETAIL SD, MASTER_PRODUCT M WHERE SD.SALES_INVOICE = '" + selectedsalesinvoice + "' AND SD.PRODUCT_ID = M.PRODUCT_ID";
+                        rdr = DS.getData(sqlCommand);
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                addNewRow();
+                                cashierDataGridView.Rows[rowPos].Cells["productID"].Value = rdr.GetString("KODE_PRODUK");
+                                cashierDataGridView.Rows[rowPos].Cells["productName"].Value = rdr.GetString("NAMA_PRODUK");
+                                cashierDataGridView.Rows[rowPos].Cells["qty"].Value = rdr.GetString("QTY");
+                                salesQty[rowPos] = rdr.GetString("QTY");
+
+                                rowPos += 1;
+                            }
+                        }
+                        rdr.Close();
+
+                        if (isJobFinished == 1)
+                        {
+                            finishedDateTimePicker.Enabled = false;
+                            finishedTimeMaskedTextBox.ReadOnly = true;
+                            finishedJobButton.Enabled = false;
+                            cashierDataGridView.ReadOnly = true;
+                        }
+                    }
+                    else
+                    {
+                        // NEW SURAT TUGAS, PULL DATA FROM SALES_ORDER
+                        // PULL HEADER DATA
+                        sqlCommand = "SELECT SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP " +
+                                               "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "'";
+
+                        rdr = DS.getData(sqlCommand);
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                pelangganTextBox.Text = rdr.GetString("NAMA");
+                                noFakturLabel.Text = rdr.GetString("NO_INVOICE");
+
+                                customerComboBox.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
+                                customerComboBox.Text = customerComboBox.Items[customerComboBox.SelectedIndex].ToString();
+                                selectedPelangganID = rdr.GetInt32("PELANGGAN_ID");
+                            }
+                        }
+                        rdr.Close();
+
+                        // PULL DETAIL DATA
+                        sqlCommand = "SELECT M.PRODUCT_ID AS KODE_PRODUK, M.PRODUCT_NAME AS NAMA_PRODUK, SD.PRODUCT_QTY AS QTY " +
+                                               "FROM SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.SALES_INVOICE = '" + selectedsalesinvoice + "' AND SD.PRODUCT_ID = M.PRODUCT_ID";
+                        rdr = DS.getData(sqlCommand);
+                        if (rdr.HasRows)
+                        {
+                            while (rdr.Read())
+                            {
+                                addNewRow();
+                                cashierDataGridView.Rows[rowPos].Cells["productID"].Value = rdr.GetString("KODE_PRODUK");
+                                cashierDataGridView.Rows[rowPos].Cells["productName"].Value = rdr.GetString("NAMA_PRODUK");
+                                cashierDataGridView.Rows[rowPos].Cells["qty"].Value = rdr.GetString("QTY");
+                                salesQty[rowPos] = rdr.GetString("QTY");
+
+                                rowPos += 1;
+                            }
+                        }
+                        rdr.Close();
+                    }
+
                     break;
                 case globalConstants.EDIT_SALES_QUOTATION:
                     // PULL HEADER DATA
@@ -2226,7 +2449,7 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid");
                 approvalButton.Visible = false;
             }
-            else if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            else if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
             {
                 loadNoFaktur();
                 approvalButton.Visible = false;
@@ -2251,6 +2474,10 @@ namespace AlphaSoft
                     labelCaraBayar.Visible = false;
                     tempoMaskedTextBox.Visible = false;
                     paymentComboBox.Visible = false;
+                    printoutCheckBox.Visible = false;
+
+                    jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+                    finishedDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
                 }
             }
 
@@ -2345,7 +2572,7 @@ namespace AlphaSoft
             productPriceColumn.Name = "productPrice";
             productPriceColumn.Width = 100;
 
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 productPriceColumn.Visible = false; // DISABLE ALL PRICE RELATED INFORMATION FOR SURAT TUGAS PEMASANGAN
 
             // USER WHO HAS ACCESS TO PENGATURAN HARGA CAN EDIT THE PRODUCT PRICE MANUALLY
@@ -2370,7 +2597,7 @@ namespace AlphaSoft
             disc1Column.Name = "disc1";
             disc1Column.Width = 150;
             disc1Column.MaxInputLength = 5;
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 disc1Column.Visible = false;
             else
                 disc1Column.Visible = discVisible;
@@ -2392,7 +2619,7 @@ namespace AlphaSoft
             subTotalColumn.HeaderText = "JUMLAH";
             subTotalColumn.Name = "jumlah";
             subTotalColumn.Width = 150;
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 subTotalColumn.Visible = false;
             else
                 subTotalColumn.Visible = true;
@@ -2557,7 +2784,7 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == globalUtilities.PAPER_POS_RECEIPT && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU) //kertas POS
+            if (papermode == globalUtilities.PAPER_POS_RECEIPT && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU) //kertas POS
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
                 //width, height
@@ -2593,7 +2820,7 @@ namespace AlphaSoft
                     "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
-                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 {
                     // PRINT OUT SURAT TUGAS
                     sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
@@ -2615,7 +2842,7 @@ namespace AlphaSoft
                 }
 
 
-                if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 {
                     // PRINT OUT SURAT TUGAS, REUSE DELIVERY ORDER FORM
                     DS.writeXML(sqlCommandx, globalConstants.suratTugasXML);
@@ -3241,6 +3468,9 @@ namespace AlphaSoft
             var cell = cashierDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = cashierDataGridView.Rows[e.RowIndex];
 
+            if (isLoading)
+                return;
+
             rowSelectedIndex = e.RowIndex;
             columnName = cell.OwningColumn.Name;
 
@@ -3373,6 +3603,8 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, attempt to calculate total value");
                 calculateTotal();
             }
+
+            isLoading = false;
         }
 
         private void cashierDataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
@@ -3466,6 +3698,52 @@ namespace AlphaSoft
         private void discJualPersenTextBox_Click(object sender, EventArgs e)
         {
             discJualPersenTextBox.SelectionStart = discJualPersenTextBox.Text.Length;
+        }
+
+        private void finishedJobButton_Click(object sender, EventArgs e)
+        {
+            if (setJobAsFinished())
+            { 
+                MessageBox.Show("DONE");
+                cashierDataGridView.ReadOnly = true;
+                jobStartTimeMaskedTextBox.ReadOnly = true;
+                jobStartDateTimePicker.Enabled = false;
+
+                finishedTimeMaskedTextBox.ReadOnly = true;
+                finishedDateTimePicker.Enabled = false;
+            }
+            else
+                MessageBox.Show("FAIL");
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void maskedTextBox1_MaskInputRejected_1(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void jobStartTimeMaskedTextBox_Enter(object sender, EventArgs e)
+        {
+            jobStartTimeMaskedTextBox.SelectAll();
+        }
+
+        private void finishedTimeMaskedTextBox_Enter(object sender, EventArgs e)
+        {
+            finishedTimeMaskedTextBox.SelectAll();
         }
     }
 }

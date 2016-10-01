@@ -1422,9 +1422,12 @@ namespace AlphaSoft
 
         private void MENU_PEMASANGAN_BARU_Click(object sender, EventArgs e)
         {
-            cashierForm displayedForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, false);
-
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.TUGAS_PEMASANGAN_BARU);
             displayedForm.Show();
+
+            //cashierForm displayedForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, false);
+
+            //displayedForm.Show();
         }
     }
 }

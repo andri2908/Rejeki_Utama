@@ -90,11 +90,10 @@
             this.MENU_transaksiPenjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SalesQuotation = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SORevision = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_SalesCommission = new System.Windows.Forms.ToolStripMenuItem();
-            this.MENU_modulKasir = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_setNoFaktur = new System.Windows.Forms.ToolStripMenuItem();
-            this.MENU_ServiceAC = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_modulKasir = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_PEMASANGAN_BARU = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returPenjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returByInvoice = new System.Windows.Forms.ToolStripMenuItem();
@@ -363,8 +362,9 @@
             this.MENU_pengaturanGambarLatar.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_pengaturanGambarLatar.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pengaturanGambarLatar.Name = "MENU_pengaturanGambarLatar";
-            this.MENU_pengaturanGambarLatar.Size = new System.Drawing.Size(294, 22);
-            this.MENU_pengaturanGambarLatar.Text = "Pengaturan Gambar Latar";
+            this.MENU_pengaturanGambarLatar.Size = new System.Drawing.Size(335, 22);
+            this.MENU_pengaturanGambarLatar.Text = "Pengaturan Gambar Latar [HIDDEN]";
+            this.MENU_pengaturanGambarLatar.Visible = false;
             this.MENU_pengaturanGambarLatar.Click += new System.EventHandler(this.pengaturanGambarLatarToolStripMenuItem_Click);
             // 
             // MENU_pengaturanPrinter
@@ -798,11 +798,10 @@
             this.MENU_transaksiPenjualan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MENU_SalesQuotation,
             this.MENU_SORevision,
-            this.toolStripMenuItem10,
             this.MENU_SalesCommission,
-            this.MENU_modulKasir,
             this.MENU_setNoFaktur,
-            this.MENU_ServiceAC,
+            this.MENU_modulKasir,
+            this.toolStripMenuItem10,
             this.MENU_PEMASANGAN_BARU});
             this.MENU_transaksiPenjualan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_transaksiPenjualan.Name = "MENU_transaksiPenjualan";
@@ -829,16 +828,6 @@
             this.MENU_SORevision.Visible = false;
             this.MENU_SORevision.Click += new System.EventHandler(this.MENU_SORevision_Click);
             // 
-            // toolStripMenuItem10
-            // 
-            this.toolStripMenuItem10.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem10.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(297, 22);
-            this.toolStripMenuItem10.Text = "Delivery Order [HIDDEN]";
-            this.toolStripMenuItem10.Visible = false;
-            this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click_1);
-            // 
             // MENU_SalesCommission
             // 
             this.MENU_SalesCommission.BackColor = System.Drawing.Color.SteelBlue;
@@ -849,15 +838,6 @@
             this.MENU_SalesCommission.Visible = false;
             this.MENU_SalesCommission.Click += new System.EventHandler(this.MENU_SalesTarget_Click);
             // 
-            // MENU_modulKasir
-            // 
-            this.MENU_modulKasir.BackColor = System.Drawing.Color.SteelBlue;
-            this.MENU_modulKasir.ForeColor = System.Drawing.Color.FloralWhite;
-            this.MENU_modulKasir.Name = "MENU_modulKasir";
-            this.MENU_modulKasir.Size = new System.Drawing.Size(297, 22);
-            this.MENU_modulKasir.Text = "Modul Kasir";
-            this.MENU_modulKasir.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
-            // 
             // MENU_setNoFaktur
             // 
             this.MENU_setNoFaktur.BackColor = System.Drawing.Color.SteelBlue;
@@ -867,14 +847,23 @@
             this.MENU_setNoFaktur.Text = "Set No Faktur";
             this.MENU_setNoFaktur.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
             // 
-            // MENU_ServiceAC
+            // MENU_modulKasir
             // 
-            this.MENU_ServiceAC.BackColor = System.Drawing.Color.SteelBlue;
-            this.MENU_ServiceAC.ForeColor = System.Drawing.Color.FloralWhite;
-            this.MENU_ServiceAC.Name = "MENU_ServiceAC";
-            this.MENU_ServiceAC.Size = new System.Drawing.Size(297, 22);
-            this.MENU_ServiceAC.Text = "Service AC";
-            this.MENU_ServiceAC.Click += new System.EventHandler(this.MENU_ServiceAC_Click);
+            this.MENU_modulKasir.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_modulKasir.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_modulKasir.Name = "MENU_modulKasir";
+            this.MENU_modulKasir.Size = new System.Drawing.Size(297, 22);
+            this.MENU_modulKasir.Text = "Modul Kasir";
+            this.MENU_modulKasir.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem10.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(297, 22);
+            this.toolStripMenuItem10.Text = "Delivery Order";
+            this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click_1);
             // 
             // MENU_PEMASANGAN_BARU
             // 
@@ -882,7 +871,7 @@
             this.MENU_PEMASANGAN_BARU.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_PEMASANGAN_BARU.Name = "MENU_PEMASANGAN_BARU";
             this.MENU_PEMASANGAN_BARU.Size = new System.Drawing.Size(297, 22);
-            this.MENU_PEMASANGAN_BARU.Text = "Pemasangan Baru";
+            this.MENU_PEMASANGAN_BARU.Text = "Surat Tugas";
             this.MENU_PEMASANGAN_BARU.Click += new System.EventHandler(this.MENU_PEMASANGAN_BARU_Click);
             // 
             // MENU_returPenjualan
@@ -933,6 +922,7 @@
             this.MENU_membership.Name = "MENU_membership";
             this.MENU_membership.Size = new System.Drawing.Size(278, 22);
             this.MENU_membership.Text = "Membership Point [HIDDEN]";
+            this.MENU_membership.Visible = false;
             this.MENU_membership.Click += new System.EventHandler(this.MENU_membership_Click);
             // 
             // MAINMENU_KEUANGAN
@@ -2031,7 +2021,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanGudang;
         private System.Windows.Forms.ToolStripMenuItem MENU_PENGATURAN_TEKNISI;
-        private System.Windows.Forms.ToolStripMenuItem MENU_ServiceAC;
         private System.Windows.Forms.ToolStripMenuItem MENU_PEMASANGAN_BARU;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }

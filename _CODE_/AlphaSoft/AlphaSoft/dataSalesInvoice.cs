@@ -100,6 +100,16 @@ namespace AlphaSoft
                                        "FROM SALES_HEADER SH " +
                                        "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
             }
+            else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            {
+                sqlClause1 = "SELECT SH.ID, SH.SALES_INVOICE AS 'NO INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(SH.SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', (SH.SALES_TOTAL - SH.SALES_DISCOUNT_FINAL) AS 'TOTAL', IF(STH.SALES_INVOICE IS NOT NULL, 'ST', '') AS 'SURAT TUGAS' " +
+                                       "FROM SALES_HEADER SH LEFT OUTER JOIN SURAT_TUGAS_HEADER STH ON (STH.SALES_INVOICE = SH.SALES_INVOICE), MASTER_CUSTOMER MC " +
+                                       "WHERE SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_VOID = 0";
+
+                sqlClause2 = "SELECT SH.ID, SH.SALES_INVOICE AS 'NO INVOICE', '' AS 'CUSTOMER', DATE_FORMAT(SH.SALES_DATE, '%d-%M-%Y') AS 'TGL INVOICE',(SH.SALES_TOTAL - SH.SALES_DISCOUNT_FINAL) AS 'TOTAL',  IF(STH.SALES_INVOICE IS NOT NULL, 'ST', '') AS 'SURAT TUGAS' " +
+                                       "FROM SALES_HEADER SH LEFT OUTER JOIN SURAT_TUGAS_HEADER STH ON (STH.SALES_INVOICE = SH.SALES_INVOICE) " +
+                                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
+            }
 
             if (!showAllCheckBox.Checked)
             {
@@ -108,7 +118,7 @@ namespace AlphaSoft
                     noInvoiceParam = MySqlHelper.EscapeString(noInvoiceTextBox.Text);
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         whereClause1 = whereClause1 + " AND SQ.SQ_INVOICE LIKE '%" + noInvoiceParam + "%'";
-                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
                         whereClause1 = whereClause1 + " AND SH.SALES_INVOICE LIKE '%" + noInvoiceParam + "%'";
                 }
 
@@ -117,14 +127,14 @@ namespace AlphaSoft
 
                 if (originModuleID == globalConstants.SALES_QUOTATION)
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SQ.SQ_DATE, '%Y%m%d')  <= '" + dateTo + "'";
-                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU) 
                     whereClause1 = whereClause1 + " AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  >= '" + dateFrom + "' AND DATE_FORMAT(SH.SALES_DATE, '%Y%m%d')  <= '" + dateTo + "'";
 
                 if (customerID > 0)
                 {
                     if (originModuleID == globalConstants.SALES_QUOTATION)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SQ.CUSTOMER_ID = " + customerID;
-                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER)
+                    else if (originModuleID == globalConstants.SALES_ORDER_REVISION || originModuleID == globalConstants.DELIVERY_ORDER || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
                         sqlCommand = sqlClause1 + whereClause1 + " AND AND SH.CUSTOMER_ID = " + customerID;
                 }
                 else
@@ -155,11 +165,13 @@ namespace AlphaSoft
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["CUSTOMER"].Width = 200;
-                    dataPenerimaanBarang.Columns["TOTAL"].Width = 200;
-                }
 
-                rdr.Close();
+                    if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
+                        dataPenerimaanBarang.Columns["TOTAL"].Width = 200;
+                }
             }
+
+            rdr.Close();
         }
 
         private void dataSalesInvoice_Load(object sender, EventArgs e)
@@ -178,7 +190,7 @@ namespace AlphaSoft
             else
                 newButton.Visible = false;
 
-            if (originModuleID == globalConstants.DELIVERY_ORDER)
+            if (originModuleID == globalConstants.DELIVERY_ORDER || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
                 newButton.Visible = false;
 
             arrButton[0] = displayButton;
@@ -204,7 +216,7 @@ namespace AlphaSoft
         {
             string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
                                         "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
-                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
+                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "' AND MP.PRODUCT_IS_SERVICE = 0";
 
             DS.writeXML(sqlCommandx, globalConstants.deliveryOrderXML);
             deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
@@ -311,6 +323,10 @@ namespace AlphaSoft
                             printOutDeliveryOrder(noInvoice, revNo, salesActiveStatus);
                     }
                     break;
+                case globalConstants.TUGAS_PEMASANGAN_BARU:
+                    cashierForm displayedSuratTugasForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, noInvoice);
+                    displayedSuratTugasForm.ShowDialog(this);
+                    break;
             }
         }
 
@@ -339,6 +355,10 @@ namespace AlphaSoft
                 revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                 displaySpecificForm(noInvoice, revNo);
             }
+            else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            {
+                displaySpecificForm(noInvoice);
+            }
         }
 
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
@@ -365,6 +385,10 @@ namespace AlphaSoft
                     revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                     displaySpecificForm(noInvoice, revNo);
                 }
+                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                {
+                    displaySpecificForm(noInvoice);
+                }
             }
         }
 
@@ -378,6 +402,11 @@ namespace AlphaSoft
             else if (originModuleID == globalConstants.SALES_ORDER_REVISION)
             {
                 cashierForm cashierDisplayForm = new cashierForm(1);
+                cashierDisplayForm.ShowDialog(this);
+            }
+            else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+            {
+                cashierForm cashierDisplayForm = new cashierForm(originModuleID, true);
                 cashierDisplayForm.ShowDialog(this);
             }
         }
