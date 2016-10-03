@@ -40,6 +40,7 @@ namespace AlphaSoft
         private double totalAfterDisc = 0;
         private string discJualPersenValueText = "0";
         private int isJobFinished = 0;
+        int salesActiveStatus = 0;
 
         private Data_Access DS = new Data_Access();
 
@@ -141,6 +142,9 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                        return;
+
                     totalAfterDiscTextBox.Focus();
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY BARCODE FORM");
 
@@ -164,7 +168,7 @@ namespace AlphaSoft
 
                 case Keys.F4:
                     //MessageBox.Show("F4");
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
@@ -173,7 +177,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F5:
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     if (DialogResult.Yes == MessageBox.Show("HAPUS DATA DATA DI LAYAR ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
@@ -187,7 +191,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F8:
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED");
@@ -196,7 +200,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F9:
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     if (custIsBlocked == 0)
@@ -212,7 +216,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     totalAfterDiscTextBox.Focus();
@@ -231,7 +235,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F10:
-                    if (isJobFinished == 1)
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
                         return;
 
                     //MessageBox.Show("F10");
@@ -262,7 +266,10 @@ namespace AlphaSoft
             switch (key)
             {
                 case Keys.Delete: // CTRL + DELETE
-                    //MessageBox.Show("CTRL+DELETE");
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                        return;
+
+                        //MessageBox.Show("CTRL+DELETE");
                     if (DialogResult.Yes == MessageBox.Show("DELETE CURRENT ROW?", "WARNING", MessageBoxButtons.YesNo))
                     {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierDataGridView_KeyDown ATTEMPT TO DELETE ROW");
@@ -273,6 +280,9 @@ namespace AlphaSoft
                     break;
 
                 case Keys.Enter:
+                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                        return;
+
                     if (custIsBlocked == 0)
                     {
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED");
@@ -3744,6 +3754,120 @@ namespace AlphaSoft
         private void finishedTimeMaskedTextBox_Enter(object sender, EventArgs e)
         {
             finishedTimeMaskedTextBox.SelectAll();
+        }
+
+        private bool processSalesOrderToDO(string noInvoice, string revNo, int salesActiveStatus)
+        {
+            bool result = false;
+            string sqlCommand = "";
+            MySqlException internalEX = null;
+            int locationID = 0;
+            MySqlDataReader rdr;
+            List<string> productIDList = new List<string>();
+            List<string> productIDQty = new List<string>();
+
+            if (salesActiveStatus == 0)
+                return true;
+
+            DS.beginTransaction();
+
+            try
+            {
+                DS.mySqlConnect();
+
+                // UPDATE SALES HEADER SET SALES ACTIVE TO 0
+                sqlCommand = "UPDATE SALES_HEADER SET SALES_ACTIVE = 0 WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                    throw internalEX;
+
+                // GET LIST OF PRODUCT ID
+                productIDList.Clear();
+                productIDQty.Clear();
+
+                sqlCommand = "SELECT PRODUCT_ID, PRODUCT_QTY FROM SALES_DETAIL WHERE SALES_INVOICE = '" + noInvoice + "' AND REV_NO = '" + revNo + "'";
+                using (rdr = DS.getData(sqlCommand))
+                {
+                    if (rdr.HasRows)
+                    {
+                        while (rdr.Read())
+                        {
+                            productIDList.Add(rdr.GetString("PRODUCT_ID"));
+                            productIDQty.Add(rdr.GetString("PRODUCT_QTY"));
+                        }
+                    }
+                }
+                rdr.Close();
+
+                locationID = gutil.loadlocationID(2);
+
+                for (int i = 0; i < productIDList.Count; i++)
+                {
+                    // REDUCE STOCK AT MASTER STOCK
+                    sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "'";
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+
+                    // REDUCE STOCK AT PRODUCT LOCATION
+                    sqlCommand = "UPDATE PRODUCT_LOCATION SET PRODUCT_LOCATION_QTY = PRODUCT_LOCATION_QTY - " + productIDQty[i].ToString() + " WHERE PRODUCT_ID = '" + productIDList[i].ToString() + "' AND LOCATION_ID = " + locationID;
+                    if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
+                        throw internalEX;
+                }
+
+                DS.commit();
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
+        }
+
+        private void printOutDeliveryOrder(string SONo, string revNo, int salesActiveStatus)
+        {
+            string sqlCommandx = "SELECT '" + salesActiveStatus + "' AS 'SALES_STATUS', SH.SALES_DATE AS 'TGL', SH.SALES_INVOICE AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, '') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', SD.PRODUCT_QTY AS 'QTY' " +
+                                        "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
+                                        "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "' AND MP.PRODUCT_IS_SERVICE = 0";
+
+            DS.writeXML(sqlCommandx, globalConstants.deliveryOrderXML);
+            deliveryOrderPrintOutForm displayForm = new deliveryOrderPrintOutForm();
+            displayForm.ShowDialog(this);
+        }
+
+        private void generateDO_Click(object sender, EventArgs e)
+        {
+            string dialogMessage = "";
+            string revNo = "0";
+
+            // FOR REJEKI UTAMA, NO REVISION, SO THE REV NO VALUE IS ALWAYS 0
+            salesActiveStatus = Convert.ToInt32(DS.getDataSingleValue("SELECT SALES_ACTIVE FROM SALES_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "' AND REV_NO = '" + revNo + "'"));
+            if (salesActiveStatus == 1)
+            {
+                dialogMessage = "TERBITKAN DELIVERY ORDER ?";
+            }
+            else
+            {
+                dialogMessage = "TERBITKAN COPY DELIVERY ORDER ?";
+            }
+
+            if (DialogResult.Yes == MessageBox.Show(dialogMessage, "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            {
+                // UPDATE SALES HEADER SET TO NON ACTIVE AND REDUCE STOCK
+                if (processSalesOrderToDO(selectedsalesinvoice, revNo, salesActiveStatus))
+                    printOutDeliveryOrder(selectedsalesinvoice, revNo, salesActiveStatus);
+
+                gutil.setReadOnlyAllControls(this);
+
+                generateDO.Enabled = true;
+                generateSuratTugas.Enabled = true;
+            }
+        }
+
+        private void generateSuratTugas_Click(object sender, EventArgs e)
+        {
+            cashierForm displayedSuratTugasForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, selectedsalesinvoice);
+            displayedSuratTugasForm.ShowDialog(this);
         }
     }
 }

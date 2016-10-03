@@ -190,6 +190,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -246,7 +247,7 @@
             this.logInToolStripMenuItem.Enabled = false;
             this.logInToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.logInToolStripMenuItem.Name = "logInToolStripMenuItem";
-            this.logInToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.logInToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
             this.logInToolStripMenuItem.Text = "Log-&In";
             this.logInToolStripMenuItem.Click += new System.EventHandler(this.logInToolStripMenuItem_Click);
             // 
@@ -255,7 +256,7 @@
             this.MENU_changePassword.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_changePassword.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_changePassword.Name = "MENU_changePassword";
-            this.MENU_changePassword.Size = new System.Drawing.Size(294, 22);
+            this.MENU_changePassword.Size = new System.Drawing.Size(335, 22);
             this.MENU_changePassword.Text = "&Change Password";
             this.MENU_changePassword.Click += new System.EventHandler(this.changePasswordToolStripMenuItem_Click);
             // 
@@ -264,7 +265,7 @@
             this.MENU_logOut.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_logOut.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_logOut.Name = "MENU_logOut";
-            this.MENU_logOut.Size = new System.Drawing.Size(294, 22);
+            this.MENU_logOut.Size = new System.Drawing.Size(335, 22);
             this.MENU_logOut.Text = "Log-&Out";
             this.MENU_logOut.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
@@ -273,7 +274,7 @@
             this.toolStripMenuItem33.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem33.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem33.Name = "toolStripMenuItem33";
-            this.toolStripMenuItem33.Size = new System.Drawing.Size(291, 6);
+            this.toolStripMenuItem33.Size = new System.Drawing.Size(332, 6);
             // 
             // MENU_manajemenUser
             // 
@@ -284,7 +285,7 @@
             this.MENU_tambahUser});
             this.MENU_manajemenUser.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_manajemenUser.Name = "MENU_manajemenUser";
-            this.MENU_manajemenUser.Size = new System.Drawing.Size(294, 22);
+            this.MENU_manajemenUser.Size = new System.Drawing.Size(335, 22);
             this.MENU_manajemenUser.Text = "Manajemen User";
             // 
             // MENU_tambahGroupUser
@@ -321,7 +322,7 @@
             this.MENU_tambahCabang});
             this.MENU_manajemenCabang.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_manajemenCabang.Name = "MENU_manajemenCabang";
-            this.MENU_manajemenCabang.Size = new System.Drawing.Size(294, 22);
+            this.MENU_manajemenCabang.Size = new System.Drawing.Size(335, 22);
             this.MENU_manajemenCabang.Text = "Manajemen Cabang (HIDDEN)";
             this.MENU_manajemenCabang.Visible = false;
             // 
@@ -339,21 +340,21 @@
             this.MENU_sinkronisasiInformasi.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_sinkronisasiInformasi.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_sinkronisasiInformasi.Name = "MENU_sinkronisasiInformasi";
-            this.MENU_sinkronisasiInformasi.Size = new System.Drawing.Size(294, 22);
+            this.MENU_sinkronisasiInformasi.Size = new System.Drawing.Size(335, 22);
             this.MENU_sinkronisasiInformasi.Text = "Sinkronisasi Informasi";
             this.MENU_sinkronisasiInformasi.Click += new System.EventHandler(this.toolStripMenuItem55_Click);
             // 
             // toolStripMenuItem34
             // 
             this.toolStripMenuItem34.Name = "toolStripMenuItem34";
-            this.toolStripMenuItem34.Size = new System.Drawing.Size(291, 6);
+            this.toolStripMenuItem34.Size = new System.Drawing.Size(332, 6);
             // 
             // MENU_backUpRestoreDatabaseToolStripMenuItem
             // 
             this.MENU_backUpRestoreDatabaseToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_backUpRestoreDatabaseToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_backUpRestoreDatabaseToolStripMenuItem.Name = "MENU_backUpRestoreDatabaseToolStripMenuItem";
-            this.MENU_backUpRestoreDatabaseToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.MENU_backUpRestoreDatabaseToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
             this.MENU_backUpRestoreDatabaseToolStripMenuItem.Text = "Backup/ Restore Database";
             this.MENU_backUpRestoreDatabaseToolStripMenuItem.Click += new System.EventHandler(this.backUpRestoreDatabaseToolStripMenuItem_Click);
             // 
@@ -372,7 +373,7 @@
             this.MENU_pengaturanPrinter.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_pengaturanPrinter.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pengaturanPrinter.Name = "MENU_pengaturanPrinter";
-            this.MENU_pengaturanPrinter.Size = new System.Drawing.Size(294, 22);
+            this.MENU_pengaturanPrinter.Size = new System.Drawing.Size(335, 22);
             this.MENU_pengaturanPrinter.Text = "Pengaturan Printer";
             this.MENU_pengaturanPrinter.Click += new System.EventHandler(this.pengaturanPrinterToolStripMenuItem_Click);
             // 
@@ -381,21 +382,21 @@
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem.Name = "MENU_pengaturanSistemAplikasiToolStripMenuItem";
-            this.MENU_pengaturanSistemAplikasiToolStripMenuItem.Size = new System.Drawing.Size(294, 22);
+            this.MENU_pengaturanSistemAplikasiToolStripMenuItem.Size = new System.Drawing.Size(335, 22);
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem.Text = "Pengaturan Sistem Aplikasi";
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem.Click += new System.EventHandler(this.pengaturanSistemAplikasiToolStripMenuItem_Click);
             // 
             // toolStripMenuItem35
             // 
             this.toolStripMenuItem35.Name = "toolStripMenuItem35";
-            this.toolStripMenuItem35.Size = new System.Drawing.Size(291, 6);
+            this.toolStripMenuItem35.Size = new System.Drawing.Size(332, 6);
             // 
             // MENU_exit
             // 
             this.MENU_exit.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_exit.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_exit.Name = "MENU_exit";
-            this.MENU_exit.Size = new System.Drawing.Size(294, 22);
+            this.MENU_exit.Size = new System.Drawing.Size(335, 22);
             this.MENU_exit.Text = "E&xit";
             this.MENU_exit.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -802,7 +803,8 @@
             this.MENU_setNoFaktur,
             this.MENU_modulKasir,
             this.toolStripMenuItem10,
-            this.MENU_PEMASANGAN_BARU});
+            this.MENU_PEMASANGAN_BARU,
+            this.toolStripMenuItem13});
             this.MENU_transaksiPenjualan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_transaksiPenjualan.Name = "MENU_transaksiPenjualan";
             this.MENU_transaksiPenjualan.Size = new System.Drawing.Size(278, 22);
@@ -1823,6 +1825,15 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
+            // toolStripMenuItem13
+            // 
+            this.toolStripMenuItem13.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem13.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(297, 22);
+            this.toolStripMenuItem13.Text = "Monitor Surat Tugas";
+            this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
+            // 
             // adminForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2022,6 +2033,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanGudang;
         private System.Windows.Forms.ToolStripMenuItem MENU_PENGATURAN_TEKNISI;
         private System.Windows.Forms.ToolStripMenuItem MENU_PEMASANGAN_BARU;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

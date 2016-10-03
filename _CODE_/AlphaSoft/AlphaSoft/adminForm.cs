@@ -1429,5 +1429,11 @@ namespace AlphaSoft
 
             //displayedForm.Show();
         }
+
+        private void toolStripMenuItem13_Click_1(object sender, EventArgs e)
+        {
+            dataSuratTugasForm displayedForm = new dataSuratTugasForm(globalConstants.MONITOR_SURAT_TUGAS);
+            displayedForm.Show();
+        }
     }
 }
