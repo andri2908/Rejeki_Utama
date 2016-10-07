@@ -34,6 +34,9 @@ namespace AlphaSoft
         private bool isLoading = false;
         private bool isLoadingDiscPercent = false;
         private double bayarAmount = 0;
+        private string bayarAmountText = "0";
+       // private double discAmount = 0;
+        private string discAmountText = "0";
         private double sisaBayar = 0;
         private int originModuleID = 0;
         private int custIsBlocked = 0;
@@ -142,7 +145,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     totalAfterDiscTextBox.Focus();
@@ -168,7 +171,7 @@ namespace AlphaSoft
 
                 case Keys.F4:
                     //MessageBox.Show("F4");
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
@@ -191,7 +194,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F8:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED");
@@ -200,7 +203,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F9:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     if (custIsBlocked == 0)
@@ -216,7 +219,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     totalAfterDiscTextBox.Focus();
@@ -235,7 +238,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F10:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     //MessageBox.Show("F10");
@@ -266,7 +269,7 @@ namespace AlphaSoft
             switch (key)
             {
                 case Keys.Delete: // CTRL + DELETE
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                         //MessageBox.Show("CTRL+DELETE");
@@ -280,7 +283,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.Enter:
-                    if (isJobFinished == 1 || salesActiveStatus == 0)
+                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
                         return;
 
                     if (custIsBlocked == 0)
@@ -444,14 +447,26 @@ namespace AlphaSoft
             disc1.Clear();
             disc2.Clear();
             discRP.Clear();
+
+
+            salesQty.Add("0");
+            disc1.Add("0");
+            disc2.Add("0");
+            discRP.Add("0");
+
             selectedPelangganID = 0;
             globalTotalValue = 0;
             discValue = 0;
-            totalLabel.Text = globalTotalValue.ToString("C2", culture);
+            sisaBayar = 0;
+            bayarAmount = 0;
+            bayarAmountText = "0";
+            discAmountText = "0";
+        
+            totalLabel.Text = globalTotalValue.ToString("C0", culture);
             gutil.ResetAllControls(this);
 
-            totalPenjualanTextBox.Text = globalTotalValue.ToString("C2", culture);
-            totalAfterDiscTextBox.Text = globalTotalValue.ToString("C2", culture);
+            totalPenjualanTextBox.Text = globalTotalValue.ToString("C0", culture);
+            totalAfterDiscTextBox.Text = globalTotalValue.ToString("C0", culture);
             uangKembaliTextBox.Text = "0";
 
             customerComboBox.SelectedIndex = 0;
@@ -856,7 +871,10 @@ namespace AlphaSoft
 
         private bool dataValidated()
         {
-            if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU && globalTotalValue <= 0)
+            if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
+                originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU &&
+                originModuleID != globalConstants.MONITOR_SURAT_TUGAS &&
+                globalTotalValue <= 0)
             {
                 errorLabel.Text = "NILAI TRANSAKSI 0";
                 return false;
@@ -879,7 +897,9 @@ namespace AlphaSoft
                     return false;
                 }
 
-                if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
+                    originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU &&
+                    originModuleID != globalConstants.MONITOR_SURAT_TUGAS)
                 { 
                     if (
                         ((null == cashierDataGridView.Rows[i].Cells["jumlah"].Value) ||
@@ -923,7 +943,11 @@ namespace AlphaSoft
                     }
                 }
 
-                if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU) // NORMAL TRANSACTION AND SALES ORDER REVISION
+                if (originModuleID != globalConstants.SALES_QUOTATION && 
+                    originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
+                    originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU &&
+                    originModuleID != globalConstants.MONITOR_SURAT_TUGAS
+                    ) // NORMAL TRANSACTION AND SALES ORDER REVISION
                 {
                     string currentInvoiceID = "";
                     if (originModuleID == globalConstants.SALES_QUOTATION)
@@ -939,7 +963,8 @@ namespace AlphaSoft
             }
 
             if (originModuleID != globalConstants.SALES_QUOTATION && originModuleID != globalConstants.EDIT_SALES_QUOTATION
-                && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU &&
+                originModuleID != globalConstants.MONITOR_SURAT_TUGAS)
             { 
                 if (cashRadioButton.Checked)
                 {
@@ -1005,6 +1030,8 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "UPDATE JOB FINISHED SURAT TUGAS [" + selectedsalesinvoice + "]");
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
+
+                DS.commit();
             }
             catch (Exception ex)
             {
@@ -1156,11 +1183,17 @@ namespace AlphaSoft
                     }
                 }
             }
-            else if (originModuleID == globalConstants.DUMMY_TRANSACTION_TAX || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+            else if (originModuleID == globalConstants.DUMMY_TRANSACTION_TAX)
                 addToTaxTable = true;
-            // ----------------------------------------------------------------------
+            else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU ||
+                originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU ||
+                originModuleID == globalConstants.MONITOR_SURAT_TUGAS
+                )
+                // SURAT TUGAS DOESN'T NEED TO GO TO TAX TABLE
+                addToTaxTable = false;
+                // ----------------------------------------------------------------------
 
-            DS.beginTransaction();
+                DS.beginTransaction();
 
             try
             {
@@ -2172,6 +2205,7 @@ namespace AlphaSoft
                 case globalConstants.SERVICE_AC:
                     break;
                 case globalConstants.TUGAS_PEMASANGAN_BARU:
+                case globalConstants.MONITOR_SURAT_TUGAS:
                     // CHECK WHETHER SURAT TUGAS HAS BEEN GENERATED PREVIOUSLY
                     sqlCommand = "SELECT COUNT(1) AS 'NUM' FROM SURAT_TUGAS_HEADER WHERE SALES_INVOICE = '" + selectedsalesinvoice + "'";
 
@@ -2182,11 +2216,8 @@ namespace AlphaSoft
 
                     if (numRow > 0)
                     {
-                        // SURAT TUGAS HAS BEEN GENERATED PREVIOUSLY, PULL DATA FROM SURAT_TUGAS
-                        originModuleID = globalConstants.EDIT_TUGAS_PEMASANGAN_BARU;
-
                         // PULL HEADER DATA
-                        sqlCommand = "SELECT SH.IS_JOB_FINISHED, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.TECHNICIAN_ID, IFNULL(MT.TECHNICIAN_NAME, '') AS 'TECHNICIAN_NAME', SH.JOB_SCHEDULED_DATE, IFNULL(SH.JOB_SCHEDULED_TIME, '') AS JOB_SCHEDULED_TIME, SH.JOB_FINISHED_DATE, IFNULL(SH.JOB_FINISHED_TIME, '') AS JOB_FINISHED_TIME " +
+                        sqlCommand = "SELECT SH.IS_JOB_FINISHED, SH.SALES_INVOICE AS NO_INVOICE, IFNULL(M.CUSTOMER_ID, 0) AS PELANGGAN_ID, IFNULL(M.CUSTOMER_FULL_NAME, '') AS NAMA, IFNULL(M.CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, SH.TECHNICIAN_ID, IFNULL(MT.TECHNICIAN_NAME, '') AS 'TECHNICIAN_NAME', IFNULL(SH.JOB_SCHEDULED_DATE, '') AS JOB_SCHEDULED_DATE, IFNULL(SH.JOB_SCHEDULED_TIME, '') AS JOB_SCHEDULED_TIME, IFNULL(SH.JOB_FINISHED_DATE, '') AS JOB_FINISHED_DATE, IFNULL(SH.JOB_FINISHED_TIME, '') AS JOB_FINISHED_TIME " +
                                                "FROM SURAT_TUGAS_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER M ON (SH.CUSTOMER_ID = M.CUSTOMER_ID) LEFT OUTER JOIN MASTER_TECHNICIAN MT ON (SH.TECHNICIAN_ID = MT.ID) WHERE SH.SALES_INVOICE = '" + selectedsalesinvoice + "'";
 
                         rdr = DS.getData(sqlCommand);
@@ -2207,13 +2238,26 @@ namespace AlphaSoft
                                 jobStartDateTimePicker.Value = rdr.GetDateTime("JOB_SCHEDULED_DATE");
                                 jobStartTimeMaskedTextBox.Text = rdr.GetString("JOB_SCHEDULED_TIME");
 
-                                finishedDateTimePicker.Value = rdr.GetDateTime("JOB_FINISHED_DATE");
-                                finishedTimeMaskedTextBox.Text = rdr.GetString("JOB_FINISHED_TIME");
+                                if (rdr.GetString("JOB_FINISHED_DATE").Length > 0)
+                                    finishedDateTimePicker.Value = rdr.GetDateTime("JOB_FINISHED_DATE");
+
+                                if (rdr.GetString("JOB_FINISHED_TIME").Length > 0)
+                                    finishedTimeMaskedTextBox.Text = rdr.GetString("JOB_FINISHED_TIME");
 
                                 isJobFinished = rdr.GetInt32("IS_JOB_FINISHED");
                             }
                         }
                         rdr.Close();
+
+                        //if (originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
+                        //{
+                        //    // DISABLE JOB START DATE AND TIME FOR MONITOR SURAT TUGAS
+                        //    jobStartDateTimePicker.Enabled = false;
+                        //    jobStartTimeMaskedTextBox.ReadOnly= true;
+                        //}
+
+                        // SURAT TUGAS HAS BEEN GENERATED PREVIOUSLY, PULL DATA FROM SURAT_TUGAS
+                        originModuleID = globalConstants.EDIT_TUGAS_PEMASANGAN_BARU;
 
                         // PULL DETAIL DATA
                         sqlCommand = "SELECT M.PRODUCT_ID AS KODE_PRODUK, M.PRODUCT_NAME AS NAMA_PRODUK, SD.PRODUCT_QTY AS QTY " +
@@ -2459,7 +2503,9 @@ namespace AlphaSoft
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid");
                 approvalButton.Visible = false;
             }
-            else if (originModuleID == globalConstants.SERVICE_AC || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+            else if (originModuleID == globalConstants.SERVICE_AC || 
+                    originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || 
+                    originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
             {
                 loadNoFaktur();
                 approvalButton.Visible = false;
@@ -2471,7 +2517,7 @@ namespace AlphaSoft
                 {
                     posTitle = "REJEKI UTAMA - MODUL SERVICE AC";
                 }
-                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 {
                     posTitle = "REJEKI UTAMA - SURAT TUGAS PEMASANGAN";
                     panel6.Visible = false;
@@ -2582,7 +2628,7 @@ namespace AlphaSoft
             productPriceColumn.Name = "productPrice";
             productPriceColumn.Width = 100;
 
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 productPriceColumn.Visible = false; // DISABLE ALL PRICE RELATED INFORMATION FOR SURAT TUGAS PEMASANGAN
 
             // USER WHO HAS ACCESS TO PENGATURAN HARGA CAN EDIT THE PRODUCT PRICE MANUALLY
@@ -2607,7 +2653,7 @@ namespace AlphaSoft
             disc1Column.Name = "disc1";
             disc1Column.Width = 150;
             disc1Column.MaxInputLength = 5;
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 disc1Column.Visible = false;
             else
                 disc1Column.Visible = discVisible;
@@ -2629,7 +2675,7 @@ namespace AlphaSoft
             subTotalColumn.HeaderText = "JUMLAH";
             subTotalColumn.Name = "jumlah";
             subTotalColumn.Width = 150;
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 subTotalColumn.Visible = false;
             else
                 subTotalColumn.Visible = true;
@@ -2794,7 +2840,10 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == globalUtilities.PAPER_POS_RECEIPT && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU) //kertas POS
+            if (papermode == globalUtilities.PAPER_POS_RECEIPT && 
+                originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
+                originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU && 
+                originModuleID != globalConstants.MONITOR_SURAT_TUGAS) //kertas POS
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
                 //width, height
@@ -2830,14 +2879,21 @@ namespace AlphaSoft
                     "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
-                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || 
+                    originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 {
                     // PRINT OUT SURAT TUGAS
-                    sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
-                    "FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
-                    "UNION " +
-                    "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
-                    "FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
+                    //sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', MC.CUSTOMER_ADDRESS1, MC.CUSTOMER_ADDRESS2, MC.CUSTOMER_ADDRESS_CITY, MC.CUSTOMER_PHONE, M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
+                    //"FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE MT.ID = "+selectedTechnicianID+" AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
+                    //"UNION " +
+                    //"SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', '' AS CUSTOMER_ADDRESS1, '' AS CUSTOMER_ADDRESS2, '' AS CUSTOMER_ADDRESS_CITY, '' AS CUSTOMER_PHONE, M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
+                    //"FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE MT.ID = " + selectedTechnicianID + " AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
+
+                    sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', MC.CUSTOMER_ADDRESS1, MC.CUSTOMER_ADDRESS2, MC.CUSTOMER_ADDRESS_CITY, MC.CUSTOMER_PHONE, M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
+                        "FROM MASTER_TECHNICIAN MT, SURAT_TUGAS_HEADER SH, SURAT_TUGAS_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
+                        "UNION " +
+                        "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', '' AS CUSTOMER_ADDRESS1, '' AS CUSTOMER_ADDRESS2, '' AS CUSTOMER_ADDRESS_CITY, '' AS CUSTOMER_PHONE, M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
+                        "FROM MASTER_TECHNICIAN MT, SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SH.TECHNICIAN_ID = MT.ID AND SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else
                 {
@@ -2852,7 +2908,10 @@ namespace AlphaSoft
                 }
 
 
-                if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || 
+                    originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU ||
+                    originModuleID == globalConstants.MONITOR_SURAT_TUGAS
+                    )
                 {
                     // PRINT OUT SURAT TUGAS, REUSE DELIVERY ORDER FORM
                     DS.writeXML(sqlCommandx, globalConstants.suratTugasXML);
@@ -3721,6 +3780,9 @@ namespace AlphaSoft
 
                 finishedTimeMaskedTextBox.ReadOnly = true;
                 finishedDateTimePicker.Enabled = false;
+
+                finishedJobButton.Enabled = false;
+                isJobFinished = 1;
             }
             else
                 MessageBox.Show("FAIL");

@@ -40,14 +40,14 @@
             this.customerHiddenCombo = new System.Windows.Forms.ComboBox();
             this.showAllCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.teknisiCombo = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.customerCombo = new System.Windows.Forms.ComboBox();
             this.displayButton = new System.Windows.Forms.Button();
             this.dataPenerimaanBarang = new System.Windows.Forms.DataGridView();
             this.teknisiHiddenCombo = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.teknisiCombo = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataPenerimaanBarang)).BeginInit();
@@ -172,6 +172,30 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(899, 135);
             this.tableLayoutPanel1.TabIndex = 72;
             // 
+            // label4
+            // 
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label4.Location = new System.Drawing.Point(3, 110);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 18);
+            this.label4.TabIndex = 48;
+            this.label4.Text = "Teknisi";
+            // 
+            // teknisiCombo
+            // 
+            this.teknisiCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.teknisiCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.teknisiCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teknisiCombo.FormattingEnabled = true;
+            this.teknisiCombo.Location = new System.Drawing.Point(200, 107);
+            this.teknisiCombo.Name = "teknisiCombo";
+            this.teknisiCombo.Size = new System.Drawing.Size(311, 26);
+            this.teknisiCombo.TabIndex = 49;
+            this.teknisiCombo.SelectedIndexChanged += new System.EventHandler(this.teknisiCombo_SelectedIndexChanged);
+            // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -259,30 +283,6 @@
             this.teknisiHiddenCombo.Size = new System.Drawing.Size(311, 26);
             this.teknisiHiddenCombo.TabIndex = 73;
             this.teknisiHiddenCombo.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(3, 110);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 18);
-            this.label4.TabIndex = 48;
-            this.label4.Text = "Teknisi";
-            // 
-            // teknisiCombo
-            // 
-            this.teknisiCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.teknisiCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.teknisiCombo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.teknisiCombo.FormattingEnabled = true;
-            this.teknisiCombo.Location = new System.Drawing.Point(200, 107);
-            this.teknisiCombo.Name = "teknisiCombo";
-            this.teknisiCombo.Size = new System.Drawing.Size(311, 26);
-            this.teknisiCombo.TabIndex = 49;
-            this.teknisiCombo.SelectedIndexChanged += new System.EventHandler(this.teknisiCombo_SelectedIndexChanged);
             // 
             // dataSuratTugasForm
             // 

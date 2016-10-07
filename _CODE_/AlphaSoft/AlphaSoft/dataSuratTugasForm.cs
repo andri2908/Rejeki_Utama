@@ -106,11 +106,11 @@ namespace AlphaSoft
                 //                       "FROM SALES_HEADER SH LEFT OUTER JOIN SURAT_TUGAS_HEADER STH ON (STH.SALES_INVOICE = SH.SALES_INVOICE) " +
                 //                       "WHERE SH.CUSTOMER_ID = 0 AND SH.SALES_VOID = 0";
 
-                sqlClause1 = "SELECT STH.ID, STH.SALES_INVOICE, MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(STH.SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', DATE_FORMAT(STH.JOB_SCHEDULED_DATE, '%d-%M-%Y')  AS 'TGL TUGAS', DATE_FORMAT(STH.JOB_SCHEDULED_TIME, '%d-%M-%Y')  AS 'JAM TUGAS', DATE_FORMAT(STH.JOB_FINISHED_DATE, '%d-%M-%Y')  AS 'TGL SELESAI', DATE_FORMAT(STH.JOB_FINISHED_TIME, '%d-%M-%Y')  AS 'JAM SELESAI', STH.IS_JOB_FINISHED " +
+                sqlClause1 = "SELECT IF(STH.IS_JOB_FINISHED=1, 'DONE', IF(STH.JOB_SCHEDULED_DATE>=NOW(), 'SCHEDULED', 'PENDING')) AS STATUS, STH.ID, STH.SALES_INVOICE, MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', DATE_FORMAT(STH.SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', DATE_FORMAT(STH.JOB_SCHEDULED_DATE, '%d-%M-%Y')  AS 'TGL TUGAS', DATE_FORMAT(STH.JOB_SCHEDULED_TIME, '%d-%M-%Y')  AS 'JAM TUGAS', DATE_FORMAT(STH.JOB_FINISHED_DATE, '%d-%M-%Y')  AS 'TGL SELESAI', DATE_FORMAT(STH.JOB_FINISHED_TIME, '%d-%M-%Y')  AS 'JAM SELESAI' " +
                                     "FROM SURAT_TUGAS_HEADER STH, MASTER_CUSTOMER MC " +
                                     "WHERE STH.CUSTOMER_ID = MC.CUSTOMER_ID ";
 
-                sqlClause2 = "SELECT STH.ID, STH.SALES_INVOICE, '' AS 'CUSTOMER', DATE_FORMAT(STH.SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', DATE_FORMAT(STH.JOB_SCHEDULED_DATE, '%d-%M-%Y')  AS 'TGL TUGAS', DATE_FORMAT(STH.JOB_SCHEDULED_TIME, '%d-%M-%Y')  AS 'JAM TUGAS', DATE_FORMAT(STH.JOB_FINISHED_DATE, '%d-%M-%Y')  AS 'TGL SELESAI', DATE_FORMAT(STH.JOB_FINISHED_TIME, '%d-%M-%Y')  AS 'JAM SELESAI', STH.IS_JOB_FINISHED " +
+                sqlClause2 = "SELECT IF(STH.IS_JOB_FINISHED=1, 'DONE', IF(STH.JOB_SCHEDULED_DATE>=NOW(), 'SCHEDULED', 'PENDING')) AS STATUS, STH.ID, STH.SALES_INVOICE, '' AS 'CUSTOMER', DATE_FORMAT(STH.SALES_DATE, '%d-%M-%Y')  AS 'TGL INVOICE', DATE_FORMAT(STH.JOB_SCHEDULED_DATE, '%d-%M-%Y')  AS 'TGL TUGAS', DATE_FORMAT(STH.JOB_SCHEDULED_TIME, '%d-%M-%Y')  AS 'JAM TUGAS', DATE_FORMAT(STH.JOB_FINISHED_DATE, '%d-%M-%Y')  AS 'TGL SELESAI', DATE_FORMAT(STH.JOB_FINISHED_TIME, '%d-%M-%Y')  AS 'JAM SELESAI' " +
                                     "FROM SURAT_TUGAS_HEADER STH, MASTER_CUSTOMER MC " +
                                     "WHERE STH.CUSTOMER_ID = 0 ";
             }
@@ -209,7 +209,7 @@ namespace AlphaSoft
             switch (originModuleID)
             {
                 case globalConstants.MONITOR_SURAT_TUGAS:
-                    cashierForm displayedSuratTugasForm = new cashierForm(globalConstants.TUGAS_PEMASANGAN_BARU, noInvoice);
+                    cashierForm displayedSuratTugasForm = new cashierForm(globalConstants.MONITOR_SURAT_TUGAS, noInvoice);
                     displayedSuratTugasForm.ShowDialog(this);
                     break;
             }
@@ -235,8 +235,6 @@ namespace AlphaSoft
         private void dataPenerimaanBarang_KeyDown(object sender, KeyEventArgs e)
         {
             string noInvoice = "";
-            string status = "";
-            string revNo = "";
 
             if (e.KeyCode == Keys.Enter)
             {
@@ -244,7 +242,7 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataPenerimaanBarang.Rows[rowSelectedIndex];
                 noInvoice = selectedRow.Cells["SALES_INVOICE"].Value.ToString();
 
-                if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
+                if (originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 {
                     displaySpecificForm(noInvoice);
                 }

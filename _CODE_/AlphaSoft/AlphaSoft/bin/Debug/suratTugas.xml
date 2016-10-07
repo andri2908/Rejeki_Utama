@@ -12,6 +12,10 @@
                 <xs:element name="DATE" type="xs:dateTime" minOccurs="0" />
                 <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
                 <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER_ADDRESS1" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER_ADDRESS2" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER_ADDRESS_CITY" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER_PHONE" type="xs:string" minOccurs="0" />
                 <xs:element name="PRODUCT" type="xs:string" minOccurs="0" />
                 <xs:element name="QTY" type="xs:double" minOccurs="0" />
               </xs:sequence>
@@ -23,10 +27,14 @@
   </xs:schema>
   <Table>
     <TECHNICIAN_NAME>ANDRI</TECHNICIAN_NAME>
-    <ID>7</ID>
-    <DATE>2016-09-30T00:49:00+07:00</DATE>
-    <INVOICE>SLO001-7</INVOICE>
+    <ID>6</ID>
+    <DATE>2016-09-30T00:34:00+07:00</DATE>
+    <INVOICE>SLO001-6</INVOICE>
     <CUSTOMER>PELANGGAN 1</CUSTOMER>
+    <CUSTOMER_ADDRESS1>JALAN JALAN</CUSTOMER_ADDRESS1>
+    <CUSTOMER_ADDRESS2>JALAN SATU</CUSTOMER_ADDRESS2>
+    <CUSTOMER_ADDRESS_CITY>KOTA KOTA</CUSTOMER_ADDRESS_CITY>
+    <CUSTOMER_PHONE>12345</CUSTOMER_PHONE>
     <PRODUCT>ANOTHER PRODUCT</PRODUCT>
     <QTY>2</QTY>
   </Table>
