@@ -41,7 +41,7 @@ namespace AlphaSoft
             displayedForm.ShowDialog(this);
         }
 
-        private void loadSupplierData()
+        private void loadSupplierData(int options=0)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
@@ -54,13 +54,20 @@ namespace AlphaSoft
             //    return;
             namaSupplierParam = MySqlHelper.EscapeString(namaSupplierTextbox.Text);
 
-            if (suppliernonactiveoption.Checked == true)
+            if (options == 1)
             {
-               sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER WHERE SUPPLIER_FULL_NAME LIKE '%" + namaSupplierParam + "%'";
+                sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER";
             }
             else
             {
-               sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER WHERE SUPPLIER_ACTIVE = 1 AND SUPPLIER_FULL_NAME LIKE '%" + namaSupplierParam + "%'";
+                if (suppliernonactiveoption.Checked == true)
+                {
+                    sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER WHERE SUPPLIER_FULL_NAME LIKE '%" + namaSupplierParam + "%'";
+                }
+                else
+                {
+                    sqlCommand = "SELECT SUPPLIER_ID, SUPPLIER_FULL_NAME AS 'NAMA SUPPLIER' FROM MASTER_SUPPLIER WHERE SUPPLIER_ACTIVE = 1 AND SUPPLIER_FULL_NAME LIKE '%" + namaSupplierParam + "%'";
+                }
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -160,6 +167,11 @@ namespace AlphaSoft
                     displayedForm.ShowDialog(this);
                 }
             }
+        }
+
+        private void AllButton_Click(object sender, EventArgs e)
+        {
+            loadSupplierData(1);
         }
     }
 }

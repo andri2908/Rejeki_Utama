@@ -186,10 +186,10 @@ namespace AlphaSoft
                 newButton.Visible = false;
             }
 
-            arrButton[0] = displayButton;
-            arrButton[1] = newButton;
-            arrButton[2] = importButton;
-            gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+            //arrButton[0] = displayButton;
+            //arrButton[1] = newButton;
+            //arrButton[2] = importButton;
+            //gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
 

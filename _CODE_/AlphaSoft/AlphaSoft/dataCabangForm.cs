@@ -52,13 +52,20 @@ namespace AlphaSoft
             string branchName = MySqlHelper.EscapeString(branchNameParam);
 
             DS.mySqlConnect();
-            if (cabangnonactiveoption.Checked)
+            if (branchNameParam.Equals("All"))
             {
-                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_NAME LIKE '%" + branchName + "%'";
+                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH";
             }
             else
             {
-                sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1 AND BRANCH_NAME LIKE '%" + branchName + "%'";
+                if (cabangnonactiveoption.Checked)
+                {
+                    sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_NAME LIKE '%" + branchName + "%'";
+                }
+                else
+                {
+                    sqlCommand = "SELECT BRANCH_ID, BRANCH_NAME AS 'NAMA CABANG', branch_ip4 AS 'ALAMAT IP CABANG' FROM MASTER_BRANCH WHERE BRANCH_ACTIVE = 1 AND BRANCH_NAME LIKE '%" + branchName + "%'";
+                }
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -153,6 +160,29 @@ namespace AlphaSoft
             }
         }
 
+        private void newButton_Click_1(object sender, EventArgs e)
+        {
+            dataCabangDetailForm displayedForm = new dataCabangDetailForm(globalConstants.NEW_BRANCH, 0);
+            displayedForm.ShowDialog(this);
+            dataCabangGridView.DataSource = null;
+            if (!namaBranchTextbox.Text.Equals(""))
+                loadBranchData(namaBranchTextbox.Text);
+        }
+		
+		private void AllButton_Click(object sender, EventArgs e)
+        {
+            loadBranchData("ALL");
+        }
+
+		private void newButton_Click_2(object sender, EventArgs e)
+        {
+            dataCabangDetailForm displayedForm = new dataCabangDetailForm(globalConstants.NEW_BRANCH, 0);
+            displayedForm.ShowDialog(this);
+            dataCabangGridView.DataSource = null;
+            if (!namaBranchTextbox.Text.Equals(""))
+                loadBranchData(namaBranchTextbox.Text);
+        }
+		
         private void dataCabangGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

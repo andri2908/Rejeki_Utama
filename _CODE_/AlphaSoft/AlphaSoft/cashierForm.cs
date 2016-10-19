@@ -43,7 +43,7 @@ namespace AlphaSoft
         private double totalAfterDisc = 0;
         private string discJualPersenValueText = "0";
         private int isJobFinished = 0;
-        int salesActiveStatus = 0;
+        int salesActiveStatus = 1;
 
         private Data_Access DS = new Data_Access();
 
@@ -145,7 +145,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F2:
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0)// || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     totalAfterDiscTextBox.Focus();
@@ -171,7 +171,7 @@ namespace AlphaSoft
 
                 case Keys.F4:
                     //MessageBox.Show("F4");
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0)// || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
@@ -194,7 +194,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F8:
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0 || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED");
@@ -203,7 +203,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F9:
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0)// || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     if (custIsBlocked == 0)
@@ -219,7 +219,7 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F11:
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0)// || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     totalAfterDiscTextBox.Focus();
@@ -238,11 +238,11 @@ namespace AlphaSoft
                     break;
 
                 case Keys.F10:
-                    if (isJobFinished == 1 || (salesActiveStatus == 0 && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU))
+                    if (isJobFinished == 1 || salesActiveStatus == 0)// || originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                         return;
 
                     //MessageBox.Show("F10");
-                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY PELANGGAN FORM");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : DISPLAY TEKNISI FORM");
                     dataTeknisiForm teknisiForm = new dataTeknisiForm(originModuleID, this);
                     teknisiForm.ShowDialog(this);
                     break;
@@ -996,6 +996,17 @@ namespace AlphaSoft
                 }
             }
 
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU ||
+                originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU ||
+                originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
+            {
+                if (selectedTechnicianID == 0)
+                {
+                    errorLabel.Text = "TEKNISI BELUM DIPILIH";
+                    return false;
+                }
+            }
+
             errorLabel.Text = "";
             return true;
         }
@@ -1566,6 +1577,11 @@ namespace AlphaSoft
 
                     gutil.showSuccess(gutil.INS);
 
+                    if (originModuleID == 0)
+                    { 
+                        generateDO.Visible = true;
+                        generateSuratTugas.Visible = true;
+                    }
                     //clearUpScreen();
                 }
             }
@@ -2880,7 +2896,7 @@ namespace AlphaSoft
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
                 else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || 
-                    originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
+                          originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU)
                 {
                     // PRINT OUT SURAT TUGAS
                     //sqlCommandx = "SELECT IFNULL(MT.TECHNICIAN_NAME, '') AS TECHNICIAN_NAME, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', MC.CUSTOMER_ADDRESS1, MC.CUSTOMER_ADDRESS2, MC.CUSTOMER_ADDRESS_CITY, MC.CUSTOMER_PHONE, M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY' " +
@@ -3563,7 +3579,7 @@ namespace AlphaSoft
                     //forceUpOneLevel = true;
                 }
             }
-            else if (columnName == "hpp" ||
+            else if (columnName == "productPrice" ||
                 columnName == "qty" ||
                 columnName == "disc1" ||
                 columnName == "disc2" ||
@@ -3574,8 +3590,6 @@ namespace AlphaSoft
                     // IF TEXTBOX IS EMPTY, DEFAULT THE VALUE TO 0 AND EXIT THE CHECKING
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : cashierDataGridView_CellValueChanged , empty texbox, reset [" + cashierDataGridView.CurrentCell.OwningColumn.Name + "] value to 0");
                     isLoading = true;
-                    // reset subTotal Value and recalculate total
-                    selectedRow.Cells["jumlah"].Value = 0;
 
                     //if (detailRequestQtyApproved.Count >= rowSelectedIndex + 1)
                     //    detailRequestQtyApproved[rowSelectedIndex] = "0";
@@ -3596,8 +3610,23 @@ namespace AlphaSoft
                     }
 
                     selectedRow.Cells[columnName].Value = "0";
+
+                    // reset subTotal Value and recalculate total
+                    if (columnName == "qty" || columnName == "productPrice")
+                        selectedRow.Cells["jumlah"].Value = 0;
+                    else
+                    {
+                        productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+
+                        subTotal = calculateSubTotal(rowSelectedIndex, productPrice);
+                        gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, subtotal value [" + subTotal + "]");
+                        selectedRow.Cells["jumlah"].Value = subTotal;
+                    }
+
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : TextBox_TextChanged, recalculate total value");
                     calculateTotal();
+
+                    isLoading = false;
 
                     return;
                 }

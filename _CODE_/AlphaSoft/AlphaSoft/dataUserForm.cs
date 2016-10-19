@@ -205,11 +205,14 @@ namespace AlphaSoft
 
         private void CetakButton_Click(object sender, EventArgs e)
         {
-            //preview laporan
-            DS.mySqlConnect();
-            DS.writeXML(sqlCommandx,globalConstants.UserXML);
-            ReportUserForm displayedform = new ReportUserForm();
-            displayedform.ShowDialog(this);
+            if (sqlCommandx.Length > 0)
+            { 
+                //preview laporan
+                DS.mySqlConnect();
+                DS.writeXML(sqlCommandx,globalConstants.UserXML);
+                ReportUserForm displayedform = new ReportUserForm();
+                displayedform.ShowDialog(this);
+            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

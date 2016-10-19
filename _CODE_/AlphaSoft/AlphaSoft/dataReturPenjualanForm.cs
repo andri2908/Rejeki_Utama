@@ -28,7 +28,9 @@ namespace AlphaSoft
         private bool returnCash = false;
 
         private List<string> returnQty = new List<string>();
+        private List<string> productPriceList = new List<string>();
         private List<string> SOreturnQty = new List<string>();
+        private List<string> subtotalList = new List<string>();
 
         private string previousInput = "";
         private double extraAmount = 0;
@@ -294,9 +296,9 @@ namespace AlphaSoft
 
             if (!found)
             {
-                selectedRow.Cells["qty"].Value = 1;
-                returnQty[rowSelectedIndex] = "1";
-                currQty = 1;
+                selectedRow.Cells["qty"].Value = 0;
+                returnQty[rowSelectedIndex] = "0";
+                currQty = 0;
             }
             else
             {
@@ -409,7 +411,7 @@ namespace AlphaSoft
             for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
             {
                 if (null != detailReturDataGridView.Rows[i].Cells["subtotal"].Value)
-                    total = total + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subtotal"].Value);
+                    total = total + Convert.ToDouble(subtotalList[i]);
             }
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
@@ -516,8 +518,13 @@ namespace AlphaSoft
         {
             isLoading = true;
             selectedRow.Cells["productName"].Value = "";
+
             selectedRow.Cells["productPrice"].Value = "0";
+            productPriceList[rowSelectedIndex] = "0";
+
             selectedRow.Cells["subTotal"].Value = "0";
+            subtotalList[rowSelectedIndex] = "0";
+
             selectedRow.Cells["qty"].Value = "0";
             returnQty[rowSelectedIndex] = "0";
 
@@ -576,12 +583,14 @@ namespace AlphaSoft
 
                 hpp = getProductPriceValue(selectedProductID);
                 gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "updateSomeRowsContent, PRODUCT_BASE_PRICE [" + hpp + "]");
-                selectedRow.Cells["productPrice"].Value = hpp.ToString();
+                selectedRow.Cells["productPrice"].Value = hpp;
+                productPriceList[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qty"].Value = 0;
                 returnQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "updateSomeRowsContent, attempt to calculate total");
 
@@ -644,6 +653,7 @@ namespace AlphaSoft
             double soQTY = 0;
             bool validQty = false;
             string tempString;
+            double tempVal = 0;
             DataGridViewTextBoxEditingControl dataGridViewTextBoxEditingControl = sender as DataGridViewTextBoxEditingControl;
 
             rowSelectedIndex = detailReturDataGridView.SelectedCells[0].RowIndex;
@@ -664,6 +674,7 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subtotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 if (returnQty.Count > rowSelectedIndex)
                     returnQty[rowSelectedIndex] = "0";
@@ -695,10 +706,17 @@ namespace AlphaSoft
                 if (null != selectedRow.Cells["SOqty"].Value)
                     soQTY = Convert.ToDouble(selectedRow.Cells["SOqty"].Value);
 
-                if (soQTY >= Convert.ToDouble(dataGridViewTextBoxEditingControl.Text))
-                    validQty = true;
+                if (Double.TryParse(dataGridViewTextBoxEditingControl.Text, out tempVal))
+                {
+                    if (soQTY >= Convert.ToDouble(dataGridViewTextBoxEditingControl.Text))
+                        validQty = true;
+                    else
+                        validQty = false;
+                }
                 else
+                {
                     validQty = false;
+                }               
             }
             else
                 validQty = true;
@@ -717,26 +735,30 @@ namespace AlphaSoft
                 dataGridViewTextBoxEditingControl.Text = previousInput;
             }
 
-            productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+            productPrice = Convert.ToDouble(productPriceList[rowSelectedIndex]);
 
             subTotal = Math.Round((productPrice * Convert.ToDouble(returnQty[rowSelectedIndex])), 2);
 
-            if (null != selectedRow.Cells["disc1"].Value)
-            {
-                subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc1"].Value)/100), 2);
-            }
+            if (originModuleID == globalConstants.RETUR_PENJUALAN)
+            { 
+                if (null != selectedRow.Cells["disc1"].Value)
+                {
+                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc1"].Value)/100), 2);
+                }
 
-            if (null != selectedRow.Cells["disc2"].Value)
-            {
-                subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc2"].Value) / 100), 2);
-            }
+                if (null != selectedRow.Cells["disc2"].Value)
+                {
+                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc2"].Value) / 100), 2);
+                }
 
-            if (null != selectedRow.Cells["discRP"].Value)
-            {
-                subTotal = subTotal - Convert.ToDouble(selectedRow.Cells["discRP"].Value);
+                if (null != selectedRow.Cells["discRP"].Value)
+                {
+                    subTotal = subTotal - Convert.ToDouble(selectedRow.Cells["discRP"].Value);
+                }
             }
 
             selectedRow.Cells["subtotal"].Value = subTotal;
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
@@ -761,6 +783,9 @@ namespace AlphaSoft
                 return;
 
             returnQty.Add("0");
+            productPriceList.Add("0");
+            subtotalList.Add("0");
+
             detailReturDataGridView.Rows[e.RowIndex].Cells["qty"].Value = "0";
         }
         
@@ -822,8 +847,21 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailReturDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailReturDataGridView.Rows[rowSelectedIndex];
+                detailReturDataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                detailReturDataGridView.Rows.Remove(selectedRow);
+                if (null != selectedRow && rowSelectedIndex != detailReturDataGridView.Rows.Count - 1)
+                {
+                    for (int i = rowSelectedIndex; i < detailReturDataGridView.Rows.Count - 1; i++)
+                    {
+                        returnQty[i] = returnQty[i + 1];
+                        productPriceList[i] = productPriceList[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
+                    isLoading = true;
+                    detailReturDataGridView.Rows.Remove(selectedRow);
+                    isLoading = false;
+                }
             }
         }
 
@@ -893,18 +931,21 @@ namespace AlphaSoft
             if (noReturTextBox.Text.Length <= 0)
             {
                 errorLabel.Text = "NO RETUR TIDAK BOLEH KOSONG";
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "dataValidated [NO RETUR TIDAK BOLEH KOSONG]");
                 return false;   
             }
 
             if (globalTotalValue <= 0)
             {
                 errorLabel.Text = "NILAI RETUR 0";
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "dataValidated [NILAI RETUR 0]");
                 return false;   
             }
 
             if (detailReturDataGridView.Rows.Count <= 0)
             {
                 errorLabel.Text = "TIDAK ADA BARANG YANG DIRETUR";
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "dataValidated [TIDAK ADA BARANG YANG DIRETUR]");
                 return false;
             }
 
@@ -978,7 +1019,7 @@ namespace AlphaSoft
                     sqlCommand = "INSERT INTO RETURN_SALES_HEADER (RS_INVOICE, SALES_INVOICE, CUSTOMER_ID, RS_DATETIME, RS_TOTAL) VALUES " +
                                     "('" + returID + "', '" + selectedSalesInvoice + "', " + selectedCustomerID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(returTotal) + ")";
 
-                gutil.saveSystemDebugLog(originModuleID, "INSERT INTO RETURN SALES HEADER [" + returID + "]");
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "INSERT INTO RETURN SALES HEADER [" + returID + "]");
 
                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                     throw internalEX;
@@ -986,8 +1027,11 @@ namespace AlphaSoft
                 // SAVE DETAIL TABLE
                 for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
                 {
-                    hppValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["productPrice"].Value);
-                    qtyValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["qty"].Value);
+                    if (null == detailReturDataGridView.Rows[i].Cells["productID"].Value || !gutil.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString()))
+                        continue;
+
+                    hppValue = Convert.ToDouble(productPriceList[i]);
+                    qtyValue = Convert.ToDouble(returnQty[i]);
 
                     if (originModuleID == globalConstants.RETUR_PENJUALAN)
                         soQty = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["SOqty"].Value);
@@ -1004,7 +1048,7 @@ namespace AlphaSoft
                     sqlCommand = "INSERT INTO RETURN_SALES_DETAIL (RS_INVOICE, PRODUCT_ID, PRODUCT_SALES_PRICE, PRODUCT_SALES_QTY, PRODUCT_RETURN_QTY, RS_DESCRIPTION, RS_SUBTOTAL) VALUES " +
                                         "('" + returID + "', '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "', " + hppValue + ", " + soQty + ", " + qtyValue + ", '" + descriptionValue + "', " + gutil.validateDecimalNumericInput(Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value)) + ")";
 
-                    gutil.saveSystemDebugLog(originModuleID, "INSERT INTO RETURN SALES DETAIL [" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + ", " + hppValue + ", " + soQty + ", " + qtyValue + "]");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "INSERT INTO RETURN SALES DETAIL [" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + ", " + hppValue + ", " + soQty + ", " + qtyValue + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
 
@@ -1018,68 +1062,68 @@ namespace AlphaSoft
                     // UPDATE MASTER PRODUCT
                     sqlCommand = "UPDATE MASTER_PRODUCT SET PRODUCT_STOCK_QTY = PRODUCT_STOCK_QTY + " + qtyValue + " WHERE PRODUCT_ID = '" + detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "'";
 
-                    gutil.saveSystemDebugLog(originModuleID, "UPDATE MASTER PRODUCT QTY ["+ detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE MASTER PRODUCT QTY ["+ detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString() + "]");
                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                         throw internalEX;
                 }
 
                 extraAmount = 0;
                 // IF THERE'S ANY CREDIT LEFT FOR THAT PARTICULAR INVOICE
-                gutil.saveSystemDebugLog(originModuleID, "CHECK FOR ANY OUTSTANDING AMOUNT FOR THE INVOICE");
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "CHECK FOR ANY OUTSTANDING AMOUNT FOR THE INVOICE");
                 if (originModuleID == globalConstants.RETUR_PENJUALAN)
                 {
                     totalCredit = getTotalCredit();
                     selectedCreditID = getCreditID();
 
-                    gutil.saveSystemDebugLog(originModuleID, "selectedCreditID [" + selectedCreditID + "]");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "selectedCreditID [" + selectedCreditID + "]");
                     if (selectedCreditID > 0)
                     {
                         if (totalCredit >= globalTotalValue)
                         {
                             // RETUR VALUE LESS THAN OR EQUAL TOTAL CREDIT
                             // add retur as cash payment with description retur no
-                            gutil.saveSystemDebugLog(originModuleID, "RETUR VALUE LESS THAN OR EQUAL TOTAL CREDIT");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "RETUR VALUE LESS THAN OR EQUAL TOTAL CREDIT");
                             sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE, PAYMENT_CONFIRMED_DATE) VALUES " +
                                                 "(" + selectedCreditID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), 1, " + gutil.validateDecimalNumericInput(globalTotalValue) + ", 'RETUR [" + returID + "]', 1, STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'))";
 
-                            gutil.saveSystemDebugLog(originModuleID, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(globalTotalValue) + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(globalTotalValue) + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
                         else
                         {
                             // RETUR VALUE BIGGER THAN TOTAL CREDIT
-                            gutil.saveSystemDebugLog(originModuleID, "RETUR VALUE BIGGER THAN TOTAL CREDIT");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "RETUR VALUE BIGGER THAN TOTAL CREDIT");
                             // return the extra amount as cash
                             extraAmount = globalTotalValue - totalCredit;
-                            gutil.saveSystemDebugLog(originModuleID, "extraAmount [" + extraAmount + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "extraAmount [" + extraAmount + "]");
                             sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE, PAYMENT_CONFIRMED_DATE) VALUES " +
                                                 "(" + selectedCreditID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), 1, " + gutil.validateDecimalNumericInput(totalCredit) + ", 'RETUR [" + noReturTextBox.Text + "]', 1, STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'))";
 
-                            gutil.saveSystemDebugLog(originModuleID, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(totalCredit) + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "INSERT INTO PAYMENT CREDIT [" + selectedCreditID + ", " + gutil.validateDecimalNumericInput(totalCredit) + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
 
                         if (totalCredit <= globalTotalValue)
                         {
-                            gutil.saveSystemDebugLog(originModuleID, "RETUR VALUE BIGGER THAN TOTAL CREDIT VALUE, MEANS FULLY PAID");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "RETUR VALUE BIGGER THAN TOTAL CREDIT VALUE, MEANS FULLY PAID");
                             
                             // UPDATE SALES HEADER TABLE
                             sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1 WHERE SALES_INVOICE = '" + selectedSalesInvoice + "'";
-                            gutil.saveSystemDebugLog(originModuleID, "UPDATE SALES HEADER [" + selectedSalesInvoice + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE SALES HEADER [" + selectedSalesInvoice + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // UPDATE SALES HEADER TAX TABLE
                             sqlCommand = "UPDATE SALES_HEADER_TAX SET SALES_PAID = 1 WHERE ORIGIN_SALES_INVOICE = '" + selectedSalesInvoice + "'";
-                            gutil.saveSystemDebugLog(originModuleID, "UPDATE SALES HEADER TAX [" + selectedSalesInvoice + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE SALES HEADER TAX [" + selectedSalesInvoice + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
 
                             // UPDATE CREDIT TABLE
                             sqlCommand = "UPDATE CREDIT SET CREDIT_PAID = 1 WHERE CREDIT_ID = " + selectedCreditID;
-                            gutil.saveSystemDebugLog(originModuleID, "UPDATE CREDIT [" + selectedCreditID + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE CREDIT [" + selectedCreditID + "]");
                             if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                 throw internalEX;
                         }
@@ -1089,7 +1133,7 @@ namespace AlphaSoft
                 }
                 else if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
                 {
-                    gutil.saveSystemDebugLog(originModuleID, "GET LIST OF OUTSTANDING CREDIT AND PAY FROM THE OLDEST CREDIT");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "GET LIST OF OUTSTANDING CREDIT AND PAY FROM THE OLDEST CREDIT");
                     if (returnCash)
                         extraAmount = globalTotalValue;
                     else
@@ -1108,7 +1152,7 @@ namespace AlphaSoft
 
                         if (dt.Rows.Count > 0)
                         {
-                            gutil.saveSystemDebugLog(originModuleID, "AMOUNT OF RETUR ["+ returNominal + "] NUM OF OUTSTANDING CREDIT [" + dt.Rows.Count + "]");
+                            gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "AMOUNT OF RETUR ["+ returNominal + "] NUM OF OUTSTANDING CREDIT [" + dt.Rows.Count + "]");
                             rowCounter = 0;
                             while (returNominal > 0 && rowCounter < dt.Rows.Count)
                             {
@@ -1118,24 +1162,24 @@ namespace AlphaSoft
                                 currentCreditID = Convert.ToInt32(dt.Rows[rowCounter]["CREDIT_ID"].ToString());
                                 outstandingCreditAmount = Convert.ToDouble(dt.Rows[rowCounter]["SISA PIUTANG"].ToString());
 
-                                gutil.saveSystemDebugLog(originModuleID, "currentCreditID [" + currentCreditID + "] outstandingCreditAmount [" + outstandingCreditAmount + "]");
+                                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "currentCreditID [" + currentCreditID + "] outstandingCreditAmount [" + outstandingCreditAmount + "]");
 
                                 if (outstandingCreditAmount <= returNominal && outstandingCreditAmount > 0)
                                 {
-                                    gutil.saveSystemDebugLog(originModuleID, "currentCreditID [" + currentCreditID + "] FULLY PAID");
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "currentCreditID [" + currentCreditID + "] FULLY PAID");
                                     actualReturAmount = outstandingCreditAmount;
                                     fullyPaid = true;
                                 }
                                 else
                                 {
                                     actualReturAmount = returNominal;
-                                    gutil.saveSystemDebugLog(originModuleID, "currentCreditID [" + currentCreditID + "] NOT FULLY PAID [" + actualReturAmount + "]");
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "currentCreditID [" + currentCreditID + "] NOT FULLY PAID [" + actualReturAmount + "]");
                                 }
 
                                 sqlCommand = "INSERT INTO PAYMENT_CREDIT (CREDIT_ID, PAYMENT_DATE, PM_ID, PAYMENT_NOMINAL, PAYMENT_DESCRIPTION, PAYMENT_CONFIRMED, PAYMENT_DUE_DATE, PAYMENT_CONFIRMED_DATE) VALUES " +
                                                     "(" + currentCreditID + ", STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), 1, " + gutil.validateDecimalNumericInput(actualReturAmount) + ", 'RETUR [" + returID + "]', 1, STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'), STR_TO_DATE('" + ReturDateTime + "', '%d-%m-%Y'))";
 
-                                gutil.saveSystemDebugLog(originModuleID, "INSERT TO PAYMENT CREDIT [" + currentCreditID + ", " + gutil.validateDecimalNumericInput(actualReturAmount) + "]");
+                                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "INSERT TO PAYMENT CREDIT [" + currentCreditID + ", " + gutil.validateDecimalNumericInput(actualReturAmount) + "]");
                                 if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                     throw internalEX;
 
@@ -1143,28 +1187,28 @@ namespace AlphaSoft
                                 {
                                     // UPDATE CREDIT TABLE
                                     sqlCommand = "UPDATE CREDIT SET CREDIT_PAID = 1 WHERE CREDIT_ID = " + currentCreditID;
-                                    gutil.saveSystemDebugLog(originModuleID, "UPDATE CREDIT [" + currentCreditID + "] TO FULLY PAID");
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE CREDIT [" + currentCreditID + "] TO FULLY PAID");
                                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
 
                                     // UPDATE SALES HEADER TABLE
                                     sqlCommand = "UPDATE SALES_HEADER SET SALES_PAID = 1 WHERE SALES_INVOICE = " + currentSalesInvoice;
-                                    gutil.saveSystemDebugLog(originModuleID, "UPDATE SALES_HEADER [" + currentSalesInvoice + "] TO FULLY PAID");
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE SALES_HEADER [" + currentSalesInvoice + "] TO FULLY PAID");
                                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
 
                                     // UPDATE SALES HEADER TAX TABLE
                                     sqlCommand = "UPDATE SALES_HEADER_TAX SET SALES_PAID = 1 WHERE ORIGIN_SALES_INVOICE = " + currentSalesInvoice;
-                                    gutil.saveSystemDebugLog(originModuleID, "UPDATE SALES_HEADER_TAX [" + currentSalesInvoice + "] TO FULLY PAID");
+                                    gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "UPDATE SALES_HEADER_TAX [" + currentSalesInvoice + "] TO FULLY PAID");
                                     if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
                                         throw internalEX;
 
                                 }
 
                                 returNominal = returNominal - actualReturAmount;
-                                gutil.saveSystemDebugLog(originModuleID, "returNominal [" + returNominal + "]");
+                                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "returNominal [" + returNominal + "]");
                                 rowCounter += 1;
-                                gutil.saveSystemDebugLog(originModuleID, "rowCounter [" + rowCounter + "]");
+                                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "rowCounter [" + rowCounter + "]");
                             }
                         }
                     }
@@ -1175,7 +1219,7 @@ namespace AlphaSoft
             }
             catch (Exception e)
             {
-                gutil.saveSystemDebugLog(originModuleID, "EXCEPTION THROWN [" + e.Message + "]");
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "EXCEPTION THROWN [" + e.Message + "]");
                 try
                 {
                     DS.rollBack();
@@ -1502,6 +1546,11 @@ namespace AlphaSoft
                 noReturTextBox.Enabled = false;
                 rsDateTimePicker.Enabled = false;
             }
+            else
+            {
+                MessageBox.Show("FAIL TO SAVE");
+                gutil.saveSystemDebugLog(globalConstants.MENU_RETUR_PENJUALAN, "FAILED TO SAVE");
+            }
         }
         
         private void dataReturPenjualanForm_Load(object sender, EventArgs e)
@@ -1531,6 +1580,10 @@ namespace AlphaSoft
 
             detailReturDataGridView.EditingControlShowing += detailReturDataGridView_EditingControlShowing;
             gutil.reArrangeTabOrder(this);
+
+            returnQty.Add("0");
+            productPriceList.Add("0");
+            subtotalList.Add("0");
         }
 
         private void detailReturDataGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
@@ -1617,7 +1670,7 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
             //load customer id
-            sqlCommand = "SELECT RS.RS_INVOICE, RS.SALES_INVOICE AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER',DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE',RS.RS_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' FROM RETURN_SALES_HEADER RS,MASTER_CUSTOMER C WHERE RS.CUSTOMER_ID = C.CUSTOMER_ID AND RS.RS_INVOICE = '" + returID + "'" +
+            sqlCommand = "SELECT RS.RS_INVOICE, IFNULL(RS.SALES_INVOICE, '') AS 'INVOICE', C.CUSTOMER_FULL_NAME AS 'CUSTOMER',DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE',RS.RS_TOTAL AS 'TOTAL', IF(C.CUSTOMER_GROUP=1,'RETAIL',IF(C.CUSTOMER_GROUP=2,'GROSIR','PARTAI')) AS 'GROUP' FROM RETURN_SALES_HEADER RS,MASTER_CUSTOMER C WHERE RS.CUSTOMER_ID = C.CUSTOMER_ID AND RS.RS_INVOICE = '" + returID + "'" +
                 " UNION " +
                 "SELECT RS.RS_INVOICE, RS.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', DATE_FORMAT(RS.RS_DATETIME, '%d-%M-%Y') AS 'DATE', RS.RS_TOTAL AS 'TOTAL', 'RETAIL' AS 'GROUP' FROM RETURN_SALES_HEADER RS WHERE RS.CUSTOMER_ID = 0 AND RS.RS_INVOICE = '" + returID+ "'" +
                 "ORDER BY DATE ASC";
@@ -1920,6 +1973,7 @@ namespace AlphaSoft
             string columnName = "";
             double soQTY = 0;
             bool validQty = false;
+            double tempVal = 0;
             var cell = detailReturDataGridView[e.ColumnIndex, e.RowIndex];
             DataGridViewRow selectedRow = detailReturDataGridView.Rows[e.RowIndex];
            
@@ -1954,9 +2008,11 @@ namespace AlphaSoft
                     isLoading = true;
                     // reset subTotal Value and recalculate total
                     selectedRow.Cells["subtotal"].Value = 0;
+                    subtotalList[rowSelectedIndex] = "0";
 
                     if (returnQty.Count > rowSelectedIndex)
                         returnQty[rowSelectedIndex] = "0";
+
                     selectedRow.Cells[columnName].Value = "0";
 
                     calculateTotal();
@@ -1981,10 +2037,17 @@ namespace AlphaSoft
                     if (null != selectedRow.Cells["SOqty"].Value)
                         soQTY = Convert.ToDouble(selectedRow.Cells["SOqty"].Value);
 
-                    if (soQTY >= Convert.ToDouble(cellValue))
-                        validQty = true;
+                    if (Double.TryParse(cellValue, out tempVal))
+                    {
+                        if (soQTY >= Convert.ToDouble(cellValue))
+                            validQty = true;
+                        else
+                            validQty = false;
+                    }
                     else
+                    {
                         validQty = false;
+                    }
                 }
                 else
                     validQty = true;
@@ -2003,26 +2066,30 @@ namespace AlphaSoft
                     selectedRow.Cells[columnName].Value = previousInput;
                 }
 
-                productPrice = Convert.ToDouble(selectedRow.Cells["productPrice"].Value);
+                productPrice = Convert.ToDouble(productPriceList[rowSelectedIndex]);
 
                 subTotal = Math.Round((productPrice * Convert.ToDouble(returnQty[rowSelectedIndex])), 2);
 
-                if (null != selectedRow.Cells["disc1"].Value)
+                if (originModuleID == globalConstants.RETUR_PENJUALAN)
                 {
-                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc1"].Value) / 100), 2);
-                }
+                    if (null != selectedRow.Cells["disc1"].Value)
+                    {
+                        subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc1"].Value) / 100), 2);
+                    }
 
-                if (null != selectedRow.Cells["disc2"].Value)
-                {
-                    subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc2"].Value) / 100), 2);
-                }
+                    if (null != selectedRow.Cells["disc2"].Value)
+                    {
+                        subTotal = subTotal - Math.Round((subTotal * Convert.ToDouble(selectedRow.Cells["disc2"].Value) / 100), 2);
+                    }
 
-                if (null != selectedRow.Cells["discRP"].Value)
-                {
-                    subTotal = subTotal - Convert.ToDouble(selectedRow.Cells["discRP"].Value);
+                    if (null != selectedRow.Cells["discRP"].Value)
+                    {
+                        subTotal = subTotal - Convert.ToDouble(selectedRow.Cells["discRP"].Value);
+                    }
                 }
 
                 selectedRow.Cells["subtotal"].Value = subTotal;
+                subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                 calculateTotal();
 
@@ -2035,6 +2102,13 @@ namespace AlphaSoft
             {
                 detailReturDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
+        }
+
+        private void ChangePrinterButton_Click(object sender, EventArgs e)
+        {
+            gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "RETUR PENJUALAN FORM : ChangePrinterButton_Click, DISPLAY PRINTER SELECTION FORM");
+            SetPrinterForm displayedForm = new SetPrinterForm();
+            displayedForm.ShowDialog(this);
         }
     }
 }

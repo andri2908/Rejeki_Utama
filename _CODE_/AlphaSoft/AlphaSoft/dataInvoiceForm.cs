@@ -42,10 +42,10 @@ namespace AlphaSoft
             int rowSelectedIndex = dataInvoiceDataGridView.SelectedCells[0].RowIndex;
             DataGridViewRow selectedRow = dataInvoiceDataGridView.Rows[rowSelectedIndex];
 
-            if (selectedRow.Cells["SALES_PAID"].Value.ToString() == "1" && originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
+            if (selectedRow.Cells["STATUS BAYAR"].Value.ToString() == "LUNAS" && originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
                 return;
 
-            selectedSO = selectedRow.Cells["SALES_INVOICE"].Value.ToString();
+            selectedSO = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
             switch(originModuleID)
             {
@@ -91,10 +91,10 @@ namespace AlphaSoft
             string noInvoiceParam = "";
 
             if (originModuleID == globalConstants.RETUR_PENJUALAN)
-                sqlCommand = "SELECT SALES_INVOICE, CUSTOMER_FULL_NAME, SALES_PAID FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
+                sqlCommand = "SELECT SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', IF(SALES_PAID=1,'LUNAS','BELUM LUNAS') AS 'STATUS BAYAR' FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
                                     "(H.CUSTOMER_ID = M.CUSTOMER_ID) WHERE 1 = 1 ";
             else if (originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
-                sqlCommand = "SELECT CREDIT.SALES_INVOICE, CUSTOMER_FULL_NAME, SALES_PAID FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
+                sqlCommand = "SELECT CREDIT.SALES_INVOICE AS 'NO INVOICE', CUSTOMER_FULL_NAME AS 'NAMA PELANGGAN', IF(SALES_PAID=1,'LUNAS','BELUM LUNAS') AS 'STATUS BAYAR' FROM SALES_HEADER H LEFT OUTER JOIN MASTER_CUSTOMER M ON " +
                                     "(H.CUSTOMER_ID = M.CUSTOMER_ID), CREDIT WHERE H.SALES_INVOICE = CREDIT.SALES_INVOICE ";
 
             if (!showAllCheckBox.Checked)
@@ -120,8 +120,8 @@ namespace AlphaSoft
                     dt.Load(rdr);
                     dataInvoiceDataGridView.DataSource = dt;
 
-                    dataInvoiceDataGridView.Columns["SALES_INVOICE"].Width = 200;
-                    dataInvoiceDataGridView.Columns["CUSTOMER_FULL_NAME"].Width = 300;
+                    dataInvoiceDataGridView.Columns["NO INVOICE"].Width = 200;
+                    dataInvoiceDataGridView.Columns["NAMA PELANGGAN"].Width = 300;
                     //dataInvoiceDataGridView.Columns["SALES_PAID"].Visible = false;
                 }
             }
@@ -169,10 +169,10 @@ namespace AlphaSoft
                 int rowSelectedIndex = dataInvoiceDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataInvoiceDataGridView.Rows[rowSelectedIndex];
 
-                if (selectedRow.Cells["SALES_PAID"].Value.ToString() == "1" && originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
+                if (selectedRow.Cells["STATUS BAYAR"].Value.ToString() == "LUNAS" && originModuleID == globalConstants.PEMBAYARAN_PIUTANG)
                     return;
 
-                selectedSO = selectedRow.Cells["SALES_INVOICE"].Value.ToString();
+                selectedSO = selectedRow.Cells["NO INVOICE"].Value.ToString();
 
                 switch (originModuleID)
                 {

@@ -117,6 +117,9 @@
     <Compile Include="changePasswordForm.Designer.cs">
       <DependentUpon>changePasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\clsSMS.cs" />
+    <Compile Include="Classes\ShortMessage.cs" />
+    <Compile Include="Classes\ShortMessageCollection.cs" />
     <Compile Include="Constants.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1113,6 +1116,12 @@
     <Compile Include="smallPleaseWait.Designer.cs">
       <DependentUpon>smallPleaseWait.cs</DependentUpon>
     </Compile>
+    <Compile Include="SMSapplication.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SMSapplication.designer.cs">
+      <DependentUpon>SMSapplication.cs</DependentUpon>
+    </Compile>
     <Compile Include="stokPecahBarangForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1729,6 +1738,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="smallPleaseWait.resx">
       <DependentUpon>smallPleaseWait.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SMSapplication.resx">
+      <DependentUpon>SMSapplication.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="stokPecahBarangForm.resx">
       <DependentUpon>stokPecahBarangForm.cs</DependentUpon>

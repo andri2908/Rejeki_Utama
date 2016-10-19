@@ -188,7 +188,7 @@
             this.Name = "dataUserForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NAMA USER";
+            this.Text = "DATA USER";
             this.Activated += new System.EventHandler(this.dataUserForm_Activated);
             this.Load += new System.EventHandler(this.dataUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataUserGridView)).EndInit();

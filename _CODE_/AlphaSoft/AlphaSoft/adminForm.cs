@@ -392,6 +392,7 @@ namespace AlphaSoft
         private void toolStripMenuItem15_Click(object sender, EventArgs e)
         {
             dataUserForm displayedForm = new dataUserForm();
+
             displayedForm.MdiParent = this;
             displayedForm.Show();
         }
@@ -1072,8 +1073,9 @@ namespace AlphaSoft
         private void backUpRestoreDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             backupRestoreDatabaseForm displayedForm = new backupRestoreDatabaseForm();
+
             displayedForm.MdiParent = this;
-            displayedForm.ShowDialog(this);
+            displayedForm.Show();
         }
 
         private void MENU_penerimaanBarang_Click(object sender, EventArgs e)
@@ -1434,6 +1436,12 @@ namespace AlphaSoft
         {
             dataSuratTugasForm displayedForm = new dataSuratTugasForm(globalConstants.MONITOR_SURAT_TUGAS);
             displayedForm.Show();
+        }
+
+        private void toolStripMenuItem14_Click_1(object sender, EventArgs e)
+        {
+            SMSapplication displayedForm = new SMSapplication();
+            displayedForm.Show(); 
         }
     }
 }

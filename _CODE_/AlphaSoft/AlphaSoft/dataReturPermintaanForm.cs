@@ -25,6 +25,9 @@ namespace AlphaSoft
         private int locationID = 0;
 
         private List<string> detailQty = new List<string>();
+        private List<string> productPriceList = new List<string>();
+        private List<string> subtotalList = new List<string>();
+
         private CultureInfo culture = new CultureInfo("id-ID");
 
         private Hotkeys.GlobalHotkey ghk_F1;
@@ -366,11 +369,11 @@ namespace AlphaSoft
 
             subTotal = Math.Round((hpp * currQty), 2);
             selectedRow.Cells["subTotal"].Value = subTotal;
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
             detailReturDataGridView.CurrentCell = selectedRow.Cells["qty"];
-            detailReturDataGridView.Select();
         }
 
         private double getHPPValue(string productID)
@@ -390,8 +393,7 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
             {
-                if (null != detailReturDataGridView.Rows[i].Cells["subTotal"].Value)
-                    total = total + Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["subTotal"].Value);
+                total = total + Convert.ToDouble(subtotalList[i]);
             }
 
             globalTotalValue = total;
@@ -455,9 +457,10 @@ namespace AlphaSoft
             isLoading = true;
             selectedRow.Cells["productName"].Value = "";
             selectedRow.Cells["hpp"].Value = "0";
+            productPriceList[rowSelectedIndex] = "0";
             selectedRow.Cells["subTotal"].Value = "0";
+            subtotalList[rowSelectedIndex] = "0";
             selectedRow.Cells["qty"].Value = "0";
-
             detailQty[rowSelectedIndex] = "0";
 
             calculateTotal();
@@ -504,11 +507,13 @@ namespace AlphaSoft
                 hpp = getHPPValue(selectedProductID);
                 GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PERMINTAAN, "updateSomeRowsContent, PRODUCT_BASE_PRICE [" + hpp + "]");
                 selectedRow.Cells["hpp"].Value = hpp.ToString();
+                productPriceList[rowSelectedIndex] = hpp.ToString();
 
                 selectedRow.Cells["qty"].Value = 0;
                 detailQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 GUTIL.saveSystemDebugLog(globalConstants.MENU_RETUR_PERMINTAAN, "updateSomeRowsContent, attempt to calculate total");
 
@@ -572,6 +577,7 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailQty.Count > rowSelectedIndex)
                     detailQty[rowSelectedIndex] = "0";
@@ -636,11 +642,12 @@ namespace AlphaSoft
                 //changes on qty
                 productQty = Convert.ToDouble(dataGridViewTextBoxEditingControl.Text);
                 if (null != selectedRow.Cells["hpp"].Value)
-                    hppValue = Convert.ToDouble(selectedRow.Cells["hpp"].Value);
+                    hppValue = Convert.ToDouble(productPriceList[rowSelectedIndex]);
 
                 subTotal = Math.Round((hppValue * productQty), 2);
 
-                selectedRow.Cells["subTotal"].Value = subTotal;
+                selectedRow.Cells["subTotal"].Value = subTotal.ToString();
+                subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                 calculateTotal();
             }
@@ -682,6 +689,10 @@ namespace AlphaSoft
             addColumnToDataGrid();
 
             GUTIL.reArrangeTabOrder(this);
+
+            detailQty.Add("0");
+            productPriceList.Add("0");
+            subtotalList.Add("0");
         }
 
         private void supplierCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -796,10 +807,10 @@ namespace AlphaSoft
                 // SAVE DETAIL TABLE
                 for (int i = 0; i < detailReturDataGridView.Rows.Count; i++)
                 {
-                    if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value)
+                    if (null != detailReturDataGridView.Rows[i].Cells["productID"].Value && GUTIL.isProductIDExist(detailReturDataGridView.Rows[i].Cells["productID"].Value.ToString()))
                     { 
-                       hppValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["HPP"].Value);
-                       qtyValue = Convert.ToDouble(detailReturDataGridView.Rows[i].Cells["qty"].Value);
+                       hppValue = Convert.ToDouble(productPriceList[i]);
+                       qtyValue = Convert.ToDouble(detailQty[i]);
                       
                        try
                        {
@@ -928,6 +939,8 @@ namespace AlphaSoft
         private void detailReturDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             detailQty.Add("0");
+            productPriceList.Add("0");
+            subtotalList.Add("0");
         }
 
         private void deleteCurrentRow()
@@ -936,8 +949,21 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailReturDataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailReturDataGridView.Rows[rowSelectedIndex];
+                detailReturDataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                detailReturDataGridView.Rows.Remove(selectedRow);
+                if (null != selectedRow && rowSelectedIndex != detailReturDataGridView.Rows.Count - 1)
+                {
+                    for (int i = rowSelectedIndex; i < detailReturDataGridView.Rows.Count - 1; i++)
+                    {
+                        detailQty[i] = detailQty[i + 1];
+                        productPriceList[i] = productPriceList[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
+                    isLoading = true;
+                    detailReturDataGridView.Rows.Remove(selectedRow);
+                    isLoading = false;
+                }
             }
         }
 

@@ -61,7 +61,7 @@ namespace AlphaSoft
             displayForm.ShowDialog(this);
         }
 
-        private void loadUserGroupData()
+        private void loadUserGroupData(int options = 0)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
@@ -69,15 +69,22 @@ namespace AlphaSoft
             string namaGroupParam = MySqlHelper.EscapeString(namaGroupTextbox.Text);
 
             DS.mySqlConnect();
-            if (groupnonactiveoption.Checked)
+            if (options == 1)
             {
-                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
+                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP";
             }
             else
             {
-                sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_ACTIVE = 1 AND GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
+                if (groupnonactiveoption.Checked)
+                {
+                    sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
+                }
+                else
+                {
+                    sqlCommand = "SELECT GROUP_ID, GROUP_USER_NAME AS 'NAMA GROUP', GROUP_USER_DESCRIPTION AS 'DESKRIPSI GROUP' FROM MASTER_GROUP WHERE GROUP_USER_ACTIVE = 1 AND GROUP_USER_NAME LIKE '%" + namaGroupParam + "%'";
+                }
             }
-
+            
             using (rdr = DS.getData(sqlCommand))
             {
                 if (rdr.HasRows)
@@ -180,5 +187,9 @@ namespace AlphaSoft
             namaGroupTextbox.Select();
         }
 
+		private void AllButton_Click(object sender, EventArgs e)
+        {
+            loadUserGroupData(1);
+        }
     }
 }

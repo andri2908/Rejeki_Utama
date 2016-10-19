@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.unitNameTextBox = new System.Windows.Forms.TextBox();
             this.dataUnitGridView = new System.Windows.Forms.DataGridView();
             this.newButton = new System.Windows.Forms.Button();
             this.satuannonactiveoption = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.AllButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataUnitGridView)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -43,19 +46,19 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label1.Location = new System.Drawing.Point(11, 18);
+            this.label1.Location = new System.Drawing.Point(6, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 18);
+            this.label1.Size = new System.Drawing.Size(81, 18);
             this.label1.TabIndex = 30;
-            this.label1.Text = "Nama";
+            this.label1.Text = "SATUAN";
             // 
             // unitNameTextBox
             // 
             this.unitNameTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.unitNameTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.unitNameTextBox.Location = new System.Drawing.Point(89, 12);
+            this.unitNameTextBox.Location = new System.Drawing.Point(110, 21);
             this.unitNameTextBox.Name = "unitNameTextBox";
-            this.unitNameTextBox.Size = new System.Drawing.Size(260, 27);
+            this.unitNameTextBox.Size = new System.Drawing.Size(271, 27);
             this.unitNameTextBox.TabIndex = 31;
             this.unitNameTextBox.TextChanged += new System.EventHandler(this.unitNameTextBox_TextChanged);
             // 
@@ -64,29 +67,29 @@
             this.dataUnitGridView.AllowUserToAddRows = false;
             this.dataUnitGridView.AllowUserToDeleteRows = false;
             this.dataUnitGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataUnitGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataUnitGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataUnitGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataUnitGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataUnitGridView.Location = new System.Drawing.Point(0, 70);
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataUnitGridView.DefaultCellStyle = dataGridViewCellStyle4;
+            this.dataUnitGridView.Location = new System.Drawing.Point(0, 143);
             this.dataUnitGridView.MultiSelect = false;
             this.dataUnitGridView.Name = "dataUnitGridView";
             this.dataUnitGridView.ReadOnly = true;
             this.dataUnitGridView.RowHeadersVisible = false;
-            this.dataUnitGridView.Size = new System.Drawing.Size(518, 479);
+            this.dataUnitGridView.Size = new System.Drawing.Size(518, 406);
             this.dataUnitGridView.TabIndex = 28;
             this.dataUnitGridView.DoubleClick += new System.EventHandler(this.dataUnitGridView_DoubleClick);
             this.dataUnitGridView.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataUnitGridView_KeyDown);
@@ -94,9 +97,10 @@
             // newButton
             // 
             this.newButton.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Bold);
-            this.newButton.Location = new System.Drawing.Point(372, 12);
+            this.newButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.newButton.Location = new System.Drawing.Point(9, 45);
             this.newButton.Name = "newButton";
-            this.newButton.Size = new System.Drawing.Size(56, 27);
+            this.newButton.Size = new System.Drawing.Size(78, 37);
             this.newButton.TabIndex = 32;
             this.newButton.Text = "NEW";
             this.newButton.UseVisualStyleBackColor = true;
@@ -106,7 +110,7 @@
             // 
             this.satuannonactiveoption.AutoSize = true;
             this.satuannonactiveoption.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.satuannonactiveoption.Location = new System.Drawing.Point(89, 45);
+            this.satuannonactiveoption.Location = new System.Drawing.Point(110, 54);
             this.satuannonactiveoption.Name = "satuannonactiveoption";
             this.satuannonactiveoption.Size = new System.Drawing.Size(184, 19);
             this.satuannonactiveoption.TabIndex = 36;
@@ -114,17 +118,42 @@
             this.satuannonactiveoption.UseVisualStyleBackColor = true;
             this.satuannonactiveoption.CheckedChanged += new System.EventHandler(this.satuannonactiveoption_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.AllButton);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.satuannonactiveoption);
+            this.groupBox1.Controls.Add(this.unitNameTextBox);
+            this.groupBox1.Controls.Add(this.newButton);
+            this.groupBox1.Font = new System.Drawing.Font("Verdana", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.ForeColor = System.Drawing.Color.FloralWhite;
+            this.groupBox1.Location = new System.Drawing.Point(65, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(388, 125);
+            this.groupBox1.TabIndex = 37;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "FILTER";
+            // 
+            // AllButton
+            // 
+            this.AllButton.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AllButton.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.AllButton.Location = new System.Drawing.Point(110, 79);
+            this.AllButton.Name = "AllButton";
+            this.AllButton.Size = new System.Drawing.Size(271, 28);
+            this.AllButton.TabIndex = 42;
+            this.AllButton.Text = "DISPLAY ALL";
+            this.AllButton.UseVisualStyleBackColor = true;
+            this.AllButton.Click += new System.EventHandler(this.AllButton_Click);
+            // 
             // dataSatuanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(518, 549);
-            this.Controls.Add(this.satuannonactiveoption);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.unitNameTextBox);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataUnitGridView);
-            this.Controls.Add(this.newButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "dataSatuanForm";
@@ -134,8 +163,9 @@
             this.Activated += new System.EventHandler(this.dataSatuanForm_Activated);
             this.Load += new System.EventHandler(this.dataSatuanForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataUnitGridView)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -146,5 +176,7 @@
         private System.Windows.Forms.DataGridView dataUnitGridView;
         private System.Windows.Forms.Button newButton;
         private System.Windows.Forms.CheckBox satuannonactiveoption;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button AllButton;
     }
 }

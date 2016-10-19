@@ -24,6 +24,7 @@ namespace AlphaSoft
         private double globalTotalValue = 0;
         private List<string> detailQty = new List<string>();
         private List<string> detailHpp = new List<string>();
+        private List<string> subtotalList = new List<string>();
 
         private CultureInfo culture = new CultureInfo("id-ID");
         string previousInput = "";
@@ -212,6 +213,7 @@ namespace AlphaSoft
                 detailPODataGridView.Rows.Add();
                 detailHpp.Add("0");
                 detailQty.Add("0");
+                subtotalList.Add("0");
                 newRowIndex = detailPODataGridView.Rows.Count - 1;
             }
             else
@@ -263,6 +265,7 @@ namespace AlphaSoft
                 {
                     detailQty[emptyRowIndex] = "0";
                     detailHpp[emptyRowIndex] = "0";
+                    subtotalList[emptyRowIndex] = "0";
                     rowSelectedIndex = emptyRowIndex;
                 }
                 else
@@ -270,6 +273,7 @@ namespace AlphaSoft
                     detailPODataGridView.Rows.Add();
                     detailQty.Add("0");
                     detailHpp.Add("0");
+                    subtotalList.Add("0");
                     rowSelectedIndex = detailPODataGridView.Rows.Count - 1;
                 }
             }
@@ -291,10 +295,11 @@ namespace AlphaSoft
                 detailQty[rowSelectedIndex] = currQty.ToString();
             }
 
-            hpp = Convert.ToDouble(selectedRow.Cells["HPP"].Value);
+            hpp = Convert.ToDouble(detailHpp[rowSelectedIndex]);
 
             subTotal = Math.Round((hpp * currQty), 2);
-            selectedRow.Cells["subTotal"].Value = subTotal;
+            selectedRow.Cells["subTotal"].Value = subTotal.ToString();
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
@@ -480,8 +485,7 @@ namespace AlphaSoft
 
             for (int i = 0; i < detailPODataGridView.Rows.Count; i++)
             {
-                if (null != detailPODataGridView.Rows[i].Cells["subTotal"].Value)
-                    total = total + Convert.ToDouble(detailPODataGridView.Rows[i].Cells["subTotal"].Value);
+                total = total + Convert.ToDouble(subtotalList[i]);
             }
 
             globalTotalValue = total;
@@ -495,6 +499,7 @@ namespace AlphaSoft
             selectedRow.Cells["HPP"].Value = "0";
             detailHpp[rowSelectedIndex] = "0";
             selectedRow.Cells["subTotal"].Value = "0";
+            subtotalList[rowSelectedIndex] = "0";
             selectedRow.Cells["qty"].Value = "0";
             detailQty[rowSelectedIndex] = "0";
 
@@ -548,6 +553,7 @@ namespace AlphaSoft
                 detailQty[rowSelectedIndex] = "0";
 
                 selectedRow.Cells["subTotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "updateSomeRowsContent, attempt to calculate total");
 
@@ -611,6 +617,7 @@ namespace AlphaSoft
                 isLoading = true;
                 // reset subTotal Value and recalculate total
                 selectedRow.Cells["subtotal"].Value = 0;
+                subtotalList[rowSelectedIndex] = "0";
 
                 if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
                     detailQty[rowSelectedIndex] = "0";
@@ -661,7 +668,8 @@ namespace AlphaSoft
             productQty = Convert.ToDouble(detailQty[rowSelectedIndex]);
             subTotal = Math.Round((hppValue * productQty), 2);
 
-            selectedRow.Cells["subtotal"].Value = subTotal;
+            selectedRow.Cells["subtotal"].Value = subTotal.ToString();
+            subtotalList[rowSelectedIndex] = subTotal.ToString();
 
             calculateTotal();
 
@@ -745,6 +753,10 @@ namespace AlphaSoft
             gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
 
             gUtil.reArrangeTabOrder(this);
+
+            detailHpp.Add("0");
+            detailQty.Add("0");
+            subtotalList.Add("0");
         }
 
         private void POinvoiceTextBox_TextChanged(object sender, EventArgs e)
@@ -1197,6 +1209,9 @@ namespace AlphaSoft
                     while(rdr.Read())
                     {
                         detailPODataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_BASE_PRICE"), rdr.GetString("RO_QTY"), rdr.GetString("RO_SUBTOTAL"));
+                        detailHpp[detailPODataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_BASE_PRICE");
+                        detailQty[detailPODataGridView.Rows.Count - 1] = rdr.GetString("RO_QTY");
+                        subtotalList[detailPODataGridView.Rows.Count - 1] = rdr.GetString("RO_SUBTOTAL");
                     }
 
                     calculateTotal();
@@ -1219,6 +1234,9 @@ namespace AlphaSoft
                     while (rdr.Read())
                     {
                         detailPODataGridView.Rows.Add(rdr.GetString("PRODUCT_ID"), rdr.GetString("PRODUCT_NAME"), rdr.GetString("PRODUCT_PRICE"), rdr.GetString("PRODUCT_QTY"), rdr.GetString("PURCHASE_SUBTOTAL"));
+                        detailHpp[detailPODataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_PRICE");
+                        detailQty[detailPODataGridView.Rows.Count - 1] = rdr.GetString("PRODUCT_QTY");
+                        subtotalList[detailPODataGridView.Rows.Count - 1] = rdr.GetString("PURCHASE_SUBTOTAL");
                     }
 
                     calculateTotal();
@@ -1246,9 +1264,17 @@ namespace AlphaSoft
             {
                 int rowSelectedIndex = detailPODataGridView.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = detailPODataGridView.Rows[rowSelectedIndex];
+                detailPODataGridView.CurrentCell = selectedRow.Cells["productName"];
 
-                if (null != selectedRow)
+                if (null != selectedRow && rowSelectedIndex != detailPODataGridView.Rows.Count - 1)
                 {
+                    for (int i = rowSelectedIndex; i < detailPODataGridView.Rows.Count - 1; i++)
+                    {
+                        detailQty[i] = detailQty[i + 1];
+                        detailHpp[i] = detailHpp[i + 1];
+                        subtotalList[i] = subtotalList[i + 1];
+                    }
+
                     isLoading = true;
                     detailPODataGridView.Rows.Remove(selectedRow);
                     gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "deleteCurrentRow [" + rowSelectedIndex + "]");
@@ -1322,6 +1348,7 @@ namespace AlphaSoft
         {
             detailQty.Add("0");
             detailHpp.Add("0");
+            subtotalList.Add("0");
         }
 
         private void durationTextBox_Enter(object sender, EventArgs e)
@@ -1420,6 +1447,7 @@ namespace AlphaSoft
                     isLoading = true;
                     // reset subTotal Value and recalculate total
                     selectedRow.Cells["subtotal"].Value = 0;
+                    subtotalList[rowSelectedIndex] = "0";
 
                     if (detailPODataGridView.CurrentCell.OwningColumn.Name == "qty")
                         detailQty[rowSelectedIndex] = "0";
@@ -1467,7 +1495,8 @@ namespace AlphaSoft
                 productQty = Convert.ToDouble(detailQty[rowSelectedIndex]);
                 subTotal = Math.Round((hppValue * productQty), 2);
 
-                selectedRow.Cells["subtotal"].Value = subTotal;
+                selectedRow.Cells["subtotal"].Value = subTotal.ToString();
+                subtotalList[rowSelectedIndex] = subTotal.ToString();
 
                 calculateTotal();
             }

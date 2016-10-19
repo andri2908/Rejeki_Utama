@@ -41,7 +41,7 @@ namespace AlphaSoft
             displayedForm.ShowDialog(this);
         }
 
-        private void loadUnitData()
+        private void loadUnitData(int options=0)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
@@ -53,13 +53,20 @@ namespace AlphaSoft
 
             unitNameParam = MySqlHelper.EscapeString(unitNameTextBox.Text);
             DS.mySqlConnect();
-            if (satuannonactiveoption.Checked == true)
+            if (options == 1)
             {
-                sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT WHERE UNIT_NAME LIKE '%" + unitNameParam + "%'";
+                sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT";
             }
             else
             {
-                sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT WHERE UNIT_ACTIVE = 1 AND UNIT_NAME LIKE '%" + unitNameParam + "%'";
+                if (satuannonactiveoption.Checked == true)
+                {
+                    sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT WHERE UNIT_NAME LIKE '%" + unitNameParam + "%'";
+                }
+                else
+                {
+                    sqlCommand = "SELECT UNIT_ID, UNIT_NAME AS 'NAMA UNIT', UNIT_DESCRIPTION AS 'DESKRIPSI UNIT' FROM MASTER_UNIT WHERE UNIT_ACTIVE = 1 AND UNIT_NAME LIKE '%" + unitNameParam + "%'";
+                }
             }
 
             using (rdr = DS.getData(sqlCommand))
@@ -141,6 +148,11 @@ namespace AlphaSoft
             if (dataUnitGridView.Rows.Count > 0)
                 if (e.KeyCode == Keys.Enter)
                     displaySpecificForm();
+        }
+
+        private void AllButton_Click(object sender, EventArgs e)
+        {
+            loadUnitData(1);
         }
     }
 }
