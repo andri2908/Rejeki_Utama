@@ -169,6 +169,9 @@ namespace AlphaSoft
         public const int MENU_SALES_QUOTATION = 52;
         public const int APPROVAL_SALES_QUOTATION = 53;
 
+        public const int MENU_PENGATURAN_SMS = 54;
+
+
         // CONSTANTS FOR USER CHANGE LOG
         public const int CHANGE_LOG_LOGIN = 1;
         public const int CHANGE_LOG_LOGOUT = 2;

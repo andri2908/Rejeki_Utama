@@ -141,6 +141,10 @@ namespace AlphaSoft
             dateJoinedDateTimePicked.Format = DateTimePickerFormat.Custom;
             dateJoinedDateTimePicked.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
 
+            birthdayDateTimePicker.Format = DateTimePickerFormat.Custom;
+            birthdayDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+
             userAccessOption = DS.getUserAccessRight(globalConstants.MENU_PELANGGAN, gUtil.getUserGroupID());
 
             if (originModuleID == globalConstants.NEW_CUSTOMER)
@@ -192,7 +196,10 @@ namespace AlphaSoft
             int custBlocked = 0;
 
             string selectedDate = dateJoinedDateTimePicked.Value.ToShortDateString();
+            string birthdayDate = birthdayDateTimePicker.Value.ToShortDateString();
+
             string custJoinedDate = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(selectedDate));
+            string custBirthday = String.Format(culture, "{0:dd-MM-yyyy}", Convert.ToDateTime(birthdayDate));
             string custName = MySqlHelper.EscapeString(custNameTextBox.Text.Trim());
             double maxCreditAmount = 0;
 
@@ -261,8 +268,8 @@ namespace AlphaSoft
                 {
                     case globalConstants.NEW_CUSTOMER:
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
-                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED, REGION_ID) " +
-                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ", " + selectedRegionID +")";
+                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED, REGION_ID, CUSTOMER_BIRTHDAY) " +
+                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ", " + selectedRegionID + ", STR_TO_DATE('" + custBirthday + "', '%d-%m-%Y'))";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
@@ -281,7 +288,8 @@ namespace AlphaSoft
                                             "CUSTOMER_GROUP = " + custGroup + ", " +
                                             "MAX_CREDIT = " + maxCreditAmount + ", " +
                                             "CUSTOMER_BLOCKED = " + custBlocked + ", " +
-                                            "REGION_ID = " + selectedRegionID + " " +
+                                            "REGION_ID = " + selectedRegionID + ", " +
+                                            "CUSTOMER_BIRTHDAY = STR_TO_DATE('" + custBirthday + "', '%d-%m-%Y'), " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;

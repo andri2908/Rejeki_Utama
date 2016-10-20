@@ -376,6 +376,12 @@
     <Compile Include="deliveryOrderPrintOutForm.Designer.cs">
       <DependentUpon>deliveryOrderPrintOutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="dummySendSMSForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dummySendSMSForm.Designer.cs">
+      <DependentUpon>dummySendSMSForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="exportStockOpnameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1336,6 +1342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="deliveryOrderPrintOutForm.resx">
       <DependentUpon>deliveryOrderPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dummySendSMSForm.resx">
+      <DependentUpon>dummySendSMSForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="exportStockOpnameForm.resx">
       <DependentUpon>exportStockOpnameForm.cs</DependentUpon>

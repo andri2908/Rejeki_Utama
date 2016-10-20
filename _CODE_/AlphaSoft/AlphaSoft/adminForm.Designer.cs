@@ -49,6 +49,7 @@
             this.MENU_pengaturanPrinter = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripSeparator();
+            this.MENU_pengaturanSMStoolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_gudang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanGudang = new System.Windows.Forms.ToolStripMenuItem();
@@ -233,7 +234,7 @@
             this.MENU_pengaturanPrinter,
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem,
             this.toolStripMenuItem35,
-            this.toolStripMenuItem14,
+            this.MENU_pengaturanSMStoolStripMenuItem14,
             this.MENU_exit});
             this.MAINMENU_manajemenSistem.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MAINMENU_manajemenSistem.ForeColor = System.Drawing.Color.FloralWhite;
@@ -392,6 +393,15 @@
             // 
             this.toolStripMenuItem35.Name = "toolStripMenuItem35";
             this.toolStripMenuItem35.Size = new System.Drawing.Size(332, 6);
+            // 
+            // MENU_pengaturanSMStoolStripMenuItem14
+            // 
+            this.MENU_pengaturanSMStoolStripMenuItem14.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_pengaturanSMStoolStripMenuItem14.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_pengaturanSMStoolStripMenuItem14.Name = "MENU_pengaturanSMStoolStripMenuItem14";
+            this.MENU_pengaturanSMStoolStripMenuItem14.Size = new System.Drawing.Size(335, 22);
+            this.MENU_pengaturanSMStoolStripMenuItem14.Text = "Pengaturan Sistem SMS";
+            this.MENU_pengaturanSMStoolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click_1);
             // 
             // MENU_exit
             // 
@@ -1464,7 +1474,8 @@
             this.toolStripMenuItem25.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem25.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.laporanTabelMasterToolStripMenuItem,
-            this.generatorXMLToolStripMenuItem});
+            this.generatorXMLToolStripMenuItem,
+            this.toolStripMenuItem14});
             this.toolStripMenuItem25.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripMenuItem25.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem25.Name = "toolStripMenuItem25";
@@ -1841,9 +1852,9 @@
             this.toolStripMenuItem14.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem14.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(335, 22);
-            this.toolStripMenuItem14.Text = "Pengaturan Sistem SMS";
-            this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click_1);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(183, 22);
+            this.toolStripMenuItem14.Text = "Send SMS";
+            this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click_2);
             // 
             // adminForm
             // 
@@ -2045,6 +2056,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_PENGATURAN_TEKNISI;
         private System.Windows.Forms.ToolStripMenuItem MENU_PEMASANGAN_BARU;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
+        private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanSMStoolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }

@@ -891,6 +891,8 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_PENGATURAN_PRINTER, MENU_pengaturanPrinter);
             setAccessibility(globalConstants.MENU_PENGATURAN_GAMBAR_LATAR, MENU_pengaturanGambarLatar);
 
+            setAccessibility(globalConstants.MENU_PENGATURAN_SMS, MENU_pengaturanSMStoolStripMenuItem14);
+
             // SET ACCESSIBILITY FOR GUDANG MAIN MENU
             // SUB MENU PRODUK
             setAccessibility(globalConstants.MENU_GUDANG, MAINMENU_gudang);
@@ -1442,6 +1444,12 @@ namespace AlphaSoft
         {
             SMSapplication displayedForm = new SMSapplication();
             displayedForm.Show(); 
+        }
+
+        private void toolStripMenuItem14_Click_2(object sender, EventArgs e)
+        {
+            dummySendSMSForm displayForm = new dummySendSMSForm();
+            displayForm.ShowDialog(this);
         }
     }
 }

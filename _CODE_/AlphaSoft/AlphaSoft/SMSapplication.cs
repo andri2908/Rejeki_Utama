@@ -13,6 +13,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
 
+using MySql.Data;
+using MySql.Data.MySqlClient;
+
 namespace AlphaSoft
 {
     public partial class SMSapplication : Form
@@ -24,6 +27,8 @@ namespace AlphaSoft
         private int dataBits;
         private int readTimeOut;
         private int writeTimeOut;
+
+        //private Data_Access DS = new Data_Access();
 
         private static StreamWriter sw = null;
         private globalUtilities gUtil = new globalUtilities();
@@ -73,6 +78,29 @@ namespace AlphaSoft
             dataBits = 8;
             readTimeOut = 300;
             writeTimeOut = 300;
+            //string sqlCommand = "SELECT * FROM SYS_CONFIG_SMS WHERE ID = 1";
+            //MySqlDataReader rdr;
+
+            //using (rdr = DS.getData(sqlCommand))
+            //{
+            //    if (rdr.HasRows)
+            //    {
+            //        portName = rdr.GetString("PORT_NAME");
+            //        baudRate = rdr.GetInt32("BAUD_RATE");
+            //        dataBits = rdr.GetInt32("DATA_BITS");
+            //        readTimeOut = rdr.GetInt32("READ_TIME_OUT");
+            //        writeTimeOut = rdr.GetInt32("WRITE_TIME_OUT");
+            //    }
+            //    else
+            //    {
+            //        portName = "COM1";
+            //        baudRate = 9600;
+            //        dataBits = 8;
+            //        readTimeOut = 300;
+            //        writeTimeOut = 300;
+            //    }
+            //}
+            //rdr.Close();
         }
 
         private void loadPortSetting()
@@ -100,14 +128,57 @@ namespace AlphaSoft
                     int.TryParse(line, out writeTimeOut);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 gUtil.saveSystemDebugLog(0, "[SMS] ERROR WHEN READING PORT SETTING [" + ex.Message + "]");
             }
+            //string sqlCommand = "SELECT * FROM SYS_CONFIG_SMS WHERE ID = 2";
+            //MySqlDataReader rdr;
+
+            //loadPortDefaultSetting();
+
+            //using (rdr = DS.getData(sqlCommand))
+            //{
+            //    if (rdr.HasRows)
+            //    {
+            //        portName = rdr.GetString("PORT_NAME");
+            //        baudRate = rdr.GetInt32("BAUD_RATE");
+            //        dataBits = rdr.GetInt32("DATA_BITS");
+            //        readTimeOut = rdr.GetInt32("READ_TIME_OUT");
+            //        writeTimeOut = rdr.GetInt32("WRITE_TIME_OUT");
+            //    }
+            //    else
+            //    {
+            //        gUtil.saveSystemDebugLog(0, "[SMS] NO DATA FOR PORT SETTING USE DEFAULT SETTING");
+            //    }
+            //}
+            //rdr.Close();
         }
 
         private void savePortSetting()
         {
+            //string sqlCommand = "SELECT COUNT(1) FROM SYS_CONFIG_SMS WHERE ID = 2";
+
+            //if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand).ToString())>0)
+            //{
+            //    sqlCommand = "UPDATE SYS_CONFIG_SMS SET " +
+            //        "PORT_NAME = '" + this.cboPortName.Text + "'" +
+            //        "BAUD_RATE = " + this.cboBaudRate.Text + 
+            //        "DATA_BITS = '" + this.cboDataBits.Text +
+            //        "READ_TIME_OUT = '" + this.txtReadTimeOut.Text +
+            //        "WRITE_TIME_OUT = '" + this.txtWriteTimeOut.Text +
+            //        "WHERE ID = 2";
+            //}
+            //else
+            //{
+            //    sqlCommand = "INSERT INTO SYS_CONFIG_SMS (PORT_NAME, BAUD_RATE, DATA_BITS, READ_TIME_OUT, WRITE_TIME_OUT" +
+            //        "PORT_NAME = '" + this.cboPortName.Text + "'" +
+            //        "BAUD_RATE = " + this.cboBaudRate.Text +
+            //        "DATA_BITS = '" + this.cboDataBits.Text +
+            //        "READ_TIME_OUT = '" + this.txtReadTimeOut.Text +
+            //        "WRITE_TIME_OUT = '" + this.txtWriteTimeOut.Text +
+            //        "WHERE ID = 2";
+            //}
             sw = File.CreateText(Application.StartupPath + "\\portSetting");
 
             sw.WriteLine(this.cboPortName.Text);
@@ -162,14 +233,12 @@ namespace AlphaSoft
                     //this.statusBar1.Text = "Failed to send message";
                     gUtil.saveSystemDebugLog(0, "[SMS] Failed to send message");
                 }
-
             }
             catch (Exception ex)
             {
                 //ErrorLog(ex.Message);
                 gUtil.saveSystemDebugLog(0, "[SMS] " + ex.Message);
             }
-
         }
         // ===================================================
 
