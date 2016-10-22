@@ -1,0 +1,10 @@
+Konfigurasinya koneksi mysql
+1. Buat entri di "Remote MySQL" untuk menambahkan IP server/remote pc
+   (gunakan IP Tracker untuk melacak IP jika dibutuhkan)
+2. Buat entri di "MySQL Databases" untuk menambah user dan database.
+3. Setting di workbench sbb :
+Username : rejekiut_alpha (create and set privilege di cpanel)
+Password : 123masuk
+Server : http://rejekiutama.co.id/
+Database : rejekiut_sys_app
+Port : 3306
