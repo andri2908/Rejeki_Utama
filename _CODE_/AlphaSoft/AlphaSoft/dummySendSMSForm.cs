@@ -25,17 +25,19 @@ namespace AlphaSoft
 
         private void btnSendSMS_Click(object sender, EventArgs e)
         {
-           smsLib.start_SMSGateWayPortConnection();
+            int deliveredStatus = 0;
+
+            smsLib.start_SMSGateWayPortConnection();
 
             if (smsLib.SMSGateway_isConnected())
             {
                 phoneNo = txtSIM.Text;
                 message = txtMessage.Text;
 
-                smsLib.sendMessage(phoneNo, message);
+                smsLib.sendMessage(phoneNo, message, ref deliveredStatus);
             }
 
-            smsLib.start_SMSGateWayPortConnection();
+            smsLib.stop_SMSGateWayPortConnection();
         }
     }
 }

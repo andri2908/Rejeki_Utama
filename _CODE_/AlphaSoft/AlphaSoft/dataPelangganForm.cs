@@ -18,6 +18,7 @@ namespace AlphaSoft
         private int selectedCustomerID = 0;
         private globalUtilities gutil = new globalUtilities();
         cashierForm parentForm;
+        reminderDetailForm reminderForm;
         int originModuleID = 0;
 
         private Data_Access DS = new Data_Access();
@@ -66,6 +67,20 @@ namespace AlphaSoft
             if (originModuleID == globalConstants.RETUR_PENJUALAN_STOCK_ADJUSTMENT)
                 unknownCustomerButton.Visible = true;
         }
+
+
+        public dataPelangganForm(int moduleID, reminderDetailForm originForm)
+        {
+            InitializeComponent();
+
+            originModuleID = moduleID;
+            reminderForm = originForm;
+
+            newButton.Visible = false;
+            pelanggangnonactiveoption.Visible = false;
+            unknownCustomerButton.Visible = true;
+        }
+
 
         private void newButton_Click(object sender, EventArgs e)
         {
@@ -127,6 +142,7 @@ namespace AlphaSoft
         private void namaPelangganTextbox_TextChanged(object sender, EventArgs e)
         {
             //loadCustomerData();
+
             if (!namaPelangganTextbox.Text.Equals(""))
             {
                 loadCustomerData();
@@ -157,6 +173,11 @@ namespace AlphaSoft
             {
                 pembayaranLumpSumForm pembayaranForm = new pembayaranLumpSumForm(originModuleID, selectedCustomerID);
                 pembayaranForm.ShowDialog(this);
+            }
+            else if (originModuleID == globalConstants.REMINDER_FORM)
+            {
+                reminderForm.setCustomerID(selectedCustomerID);
+                this.Close();
             }
             else
             {
@@ -210,7 +231,12 @@ namespace AlphaSoft
                     pembayaranLumpSumForm pembayaranForm = new pembayaranLumpSumForm(originModuleID, selectedCustomerID);
                     pembayaranForm.ShowDialog(this);
                 }
-                else 
+                else if (originModuleID == globalConstants.REMINDER_FORM)
+                {
+                    reminderForm.setCustomerID(selectedCustomerID);
+                    this.Close();
+                }
+                else
                 {
                     dataPelangganDetailForm displayedForm = new dataPelangganDetailForm(globalConstants.EDIT_CUSTOMER, selectedCustomerID);
                     displayedForm.ShowDialog(this);

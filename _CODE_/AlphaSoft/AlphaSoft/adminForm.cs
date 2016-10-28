@@ -12,6 +12,8 @@ using System.Threading;
 
 using Hotkeys;
 using System.Globalization;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace AlphaSoft
 {
@@ -27,6 +29,7 @@ namespace AlphaSoft
         private int selectedUserID = 0;
         private int selectedUserGroupID = 0;
         private globalUtilities gutil = new globalUtilities();
+        private globalReminderLib gRemind = new globalReminderLib();
         private bool newMessageFormExist = false;
         private Hotkeys.GlobalHotkey ghk_F1;
         private Hotkeys.GlobalHotkey ghk_F2;
@@ -277,7 +280,7 @@ namespace AlphaSoft
             localDate = DateTime.Now;
             timeStampStatusLabel.Text = String.Format(culture, "{0:dddd, dd-MM-yyyy - HH:mm}", localDate);
         }
-        
+
         private void loadBGimage()
         {
 
@@ -331,6 +334,7 @@ namespace AlphaSoft
         private void timer1_Tick(object sender, EventArgs e)
         {
             updateLabel();
+            gRemind.checkSMSReminderTable(true);
         }
 
         private void jenisProdukToolStripMenuItem_Click(object sender, EventArgs e)
@@ -381,14 +385,6 @@ namespace AlphaSoft
             displayedForm.ShowDialog(this);
         }
 
-        private void infoFolderDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void backupRestoreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         private void toolStripMenuItem15_Click(object sender, EventArgs e)
         {
             dataUserForm displayedForm = new dataUserForm();
@@ -425,12 +421,6 @@ namespace AlphaSoft
             displayedForm.Show();
         }
 
-        //private void toolStripMenuItem16_Click(object sender, EventArgs e)
-        //{
-        //    IPPusatForm displayedForm = new IPPusatForm();
-        //    displayedForm.ShowDialog(this);
-        //}
-
         private void toolStripMenuItem48_Click(object sender, EventArgs e)
         {
             dataCabangForm displayedForm = new dataCabangForm();
@@ -454,12 +444,6 @@ namespace AlphaSoft
             dataGroupForm displayedForm = new dataGroupForm(globalConstants.TAMBAH_HAPUS_GROUP_PELANGGAN);
             displayedForm.ShowDialog(this);
         }
-
-        //private void toolStripMenuItem12_Click(object sender, EventArgs e)
-        //{
-        //    dataGroupForm displayedForm = new dataGroupForm(globalConstants.PENGATURAN_POTONGAN_HARGA);
-        //    displayedForm.ShowDialog(this);
-        //}
 
         private void toolStripMenuItem9_Click(object sender, EventArgs e)
         {
@@ -1450,6 +1434,30 @@ namespace AlphaSoft
         {
             dummySendSMSForm displayForm = new dummySendSMSForm();
             displayForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem15_Click_1(object sender, EventArgs e)
+        {
+            reminderForm displayForm = new reminderForm();
+            displayForm.ShowDialog(this);
+
+            //reminderDetailForm displayedForm = new reminderDetailForm(globalConstants.NEW_REMINDER);
+            //displayedForm.ShowDialog(this);
+            //displayedForm.MdiParent = this;
+            //displayedForm.Show();
+        }
+
+        private void toolStripMenuItem16_Click(object sender, EventArgs e)
+        {
+            dataTemplateMessageForm displayForm = new dataTemplateMessageForm();
+            displayForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem17_Click(object sender, EventArgs e)
+        {
+            globalReminderLib gRemind = new globalReminderLib();
+
+            gRemind.checkSMSReminderTable(true);
         }
     }
 }

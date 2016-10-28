@@ -46,6 +46,7 @@ namespace AlphaSoft
         int salesActiveStatus = 1;
 
         private Data_Access DS = new Data_Access();
+        private SMSapplication smsLib = new SMSapplication();
 
         private globalUtilities gutil = new globalUtilities();
         private CultureInfo culture = new CultureInfo("id-ID");
@@ -1071,6 +1072,27 @@ namespace AlphaSoft
             return result;
         }
 
+        private void sendSMSConfirmation()
+        {
+            string phoneNo = "";
+            string dateService = "";
+            string timeService = "";
+            int deliveredStatus = 0;
+
+            if (selectedPelangganID > 0)
+            { 
+                phoneNo = DS.getDataSingleValue("SELECT IFNULL(CUSTOMER_PHONE, '') FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedPelangganID).ToString();
+                dateService = String.Format(culture, "{0:dd-MM-yyyy}", jobStartDateTimePicker.Value);
+                timeService = jobStartTimeMaskedTextBox.Text;
+
+                smsLib.start_SMSGateWayPortConnection();
+
+                smsLib.sendMessage(phoneNo, "SEND SMS KONFIRMASI", ref deliveredStatus);
+
+                smsLib.stop_SMSGateWayPortConnection();
+            }
+        }
+
         private bool saveDataTransaction()
         {
             bool result = false;
@@ -1129,7 +1151,7 @@ namespace AlphaSoft
             {
                 salesTop = 1;
                 salesPaid = 1;
-                SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now); ;
+                SODueDateTime = String.Format(culture, "{0:dd-MM-yyyy}", DateTime.Now);
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CASH SALES");
                 //paymentMethod = paymentComboBox.SelectedIndex;
             }
@@ -1569,6 +1591,12 @@ namespace AlphaSoft
                     { 
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "PRINT OUT INVOICE");
                         PrintReceipt();
+                    }
+
+                    if (( originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.EDIT_TUGAS_PEMASANGAN_BARU) 
+                        &&  sendSMSCheckbox.Checked == true)
+                    {
+                        sendSMSConfirmation();
                     }
 
                     gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "VALIDATE USER CREDIT STATUS");
@@ -2548,8 +2576,13 @@ namespace AlphaSoft
                     paymentComboBox.Visible = false;
                     printoutCheckBox.Visible = false;
 
+                    jobStartDateTimePicker.Format = DateTimePickerFormat.Custom;
                     jobStartDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+                    finishedDateTimePicker.Format = DateTimePickerFormat.Custom;
                     finishedDateTimePicker.CustomFormat = globalUtilities.CUSTOM_DATE_FORMAT;
+
+                    sendSMSCheckbox.Visible = true;
                 }
             }
 

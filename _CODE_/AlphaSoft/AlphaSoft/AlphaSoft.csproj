@@ -195,6 +195,18 @@
     <Compile Include="dataTeknisiDetailForm.Designer.cs">
       <DependentUpon>dataTeknisiDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="dataTemplateMessageDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataTemplateMessageDetailForm.Designer.cs">
+      <DependentUpon>dataTemplateMessageDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="dataTemplateMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dataTemplateMessageForm.Designer.cs">
+      <DependentUpon>dataTemplateMessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="dummyReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -395,6 +407,7 @@
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="globalCryptographyMethod.cs" />
+    <Compile Include="globalReminderLib.cs" />
     <Compile Include="membershipPointForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -587,6 +600,24 @@
     </Compile>
     <Compile Include="purchaseOrderPrintOutForm.Designer.cs">
       <DependentUpon>purchaseOrderPrintOutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reminderDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reminderDetailForm.Designer.cs">
+      <DependentUpon>reminderDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reminderDetailHelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reminderDetailHelpForm.Designer.cs">
+      <DependentUpon>reminderDetailHelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="reminderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reminderForm.Designer.cs">
+      <DependentUpon>reminderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ReportAccount.cs">
       <AutoGen>True</AutoGen>
@@ -1248,6 +1279,12 @@
     <EmbeddedResource Include="dataTeknisiForm.resx">
       <DependentUpon>dataTeknisiForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="dataTemplateMessageDetailForm.resx">
+      <DependentUpon>dataTemplateMessageDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dataTemplateMessageForm.resx">
+      <DependentUpon>dataTemplateMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="dummyReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>dummyReport.cs</LastGenOutput>
@@ -1451,6 +1488,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="purchaseOrderPrintOutForm.resx">
       <DependentUpon>purchaseOrderPrintOutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reminderDetailForm.resx">
+      <DependentUpon>reminderDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reminderDetailHelpForm.resx">
+      <DependentUpon>reminderDetailHelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reminderForm.resx">
+      <DependentUpon>reminderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportAccount.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

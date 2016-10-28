@@ -53,6 +53,7 @@ namespace AlphaSoft
         public const int EDIT_SALES_QUOTATION = 122;
         public const int SALES_ORDER_REVISION = 123;
         public const int DELIVERY_ORDER = 124;
+        public const int REMINDER_FORM = 125;
 
         public const int NEW_GROUP_USER = 201;
         public const int EDIT_GROUP_USER = 202;
@@ -86,6 +87,10 @@ namespace AlphaSoft
         public const int EDIT_LOCATION = 230;
         public const int NEW_TECHNICIAN = 231;
         public const int EDIT_TECHNICIAN = 232;
+        public const int NEW_REMINDER = 233;
+        public const int EDIT_REMINDER = 234;
+        public const int NEW_TEMPLATE = 235;
+        public const int EDIT_TEMPLATE = 236;
 
         public const int NEW_AKUN = 501;  //start from 5
         public const int EDIT_AKUN = 502;

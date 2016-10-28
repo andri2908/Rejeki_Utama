@@ -41,6 +41,7 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.sendSMSCheckbox = new System.Windows.Forms.CheckBox();
             this.generateSuratTugas = new System.Windows.Forms.Button();
             this.generateDO = new System.Windows.Forms.Button();
             this.teknisiTextbox = new System.Windows.Forms.TextBox();
@@ -226,6 +227,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.SteelBlue;
+            this.panel5.Controls.Add(this.sendSMSCheckbox);
             this.panel5.Controls.Add(this.generateSuratTugas);
             this.panel5.Controls.Add(this.generateDO);
             this.panel5.Controls.Add(this.teknisiTextbox);
@@ -252,6 +254,21 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 192);
             this.panel5.TabIndex = 9;
+            // 
+            // sendSMSCheckbox
+            // 
+            this.sendSMSCheckbox.AutoSize = true;
+            this.sendSMSCheckbox.Checked = true;
+            this.sendSMSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.sendSMSCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.sendSMSCheckbox.ForeColor = System.Drawing.Color.FloralWhite;
+            this.sendSMSCheckbox.Location = new System.Drawing.Point(343, 162);
+            this.sendSMSCheckbox.Name = "sendSMSCheckbox";
+            this.sendSMSCheckbox.Size = new System.Drawing.Size(200, 22);
+            this.sendSMSCheckbox.TabIndex = 44;
+            this.sendSMSCheckbox.Text = "Kirim SMS Konfirmasi";
+            this.sendSMSCheckbox.UseVisualStyleBackColor = true;
+            this.sendSMSCheckbox.Visible = false;
             // 
             // generateSuratTugas
             // 
@@ -1050,6 +1067,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button generateSuratTugas;
         private System.Windows.Forms.Button generateDO;
+        private System.Windows.Forms.CheckBox sendSMSCheckbox;
     }
 }
 

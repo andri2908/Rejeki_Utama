@@ -693,5 +693,33 @@ namespace AlphaSoft
 
             return result;
         }
+
+        public string calculateNextReminderDate(DateTime startDate, int intervalValue, int intervalType)
+        {
+            string resultDate = "";
+            DateTime tempDate;
+
+            tempDate = startDate;
+
+            switch (intervalType)
+            {
+                case 0: // DAILY
+                    tempDate = tempDate.AddDays(1 * intervalValue);
+                    break;
+                case 1: // WEEKLY
+                    tempDate = tempDate.AddDays(7 * intervalValue);
+                    break;
+                case 2: // MONTHLY
+                    tempDate = tempDate.AddMonths(1 * intervalValue);
+                    break;
+                case 3: // YEARLY
+                    tempDate = tempDate.AddYears(1 * intervalValue);
+                    break;
+            }
+
+            resultDate = String.Format(culture, "{0:dd-MM-yyyy}", tempDate);
+
+            return resultDate;
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace AlphaSoft
         private MySqlConnection conn = new MySql.Data.MySqlClient.MySqlConnection();
         private MySqlConnection HQ_conn = new MySql.Data.MySqlClient.MySqlConnection();
         private MySqlConnection Branch_conn = new MySql.Data.MySqlClient.MySqlConnection();
+        private MySqlConnection update_conn = new MySql.Data.MySqlClient.MySqlConnection();
 
         private MySqlTransaction myTrans;
         private MySqlCommand myTransCommand;
@@ -224,6 +225,29 @@ namespace AlphaSoft
             if (null != conn)
             { 
                 conn.Close();
+            }
+        }
+
+        public bool update_mySqlConnect()
+        {
+            try
+            {
+                update_conn.ConnectionString = configFileConnectionString;//myConnectionString;
+                update_conn.Open();
+
+                return true;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                return false;
+            }
+        }
+
+        public void update_mySqlClose()
+        {
+            if (null != update_conn)
+            {
+                update_conn.Close();
             }
         }
 

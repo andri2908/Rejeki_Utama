@@ -78,29 +78,6 @@ namespace AlphaSoft
             dataBits = 8;
             readTimeOut = 300;
             writeTimeOut = 300;
-            //string sqlCommand = "SELECT * FROM SYS_CONFIG_SMS WHERE ID = 1";
-            //MySqlDataReader rdr;
-
-            //using (rdr = DS.getData(sqlCommand))
-            //{
-            //    if (rdr.HasRows)
-            //    {
-            //        portName = rdr.GetString("PORT_NAME");
-            //        baudRate = rdr.GetInt32("BAUD_RATE");
-            //        dataBits = rdr.GetInt32("DATA_BITS");
-            //        readTimeOut = rdr.GetInt32("READ_TIME_OUT");
-            //        writeTimeOut = rdr.GetInt32("WRITE_TIME_OUT");
-            //    }
-            //    else
-            //    {
-            //        portName = "COM1";
-            //        baudRate = 9600;
-            //        dataBits = 8;
-            //        readTimeOut = 300;
-            //        writeTimeOut = 300;
-            //    }
-            //}
-            //rdr.Close();
         }
 
         private void loadPortSetting()
@@ -132,53 +109,10 @@ namespace AlphaSoft
             {
                 gUtil.saveSystemDebugLog(0, "[SMS] ERROR WHEN READING PORT SETTING [" + ex.Message + "]");
             }
-            //string sqlCommand = "SELECT * FROM SYS_CONFIG_SMS WHERE ID = 2";
-            //MySqlDataReader rdr;
-
-            //loadPortDefaultSetting();
-
-            //using (rdr = DS.getData(sqlCommand))
-            //{
-            //    if (rdr.HasRows)
-            //    {
-            //        portName = rdr.GetString("PORT_NAME");
-            //        baudRate = rdr.GetInt32("BAUD_RATE");
-            //        dataBits = rdr.GetInt32("DATA_BITS");
-            //        readTimeOut = rdr.GetInt32("READ_TIME_OUT");
-            //        writeTimeOut = rdr.GetInt32("WRITE_TIME_OUT");
-            //    }
-            //    else
-            //    {
-            //        gUtil.saveSystemDebugLog(0, "[SMS] NO DATA FOR PORT SETTING USE DEFAULT SETTING");
-            //    }
-            //}
-            //rdr.Close();
         }
 
         private void savePortSetting()
         {
-            //string sqlCommand = "SELECT COUNT(1) FROM SYS_CONFIG_SMS WHERE ID = 2";
-
-            //if (Convert.ToInt32(DS.getDataSingleValue(sqlCommand).ToString())>0)
-            //{
-            //    sqlCommand = "UPDATE SYS_CONFIG_SMS SET " +
-            //        "PORT_NAME = '" + this.cboPortName.Text + "'" +
-            //        "BAUD_RATE = " + this.cboBaudRate.Text + 
-            //        "DATA_BITS = '" + this.cboDataBits.Text +
-            //        "READ_TIME_OUT = '" + this.txtReadTimeOut.Text +
-            //        "WRITE_TIME_OUT = '" + this.txtWriteTimeOut.Text +
-            //        "WHERE ID = 2";
-            //}
-            //else
-            //{
-            //    sqlCommand = "INSERT INTO SYS_CONFIG_SMS (PORT_NAME, BAUD_RATE, DATA_BITS, READ_TIME_OUT, WRITE_TIME_OUT" +
-            //        "PORT_NAME = '" + this.cboPortName.Text + "'" +
-            //        "BAUD_RATE = " + this.cboBaudRate.Text +
-            //        "DATA_BITS = '" + this.cboDataBits.Text +
-            //        "READ_TIME_OUT = '" + this.txtReadTimeOut.Text +
-            //        "WRITE_TIME_OUT = '" + this.txtWriteTimeOut.Text +
-            //        "WHERE ID = 2";
-            //}
             sw = File.CreateText(Application.StartupPath + "\\portSetting");
 
             sw.WriteLine(this.cboPortName.Text);
@@ -192,31 +126,47 @@ namespace AlphaSoft
 
         public bool start_SMSGateWayPortConnection()
         {
-            loadPortSetting();
-            return connectToPort(ref this.port, portName, baudRate, dataBits, readTimeOut, writeTimeOut);
-        }
-
-        public void stop_SMSGateWayPortConnection()
-        {
-            objclsSMS.ClosePort(this.port);
-            connectionStatus = false;
-        }
-
-        private bool connectToPort(ref SerialPort portParam, string portNameParam, int baudRateParam, int dataBitsParam, int readTimeOutParam, int writeTimeOutParam)
-        {
             bool result = false;
 
-            portParam = objclsSMS.OpenPort(portNameParam, baudRateParam, dataBitsParam, readTimeOutParam, writeTimeOutParam);
-
-            if (portParam != null)
-                connectionStatus = true;
-            else
-                connectionStatus = false;
+            if (!SMSGateway_isConnected())
+            { 
+                loadPortSetting();
+                result = connectToPort(ref this.port, portName, baudRate, dataBits, readTimeOut, writeTimeOut);
+            }
 
             return result;
         }
 
-        public void sendMessage(string SIMParam, string txtMessageParam)
+        public void stop_SMSGateWayPortConnection()
+        {
+            if (SMSGateway_isConnected())
+            { 
+                objclsSMS.ClosePort(this.port);
+                connectionStatus = false;
+            }
+        }
+
+        private bool connectToPort(ref SerialPort portParam, string portNameParam, int baudRateParam, int dataBitsParam, int readTimeOutParam, int writeTimeOutParam)
+        {
+            try
+            { 
+                portParam = objclsSMS.OpenPort(portNameParam, baudRateParam, dataBitsParam, readTimeOutParam, writeTimeOutParam);
+
+                if (portParam != null)
+                    connectionStatus = true;
+                else
+                    connectionStatus = false;
+            }
+            catch(Exception ex)
+            {
+                connectionStatus = false;  
+                gUtil.saveSystemDebugLog(0, "[SMS] ERROR OPENING PORT [" + ex.Message + "]");
+            }
+
+            return connectionStatus;
+        }
+
+        public void sendMessage(string SIMParam, string txtMessageParam, ref int deliveredStatus)
         {
             //.............................................. Send SMS ....................................................
             try
@@ -225,18 +175,21 @@ namespace AlphaSoft
                 {
                     //MessageBox.Show("Message has sent successfully");
                     //this.statusBar1.Text = "Message has sent successfully";
+                    deliveredStatus = 1;
                     gUtil.saveSystemDebugLog(0, "[SMS] Message has sent successfully");
                 }
                 else
                 {
                     //MessageBox.Show("Failed to send message");
                     //this.statusBar1.Text = "Failed to send message";
+                    deliveredStatus = 0;
                     gUtil.saveSystemDebugLog(0, "[SMS] Failed to send message");
                 }
             }
             catch (Exception ex)
             {
                 //ErrorLog(ex.Message);
+                deliveredStatus = 0;
                 gUtil.saveSystemDebugLog(0, "[SMS] " + ex.Message);
             }
         }
@@ -268,6 +221,26 @@ namespace AlphaSoft
             catch(Exception ex)
             {
                 ErrorLog(ex.Message);
+            }
+
+            // CUSTOMIZED 
+            loadPortSetting();
+
+            this.cboPortName.Text = portName;
+            this.cboBaudRate.Text = baudRate.ToString();
+            this.cboDataBits.Text = dataBits.ToString();
+            this.txtReadTimeOut.Text = readTimeOut.ToString();
+            this.txtWriteTimeOut.Text = writeTimeOut.ToString();
+
+            if (SMSGateway_isConnected())
+            {
+                this.statusBar1.Text = "Modem is connected at PORT " + this.cboPortName.Text;
+
+                //Add tab pages
+                this.tabSMSapplication.TabPages.Add(tbSendSMS);
+
+                this.lblConnectionStatus.Text = "Connected at " + this.cboPortName.Text;
+                this.btnDisconnect.Enabled = true;
             }
         }
 
