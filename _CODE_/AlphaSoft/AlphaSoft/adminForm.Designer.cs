@@ -50,6 +50,7 @@
             this.MENU_pengaturanSistemAplikasiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem35 = new System.Windows.Forms.ToolStripSeparator();
             this.MENU_pengaturanSMStoolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_exit = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_gudang = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_pengaturanGudang = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +99,7 @@
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_PEMASANGAN_BARU = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returPenjualan = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returByInvoice = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_returByStokAdjustment = new System.Windows.Forms.ToolStripMenuItem();
@@ -169,6 +171,7 @@
             this.masterUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generatorXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
             this.MAINMENU_TaxModule = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
@@ -194,8 +197,7 @@
             this.SHORTCUT_returBeli = new System.Windows.Forms.ToolStripButton();
             this.SHORTCUT_returJual = new System.Windows.Forms.ToolStripButton();
             this.timerMessage = new System.Windows.Forms.Timer(this.components);
-            this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -406,6 +408,15 @@
             this.MENU_pengaturanSMStoolStripMenuItem14.Size = new System.Drawing.Size(335, 22);
             this.MENU_pengaturanSMStoolStripMenuItem14.Text = "Pengaturan Sistem SMS";
             this.MENU_pengaturanSMStoolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click_1);
+            // 
+            // toolStripMenuItem16
+            // 
+            this.toolStripMenuItem16.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem16.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem16.Name = "toolStripMenuItem16";
+            this.toolStripMenuItem16.Size = new System.Drawing.Size(335, 22);
+            this.toolStripMenuItem16.Text = "Pengaturan Template SMS";
+            this.toolStripMenuItem16.Click += new System.EventHandler(this.toolStripMenuItem16_Click);
             // 
             // MENU_exit
             // 
@@ -830,7 +841,9 @@
             this.MENU_modulKasir,
             this.toolStripMenuItem10,
             this.MENU_PEMASANGAN_BARU,
-            this.toolStripMenuItem13});
+            this.toolStripMenuItem13,
+            this.toolStripMenuItem18,
+            this.toolStripMenuItem19});
             this.MENU_transaksiPenjualan.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_transaksiPenjualan.Name = "MENU_transaksiPenjualan";
             this.MENU_transaksiPenjualan.Size = new System.Drawing.Size(278, 22);
@@ -910,6 +923,15 @@
             this.toolStripMenuItem13.Size = new System.Drawing.Size(297, 22);
             this.toolStripMenuItem13.Text = "Monitor Surat Tugas";
             this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
+            // 
+            // toolStripMenuItem18
+            // 
+            this.toolStripMenuItem18.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem18.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem18.Name = "toolStripMenuItem18";
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(297, 22);
+            this.toolStripMenuItem18.Text = "Jadwal Teknisi";
+            this.toolStripMenuItem18.Click += new System.EventHandler(this.toolStripMenuItem18_Click_1);
             // 
             // MENU_returPenjualan
             // 
@@ -1514,7 +1536,7 @@
             this.masterUserToolStripMenuItem});
             this.laporanTabelMasterToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.laporanTabelMasterToolStripMenuItem.Name = "laporanTabelMasterToolStripMenuItem";
-            this.laporanTabelMasterToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.laporanTabelMasterToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.laporanTabelMasterToolStripMenuItem.Text = "Tabel Master";
             // 
             // masterAkunToolStripMenuItem
@@ -1603,7 +1625,7 @@
             this.generatorXMLToolStripMenuItem.BackColor = System.Drawing.Color.SteelBlue;
             this.generatorXMLToolStripMenuItem.ForeColor = System.Drawing.Color.FloralWhite;
             this.generatorXMLToolStripMenuItem.Name = "generatorXMLToolStripMenuItem";
-            this.generatorXMLToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.generatorXMLToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.generatorXMLToolStripMenuItem.Text = "Generator XML";
             this.generatorXMLToolStripMenuItem.Click += new System.EventHandler(this.generatorXMLToolStripMenuItem_Click);
             // 
@@ -1612,9 +1634,18 @@
             this.toolStripMenuItem14.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem14.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(183, 22);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(251, 22);
             this.toolStripMenuItem14.Text = "Send SMS";
             this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click_2);
+            // 
+            // toolStripMenuItem17
+            // 
+            this.toolStripMenuItem17.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem17.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem17.Name = "toolStripMenuItem17";
+            this.toolStripMenuItem17.Size = new System.Drawing.Size(251, 22);
+            this.toolStripMenuItem17.Text = "Calculate SMS Reminder";
+            this.toolStripMenuItem17.Click += new System.EventHandler(this.toolStripMenuItem17_Click);
             // 
             // MAINMENU_TaxModule
             // 
@@ -1871,23 +1902,14 @@
             this.timerMessage.Interval = 3600000;
             this.timerMessage.Tick += new System.EventHandler(this.timerMessage_Tick);
             // 
-            // toolStripMenuItem16
+            // toolStripMenuItem19
             // 
-            this.toolStripMenuItem16.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem16.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem16.Name = "toolStripMenuItem16";
-            this.toolStripMenuItem16.Size = new System.Drawing.Size(335, 22);
-            this.toolStripMenuItem16.Text = "Pengaturan Template SMS";
-            this.toolStripMenuItem16.Click += new System.EventHandler(this.toolStripMenuItem16_Click);
-            // 
-            // toolStripMenuItem17
-            // 
-            this.toolStripMenuItem17.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem17.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem17.Name = "toolStripMenuItem17";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(251, 22);
-            this.toolStripMenuItem17.Text = "Calculate SMS Reminder";
-            this.toolStripMenuItem17.Click += new System.EventHandler(this.toolStripMenuItem17_Click);
+            this.toolStripMenuItem19.BackColor = System.Drawing.Color.SteelBlue;
+            this.toolStripMenuItem19.ForeColor = System.Drawing.Color.FloralWhite;
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(297, 22);
+            this.toolStripMenuItem19.Text = "Jadwal Harian";
+            this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click_1);
             // 
             // adminForm
             // 
@@ -2094,6 +2116,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem16;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem17;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem18;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem19;
         //private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

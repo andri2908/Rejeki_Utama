@@ -48,8 +48,8 @@ namespace AlphaSoft
             string sqlCommand;
             string unitNameParam = "";
 
-            if (unitNameTextBox.Text.Equals(""))
-                return;
+            //if (unitNameTextBox.Text.Equals(""))
+            //    return;
 
             unitNameParam = MySqlHelper.EscapeString(unitNameTextBox.Text);
             DS.mySqlConnect();

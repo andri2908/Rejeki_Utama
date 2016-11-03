@@ -334,7 +334,7 @@ namespace AlphaSoft
         private void timer1_Tick(object sender, EventArgs e)
         {
             updateLabel();
-            gRemind.checkSMSReminderTable(true);
+            //gRemind.checkSMSReminderTable(true);
         }
 
         private void jenisProdukToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1458,6 +1458,18 @@ namespace AlphaSoft
             globalReminderLib gRemind = new globalReminderLib();
 
             gRemind.checkSMSReminderTable(true);
+        }
+
+        private void toolStripMenuItem18_Click_1(object sender, EventArgs e)
+        {
+            viewTechnicianJobForm displayForm = new viewTechnicianJobForm();
+            displayForm.ShowDialog(this);
+        }
+
+        private void toolStripMenuItem19_Click_1(object sender, EventArgs e)
+        {
+            technicianDailyJobViewForm displayForm = new technicianDailyJobViewForm();
+            displayForm.ShowDialog(this);
         }
     }
 }

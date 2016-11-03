@@ -406,6 +406,12 @@
     <Compile Include="crReportContainer.Designer.cs">
       <DependentUpon>crReportContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="genericDataGridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="genericDataGridForm.Designer.cs">
+      <DependentUpon>genericDataGridForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="globalCryptographyMethod.cs" />
     <Compile Include="globalReminderLib.cs" />
     <Compile Include="membershipPointForm.cs">
@@ -1207,6 +1213,18 @@
     <Compile Include="TabSchemeProvider.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="technicianDailyJobViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="technicianDailyJobViewForm.Designer.cs">
+      <DependentUpon>technicianDailyJobViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="viewTechnicianJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="viewTechnicianJobForm.Designer.cs">
+      <DependentUpon>viewTechnicianJobForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="XMLGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1385,6 +1403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="exportStockOpnameForm.resx">
       <DependentUpon>exportStockOpnameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="genericDataGridForm.resx">
+      <DependentUpon>genericDataGridForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="membershipPointForm.resx">
       <DependentUpon>membershipPointForm.cs</DependentUpon>
@@ -1820,6 +1841,12 @@
       <DependentUpon>suratTugasPrintOutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TabSchemeProvider.resx" />
+    <EmbeddedResource Include="technicianDailyJobViewForm.resx">
+      <DependentUpon>technicianDailyJobViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="viewTechnicianJobForm.resx">
+      <DependentUpon>viewTechnicianJobForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="XMLGeneratorForm.resx">
       <DependentUpon>XMLGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>

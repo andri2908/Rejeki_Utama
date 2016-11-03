@@ -1829,18 +1829,23 @@ namespace AlphaSoft
 
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CHECK STOCK QTY IS ENOUGH [" + productID + "]");
 
-            if (productID.Length <= 0)
-                result = true; // NO PRODUCT SELECTED YET
+            if (gutil.productIsService(productID))
+                result = true;
             else
             {
-                double stockQty = 0;
+                if (productID.Length <= 0)
+                    result = true; // NO PRODUCT SELECTED YET
+                else
+                {
+                    double stockQty = 0;
 
-                stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
+                    stockQty = Convert.ToDouble(DS.getDataSingleValue("SELECT (PRODUCT_STOCK_QTY - PRODUCT_LIMIT_STOCK) FROM MASTER_PRODUCT WHERE PRODUCT_ID = '" + productID + "'"));
 
-                if (stockQty >= qtyRequested)
-                    result = true;
+                    if (stockQty >= qtyRequested)
+                        result = true;
 
-                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CHECK STOCK QTY IS ENOUGH [" + stockQty + ", " + qtyRequested + "]");
+                    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : CHECK STOCK QTY IS ENOUGH [" + stockQty + ", " + qtyRequested + "]");
+                }
             }
 
             return result;

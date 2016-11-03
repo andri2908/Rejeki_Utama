@@ -104,6 +104,11 @@ namespace AlphaSoft
         public const int TUGAS_PEMASANGAN_BARU = 702;
         public const int EDIT_TUGAS_PEMASANGAN_BARU = 703;
         public const int MONITOR_SURAT_TUGAS = 704;
+        public const int DISPLAY_UNASSIGNED_JOB = 705;
+        public const int DISPLAY_JOB_WITH_NO_TECHNICIAN = 706;
+        public const int DISPLAY_LATE_JOB = 707;
+        public const int DISPLAY_PENDING_JOB= 708;
+
 
 
         // THESE CONSTANTS ARE USED TO CHECK GROUP ACCESS MODULE

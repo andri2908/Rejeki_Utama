@@ -120,7 +120,7 @@ namespace AlphaSoft
                 gUtil.saveSystemDebugLog(0, "[SMS] FAILED TO SEND SCHEDULED MESSAGE [" + ex.Message + "]");
                 for (int i = customerIndex; i < reminderID.Count; i++)
                 {
-                    updateDS.beginTransaction();
+                    updateDS.beginTransaction();  
 
                     try
                     {

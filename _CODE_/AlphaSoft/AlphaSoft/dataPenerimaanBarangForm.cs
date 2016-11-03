@@ -243,7 +243,6 @@ namespace AlphaSoft
                 rdr.Close();
             }
         }
-    
 
         private void displayButton_Click(object sender, EventArgs e)
         {
