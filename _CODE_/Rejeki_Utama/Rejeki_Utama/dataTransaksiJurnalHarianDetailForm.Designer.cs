@@ -417,7 +417,6 @@
             this.label11.Size = new System.Drawing.Size(82, 18);
             this.label11.TabIndex = 23;
             this.label11.Text = "CABANG";
-            this.label11.Visible = false;
             // 
             // label12
             // 
@@ -429,7 +428,6 @@
             this.label12.Size = new System.Drawing.Size(14, 18);
             this.label12.TabIndex = 24;
             this.label12.Text = ":";
-            this.label12.Visible = false;
             // 
             // branchCombobox
             // 
@@ -442,7 +440,6 @@
             this.branchCombobox.Name = "branchCombobox";
             this.branchCombobox.Size = new System.Drawing.Size(384, 26);
             this.branchCombobox.TabIndex = 25;
-            this.branchCombobox.Visible = false;
             // 
             // groupBox1
             // 

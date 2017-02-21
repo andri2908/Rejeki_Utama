@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cashierForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
@@ -41,25 +41,11 @@
             this.noFakturLabel = new System.Windows.Forms.Label();
             this.cashierDataGridView = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.sendSMSCheckbox = new System.Windows.Forms.CheckBox();
             this.generateSuratTugas = new System.Windows.Forms.Button();
             this.generateDO = new System.Windows.Forms.Button();
             this.teknisiTextbox = new System.Windows.Forms.TextBox();
             this.labelTeknisi = new System.Windows.Forms.Label();
             this.rejectButton = new System.Windows.Forms.Button();
-            this.approvalButton = new System.Windows.Forms.Button();
-            this.ChangePrinterButton = new System.Windows.Forms.Button();
-            this.errorLabel = new System.Windows.Forms.Label();
-            this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
-            this.pelangganTextBox = new System.Windows.Forms.TextBox();
-            this.printoutCheckBox = new System.Windows.Forms.CheckBox();
-            this.paymentComboBox = new System.Windows.Forms.ComboBox();
-            this.labelCaraBayar = new System.Windows.Forms.Label();
-            this.creditRadioButton = new System.Windows.Forms.RadioButton();
-            this.cashRadioButton = new System.Windows.Forms.RadioButton();
-            this.label4 = new System.Windows.Forms.Label();
-            this.customerComboBox = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.discJualPersenTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -75,6 +61,20 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.approvalButton = new System.Windows.Forms.Button();
+            this.ChangePrinterButton = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.tempoMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.pelangganTextBox = new System.Windows.Forms.TextBox();
+            this.printoutCheckBox = new System.Windows.Forms.CheckBox();
+            this.paymentComboBox = new System.Windows.Forms.ComboBox();
+            this.labelCaraBayar = new System.Windows.Forms.Label();
+            this.creditRadioButton = new System.Windows.Forms.RadioButton();
+            this.cashRadioButton = new System.Windows.Forms.RadioButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.customerComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.sendSMSCheckbox = new System.Windows.Forms.CheckBox();
             this.panelSuratTugas = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.jobStartTimeMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -177,43 +177,43 @@
             this.cashierDataGridView.AllowUserToAddRows = false;
             this.cashierDataGridView.AllowUserToDeleteRows = false;
             this.cashierDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FloralWhite;
-            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FloralWhite;
+            this.cashierDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.cashierDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.cashierDataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.cashierDataGridView.BackgroundColor = System.Drawing.Color.FloralWhite;
             this.cashierDataGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.SteelBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.cashierDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.cashierDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.cashierDataGridView.Cursor = System.Windows.Forms.Cursors.Default;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FloralWhite;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FloralWhite;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.cashierDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.cashierDataGridView.EnableHeadersVisualStyles = false;
             this.cashierDataGridView.GridColor = System.Drawing.Color.Black;
             this.cashierDataGridView.Location = new System.Drawing.Point(2, 130);
             this.cashierDataGridView.MultiSelect = false;
             this.cashierDataGridView.Name = "cashierDataGridView";
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.cashierDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.cashierDataGridView.RowHeadersVisible = false;
             this.cashierDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.cashierDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -254,21 +254,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(982, 162);
             this.panel5.TabIndex = 9;
-            // 
-            // sendSMSCheckbox
-            // 
-            this.sendSMSCheckbox.AutoSize = true;
-            this.sendSMSCheckbox.Checked = true;
-            this.sendSMSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.sendSMSCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.sendSMSCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sendSMSCheckbox.ForeColor = System.Drawing.Color.Black;
-            this.sendSMSCheckbox.Location = new System.Drawing.Point(8, 135);
-            this.sendSMSCheckbox.Name = "sendSMSCheckbox";
-            this.sendSMSCheckbox.Size = new System.Drawing.Size(98, 22);
-            this.sendSMSCheckbox.TabIndex = 44;
-            this.sendSMSCheckbox.Text = "Kirim SMS";
-            this.sendSMSCheckbox.UseVisualStyleBackColor = true;
             // 
             // generateSuratTugas
             // 
@@ -330,166 +315,6 @@
             this.rejectButton.UseVisualStyleBackColor = true;
             this.rejectButton.Visible = false;
             this.rejectButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // approvalButton
-            // 
-            this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.approvalButton.ForeColor = System.Drawing.Color.Black;
-            this.approvalButton.Location = new System.Drawing.Point(343, 107);
-            this.approvalButton.Name = "approvalButton";
-            this.approvalButton.Size = new System.Drawing.Size(158, 34);
-            this.approvalButton.TabIndex = 38;
-            this.approvalButton.Text = "APPROVE SQ";
-            this.approvalButton.UseVisualStyleBackColor = true;
-            this.approvalButton.Click += new System.EventHandler(this.approvalButton_Click);
-            // 
-            // ChangePrinterButton
-            // 
-            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
-            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 68);
-            this.ChangePrinterButton.Name = "ChangePrinterButton";
-            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
-            this.ChangePrinterButton.TabIndex = 37;
-            this.ChangePrinterButton.Text = "SET PRINTER";
-            this.ChangePrinterButton.UseVisualStyleBackColor = true;
-            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
-            // 
-            // errorLabel
-            // 
-            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.errorLabel.AutoSize = true;
-            this.errorLabel.BackColor = System.Drawing.Color.White;
-            this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(8, 137);
-            this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(23, 18);
-            this.errorLabel.TabIndex = 36;
-            this.errorLabel.Text = "   ";
-            // 
-            // tempoMaskedTextBox
-            // 
-            this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 68);
-            this.tempoMaskedTextBox.Mask = "00000";
-            this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
-            this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
-            this.tempoMaskedTextBox.TabIndex = 18;
-            this.tempoMaskedTextBox.Text = "0";
-            this.tempoMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tempoMaskedTextBox.ValidatingType = typeof(int);
-            this.tempoMaskedTextBox.Visible = false;
-            this.tempoMaskedTextBox.Enter += new System.EventHandler(this.tempoMaskedTextBox_Enter);
-            // 
-            // pelangganTextBox
-            // 
-            this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pelangganTextBox.Location = new System.Drawing.Point(154, 10);
-            this.pelangganTextBox.Name = "pelangganTextBox";
-            this.pelangganTextBox.ReadOnly = true;
-            this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
-            this.pelangganTextBox.TabIndex = 17;
-            this.pelangganTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pelangganTextBox_KeyDown);
-            // 
-            // printoutCheckBox
-            // 
-            this.printoutCheckBox.AutoSize = true;
-            this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
-            this.printoutCheckBox.Location = new System.Drawing.Point(11, 110);
-            this.printoutCheckBox.Name = "printoutCheckBox";
-            this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
-            this.printoutCheckBox.TabIndex = 8;
-            this.printoutCheckBox.Text = "Tanpa Cetak &Struk - Nota";
-            this.printoutCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // paymentComboBox
-            // 
-            this.paymentComboBox.FormattingEnabled = true;
-            this.paymentComboBox.Items.AddRange(new object[] {
-            "Cash",
-            "Kartu Kredit",
-            "Kartu Debit"});
-            this.paymentComboBox.Location = new System.Drawing.Point(154, 69);
-            this.paymentComboBox.Name = "paymentComboBox";
-            this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
-            this.paymentComboBox.TabIndex = 7;
-            this.paymentComboBox.Text = "Cash";
-            this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
-            // 
-            // labelCaraBayar
-            // 
-            this.labelCaraBayar.AutoSize = true;
-            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
-            this.labelCaraBayar.Location = new System.Drawing.Point(8, 71);
-            this.labelCaraBayar.Name = "labelCaraBayar";
-            this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
-            this.labelCaraBayar.TabIndex = 6;
-            this.labelCaraBayar.Text = "Cara Bayar       :";
-            // 
-            // creditRadioButton
-            // 
-            this.creditRadioButton.AutoSize = true;
-            this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.creditRadioButton.Location = new System.Drawing.Point(229, 41);
-            this.creditRadioButton.Name = "creditRadioButton";
-            this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
-            this.creditRadioButton.TabIndex = 5;
-            this.creditRadioButton.Text = "&Kredit";
-            this.creditRadioButton.UseVisualStyleBackColor = true;
-            this.creditRadioButton.CheckedChanged += new System.EventHandler(this.creditRadioButton_CheckedChanged);
-            // 
-            // cashRadioButton
-            // 
-            this.cashRadioButton.AutoSize = true;
-            this.cashRadioButton.Checked = true;
-            this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
-            this.cashRadioButton.Location = new System.Drawing.Point(154, 41);
-            this.cashRadioButton.Name = "cashRadioButton";
-            this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
-            this.cashRadioButton.TabIndex = 4;
-            this.cashRadioButton.TabStop = true;
-            this.cashRadioButton.Text = "Tuna&i";
-            this.cashRadioButton.UseVisualStyleBackColor = true;
-            this.cashRadioButton.CheckedChanged += new System.EventHandler(this.cashRadioButton_CheckedChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(9, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 18);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Pembayaran     :";
-            // 
-            // customerComboBox
-            // 
-            this.customerComboBox.FormattingEnabled = true;
-            this.customerComboBox.Items.AddRange(new object[] {
-            "P-UMUM [ECER]",
-            "P-PARTAI",
-            "P-GROSIR"});
-            this.customerComboBox.Location = new System.Drawing.Point(342, 10);
-            this.customerComboBox.Name = "customerComboBox";
-            this.customerComboBox.Size = new System.Drawing.Size(183, 26);
-            this.customerComboBox.TabIndex = 2;
-            this.customerComboBox.Text = "P-UMUM [ECER]";
-            this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label3.Location = new System.Drawing.Point(9, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 18);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "&Pelanggan [F4] : ";
             // 
             // panel6
             // 
@@ -691,6 +516,181 @@
             this.label9.Text = "Total Penjualan      : ";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label9.Visible = false;
+            // 
+            // approvalButton
+            // 
+            this.approvalButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.approvalButton.ForeColor = System.Drawing.Color.Black;
+            this.approvalButton.Location = new System.Drawing.Point(343, 107);
+            this.approvalButton.Name = "approvalButton";
+            this.approvalButton.Size = new System.Drawing.Size(158, 34);
+            this.approvalButton.TabIndex = 38;
+            this.approvalButton.Text = "APPROVE SQ";
+            this.approvalButton.UseVisualStyleBackColor = true;
+            this.approvalButton.Click += new System.EventHandler(this.approvalButton_Click);
+            // 
+            // ChangePrinterButton
+            // 
+            this.ChangePrinterButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ChangePrinterButton.ForeColor = System.Drawing.Color.Black;
+            this.ChangePrinterButton.Location = new System.Drawing.Point(343, 68);
+            this.ChangePrinterButton.Name = "ChangePrinterButton";
+            this.ChangePrinterButton.Size = new System.Drawing.Size(158, 34);
+            this.ChangePrinterButton.TabIndex = 37;
+            this.ChangePrinterButton.Text = "SET PRINTER";
+            this.ChangePrinterButton.UseVisualStyleBackColor = true;
+            this.ChangePrinterButton.Click += new System.EventHandler(this.ChangePrinterButton_Click);
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.BackColor = System.Drawing.Color.White;
+            this.errorLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(8, 137);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(23, 18);
+            this.errorLabel.TabIndex = 36;
+            this.errorLabel.Text = "   ";
+            // 
+            // tempoMaskedTextBox
+            // 
+            this.tempoMaskedTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tempoMaskedTextBox.Location = new System.Drawing.Point(154, 68);
+            this.tempoMaskedTextBox.Mask = "00000";
+            this.tempoMaskedTextBox.Name = "tempoMaskedTextBox";
+            this.tempoMaskedTextBox.Size = new System.Drawing.Size(71, 27);
+            this.tempoMaskedTextBox.TabIndex = 18;
+            this.tempoMaskedTextBox.Text = "0";
+            this.tempoMaskedTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tempoMaskedTextBox.ValidatingType = typeof(int);
+            this.tempoMaskedTextBox.Visible = false;
+            this.tempoMaskedTextBox.Enter += new System.EventHandler(this.tempoMaskedTextBox_Enter);
+            // 
+            // pelangganTextBox
+            // 
+            this.pelangganTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pelangganTextBox.Location = new System.Drawing.Point(154, 10);
+            this.pelangganTextBox.Name = "pelangganTextBox";
+            this.pelangganTextBox.ReadOnly = true;
+            this.pelangganTextBox.Size = new System.Drawing.Size(181, 27);
+            this.pelangganTextBox.TabIndex = 17;
+            this.pelangganTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.pelangganTextBox_KeyDown);
+            // 
+            // printoutCheckBox
+            // 
+            this.printoutCheckBox.AutoSize = true;
+            this.printoutCheckBox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.printoutCheckBox.ForeColor = System.Drawing.Color.FloralWhite;
+            this.printoutCheckBox.Location = new System.Drawing.Point(11, 110);
+            this.printoutCheckBox.Name = "printoutCheckBox";
+            this.printoutCheckBox.Size = new System.Drawing.Size(234, 22);
+            this.printoutCheckBox.TabIndex = 8;
+            this.printoutCheckBox.Text = "Tanpa Cetak &Struk - Nota";
+            this.printoutCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // paymentComboBox
+            // 
+            this.paymentComboBox.FormattingEnabled = true;
+            this.paymentComboBox.Items.AddRange(new object[] {
+            "Cash",
+            "Kartu Kredit",
+            "Kartu Debit"});
+            this.paymentComboBox.Location = new System.Drawing.Point(154, 69);
+            this.paymentComboBox.Name = "paymentComboBox";
+            this.paymentComboBox.Size = new System.Drawing.Size(142, 26);
+            this.paymentComboBox.TabIndex = 7;
+            this.paymentComboBox.Text = "Cash";
+            this.paymentComboBox.SelectedIndexChanged += new System.EventHandler(this.paymentComboBox_SelectedIndexChanged);
+            // 
+            // labelCaraBayar
+            // 
+            this.labelCaraBayar.AutoSize = true;
+            this.labelCaraBayar.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCaraBayar.ForeColor = System.Drawing.Color.FloralWhite;
+            this.labelCaraBayar.Location = new System.Drawing.Point(8, 71);
+            this.labelCaraBayar.Name = "labelCaraBayar";
+            this.labelCaraBayar.Size = new System.Drawing.Size(146, 18);
+            this.labelCaraBayar.TabIndex = 6;
+            this.labelCaraBayar.Text = "Cara Bayar       :";
+            // 
+            // creditRadioButton
+            // 
+            this.creditRadioButton.AutoSize = true;
+            this.creditRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
+            this.creditRadioButton.Location = new System.Drawing.Point(229, 41);
+            this.creditRadioButton.Name = "creditRadioButton";
+            this.creditRadioButton.Size = new System.Drawing.Size(75, 22);
+            this.creditRadioButton.TabIndex = 5;
+            this.creditRadioButton.Text = "&Kredit";
+            this.creditRadioButton.UseVisualStyleBackColor = true;
+            this.creditRadioButton.CheckedChanged += new System.EventHandler(this.creditRadioButton_CheckedChanged);
+            // 
+            // cashRadioButton
+            // 
+            this.cashRadioButton.AutoSize = true;
+            this.cashRadioButton.Checked = true;
+            this.cashRadioButton.ForeColor = System.Drawing.Color.FloralWhite;
+            this.cashRadioButton.Location = new System.Drawing.Point(154, 41);
+            this.cashRadioButton.Name = "cashRadioButton";
+            this.cashRadioButton.Size = new System.Drawing.Size(69, 22);
+            this.cashRadioButton.TabIndex = 4;
+            this.cashRadioButton.TabStop = true;
+            this.cashRadioButton.Text = "Tuna&i";
+            this.cashRadioButton.UseVisualStyleBackColor = true;
+            this.cashRadioButton.CheckedChanged += new System.EventHandler(this.cashRadioButton_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label4.Location = new System.Drawing.Point(9, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(145, 18);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Pembayaran     :";
+            // 
+            // customerComboBox
+            // 
+            this.customerComboBox.FormattingEnabled = true;
+            this.customerComboBox.Items.AddRange(new object[] {
+            "P-UMUM [ECER]",
+            "P-PARTAI",
+            "P-GROSIR"});
+            this.customerComboBox.Location = new System.Drawing.Point(342, 10);
+            this.customerComboBox.Name = "customerComboBox";
+            this.customerComboBox.Size = new System.Drawing.Size(183, 26);
+            this.customerComboBox.TabIndex = 2;
+            this.customerComboBox.Text = "P-UMUM [ECER]";
+            this.customerComboBox.SelectedIndexChanged += new System.EventHandler(this.customerComboBox_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.FloralWhite;
+            this.label3.Location = new System.Drawing.Point(9, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(151, 18);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "&Pelanggan [F4] : ";
+            // 
+            // sendSMSCheckbox
+            // 
+            this.sendSMSCheckbox.AutoSize = true;
+            this.sendSMSCheckbox.Checked = true;
+            this.sendSMSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.sendSMSCheckbox.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.sendSMSCheckbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sendSMSCheckbox.ForeColor = System.Drawing.Color.Black;
+            this.sendSMSCheckbox.Location = new System.Drawing.Point(8, 135);
+            this.sendSMSCheckbox.Name = "sendSMSCheckbox";
+            this.sendSMSCheckbox.Size = new System.Drawing.Size(98, 22);
+            this.sendSMSCheckbox.TabIndex = 44;
+            this.sendSMSCheckbox.Text = "Kirim SMS";
+            this.sendSMSCheckbox.UseVisualStyleBackColor = true;
             // 
             // panelSuratTugas
             // 

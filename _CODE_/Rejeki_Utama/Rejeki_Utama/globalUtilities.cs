@@ -106,7 +106,7 @@ namespace AlphaSoft
                 return false;
         }
 
-        public int loadbranchID(int opt,out string namacabang)
+        public int loadbranchID(int opt, out string namacabang)
         {
             MySqlDataReader rdr;
             DataTable dt = new DataTable();
