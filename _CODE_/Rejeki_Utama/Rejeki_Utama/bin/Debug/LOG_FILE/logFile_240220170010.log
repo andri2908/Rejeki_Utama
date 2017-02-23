@@ -1,0 +1,1276 @@
+[] [2/24/2017 00:00] [] USER = ADMIN IS ACTIVE
+[ADMIN] [2/24/2017 00:00] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [2/24/2017 00:00] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [2/24/2017 00:00] [] DISPLAY ADMIN FORM
+[ADMIN] [2/24/2017 00:00] [] adminForm Load
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : MULTIPLE CASHIER INSTANCE [1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:00] [] [POS SEARCH PRODUCT] D:\Project\Rejeki_Utama\_CODE_\Rejeki_Utama\Rejeki_Utama\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ADD NEW ROW FROM BARCODE [AC SPLIT SPECIAL]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productID]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_BASE_PRICE]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_RETAIL_PRICE]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [73, 0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SET QTY TO 1 BECAUSE OF NEW ROW
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [100]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [100]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [100]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [100]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [1000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [1000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [73, 2]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [2000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [2000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [2000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [2000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:00] [] CHECK STOCK QTY IS ENOUGH [73, 20]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [20000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [20000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [20000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [20000]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [19999]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [19999]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [19999]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [19999]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : SUBTOTAL [19990]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [19990]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal [19990]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [19990]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:00] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [190]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [190]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [190]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [190]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [19990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [19990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [19990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [19990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [199990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [199990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [199990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [199990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1999990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1999990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1999990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1999990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1999998]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1999998]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1999998]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1999998]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1999980]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1999980]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1999980]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1999980]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1999800]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1999800]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1999800]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1999800]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1998000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1998000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1998000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1998000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1980000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1980000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1980000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1980000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SUBTOTAL [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1799999]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1799990]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1799900]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1799000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1790000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1700000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [1700000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:01] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:01] [] CHECK STOCK QTY IS ENOUGH [73, 20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [1]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [17]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [170]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [1700]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [17000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [170000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [1700000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:01] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:01] [] CHECK STOCK QTY IS ENOUGH [73, 20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : ATTEMPT TO SAVE SALES DATA [24-02-2017 00:01]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SALES DISC FINAL [100000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : CASH SALES
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CHECK IF TAX LIMIT SET FOR PERCENTAGE PURCHASE [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CHECK IF TAX LIMIT SET FOR AVERAGE DAILY PURCHASE [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : NO FAKTUR [SLO001]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : MAX SALES INVOICE [19]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : SALES INVOICE [SLO001-20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] INSERT INTO SALES HEADER [SLO001-20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] INSERT INTO SALES DETAIL[5, 100000, 20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] INSERT TO CREDIT TABLE [SLO001-20]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] INSERT TO DAILY JOURNAL TABLE [1800000]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] TRANSACTION SAVED
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] VALIDATE USER CREDIT STATUS
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:01] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] RE-PRINT INVOICE
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:03] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : MULTIPLE CASHIER INSTANCE [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [] [POS SEARCH PRODUCT] D:\Project\Rejeki_Utama\_CODE_\Rejeki_Utama\Rejeki_Utama\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ADD NEW ROW FROM BARCODE [AC SPLIT SPECIAL]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productID]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_BASE_PRICE]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_RETAIL_PRICE]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [73, 0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SET QTY TO 1 BECAUSE OF NEW ROW
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [100]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [100]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [100]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [100]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [1000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [1000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [1000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [1000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [10000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [10000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [100000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [100000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [100000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [100000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [73, 2]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [200000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [200000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [200000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [200000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [199999]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [199999]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [199999]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [199999]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [199990]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [199990]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [199990]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [199990]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [199900]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [199900]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [199900]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [199900]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [199000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [199000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [199000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [199000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SUBTOTAL [190000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [190000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal [190000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [190000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [189995]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [189950]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [189500]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [185000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [140000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [140000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [1]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [14]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [140]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [1400]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [14000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [140000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:04] [] CHECK STOCK QTY IS ENOUGH [73, 2]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : ATTEMPT TO SAVE SALES DATA [24-02-2017 00:04]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SALES DISC FINAL [50000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : CASH SALES
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CHECK IF TAX LIMIT SET FOR PERCENTAGE PURCHASE [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CHECK IF TAX LIMIT SET FOR AVERAGE DAILY PURCHASE [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : NO FAKTUR [SLO001]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : MAX SALES INVOICE [20]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : SALES INVOICE [SLO001-21]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] INSERT INTO SALES HEADER [SLO001-21]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] INSERT INTO SALES DETAIL[5, 100000, 2]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] INSERT TO CREDIT TABLE [SLO001-21]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] INSERT TO DAILY JOURNAL TABLE [190000]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] TRANSACTION SAVED
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:04] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] VALIDATE USER CREDIT STATUS
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] RE-PRINT INVOICE
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:05] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : MULTIPLE CASHIER INSTANCE [1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [] [POS SEARCH PRODUCT] D:\Project\Rejeki_Utama\_CODE_\Rejeki_Utama\Rejeki_Utama\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ADD NEW ROW FROM BARCODE [AC SPLIT SPECIAL]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productID]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_BASE_PRICE]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_RETAIL_PRICE]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [73, 0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SET QTY TO 1 BECAUSE OF NEW ROW
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SUBTOTAL [9]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [9]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal [9]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [9]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [4]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [4]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [4]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:08] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : ATTEMPT TO SAVE SALES DATA [24-02-2017 00:08]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SALES DISC FINAL [5]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : CASH SALES
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CHECK IF TAX LIMIT SET FOR PERCENTAGE PURCHASE [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CHECK IF TAX LIMIT SET FOR AVERAGE DAILY PURCHASE [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : NO FAKTUR [SLO001]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : MAX SALES INVOICE [21]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : SALES INVOICE [SLO001-22]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] INSERT INTO SALES HEADER [SLO001-22]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] INSERT INTO SALES DETAIL[5, 10, 1]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] INSERT TO CREDIT TABLE [SLO001-22]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] INSERT TO DAILY JOURNAL TABLE [9]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] TRANSACTION SAVED
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:08] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[] [2/24/2017 00:09] [] USER = ADMIN IS ACTIVE
+[ADMIN] [2/24/2017 00:09] [] USER ID = 1 LOGIN SUCCESSFULLY
+[ADMIN] [2/24/2017 00:09] [] ACTIVATE USER ACCESS RIGHT
+[ADMIN] [2/24/2017 00:09] [] DISPLAY ADMIN FORM
+[ADMIN] [2/24/2017 00:09] [] adminForm Load
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : MULTIPLE CASHIER INSTANCE [1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO LOAD NO FAKTUR
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : loadNoFaktur, noFakturValue [SLO001]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierForm_Load, ATTEMPT TO addColumnToDataGrid
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : HOTKEY TO ADD NEW ROW PRESSED
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  isActive [True]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ROW COUNT [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ADD NEW ROW,  ALLOW TO ADD [True]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [F8]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [disc2]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [] [POS SEARCH PRODUCT] D:\Project\Rejeki_Utama\_CODE_\Rejeki_Utama\Rejeki_Utama\bin\Debug\PRODUCT_PHOTO\ 
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ADD NEW ROW FROM BARCODE [AC SPLIT SPECIAL]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productID]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productName]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_BASE_PRICE]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_BASE_PRICE [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [hpp]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PRODUCT PRICE TYPE [PRODUCT_RETAIL_PRICE]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PRODUCT PRICE [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, PRODUCT_SALES_PRICE [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [productPrice]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [73, 0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [jumlah]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ComboBox_SelectedIndexChanged, attempt to calculate total
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [qty]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SET QTY TO 1 BECAUSE OF NEW ROW
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [10]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : cashierDataGridView_CellValueChanged [discRP]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, previousInput []
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, dataGridViewTextBoxEditingControl.Text pass REGEX Checking
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CALCULATE SUBTOTAL
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SUBTOTAL [9]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, subtotal value [9]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : TextBox_TextChanged, attempt to calculate total value
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal [9]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateTotal, totalAfterDisc [9]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [4]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : discJualMaskedTextBox_Validating, totalAfterDisc [4]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, bayarTextBox.Text [4]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : calculateChangeValue, sisaBayar [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : HOTKEY TO SAVE AND PRINT OUT INVOICE PRESSED
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] ATTEMPT TO SAVE AND PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [5]
+[ADMIN] [2/24/2017 00:09] [] CHECK STOCK QTY IS ENOUGH [73, 1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : ATTEMPT TO SAVE SALES DATA [24-02-2017 00:09]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SALES DISC FINAL [5]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : CASH SALES
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CHECK IF TAX LIMIT SET FOR PERCENTAGE PURCHASE [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CHECK IF TAX LIMIT SET FOR AVERAGE DAILY PURCHASE [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : NO FAKTUR [SLO001]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : MAX SALES INVOICE [22]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : SALES INVOICE [SLO001-23]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] INSERT INTO SALES HEADER [SLO001-23]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] INSERT INTO SALES DETAIL[5, 10, 1]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] INSERT TO CREDIT TABLE [SLO001-23]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] INSERT TO DAILY JOURNAL TABLE [9]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] TRANSACTION SAVED
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] PRINT OUT INVOICE
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PrintReceipt
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PrintReceipt, papermode [0]
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : PrintReceipt, display SalesReceiptForm
+[ADMIN] [2/24/2017 00:09] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] VALIDATE USER CREDIT STATUS
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] CASHIER FORM : REGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [PENJUALAN] CASHIER FORM : UNREGISTER HOTKEY
+[ADMIN] [2/24/2017 00:10] [] USER ID = 1LOGOUT

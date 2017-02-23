@@ -1,0 +1,64 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="Table">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="INVOICE" type="xs:string" minOccurs="0" />
+                <xs:element name="CUSTOMER" type="xs:string" minOccurs="0" />
+                <xs:element name="DATE" type="xs:string" minOccurs="0" />
+                <xs:element name="TOTAL" type="xs:double" minOccurs="0" />
+                <xs:element name="GROUP" type="xs:string" minOccurs="0" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+    </xs:element>
+  </xs:schema>
+  <Table>
+    <INVOICE>SLO001-17</INVOICE>
+    <CUSTOMER>TEST PELANGGAN</CUSTOMER>
+    <DATE>23-February-2017</DATE>
+    <TOTAL>200000</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-12</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <DATE>18-February-2017</DATE>
+    <TOTAL>200</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-13</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <DATE>18-February-2017</DATE>
+    <TOTAL>200</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-14</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <DATE>21-February-2017</DATE>
+    <TOTAL>200</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-15</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <DATE>21-February-2017</DATE>
+    <TOTAL>20</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+  <Table>
+    <INVOICE>SLO001-16</INVOICE>
+    <CUSTOMER>P-UMUM</CUSTOMER>
+    <DATE>23-February-2017</DATE>
+    <TOTAL>180</TOTAL>
+    <GROUP>RETAIL</GROUP>
+  </Table>
+</NewDataSet>

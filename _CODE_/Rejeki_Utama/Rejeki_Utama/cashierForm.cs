@@ -1604,7 +1604,7 @@ namespace AlphaSoft
                     if (numRows > 0)
                     {
                         // UPDATE CREDIT TABLE TO REFLECT REVISION
-                        sqlCommand = "UPDATE CREDIT SET CREDIT_DUE_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + "CREDIT_NOMINAL = " + gutil.validateDecimalNumericInput(globalTotalValue) +
+                        sqlCommand = "UPDATE CREDIT SET CREDIT_DUE_DATE = STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + "CREDIT_NOMINAL = " + gutil.validateDecimalNumericInput(globalTotalValue- Convert.ToDouble(salesDiscountFinal)) +
                                                ", CREDIT_PAID = " + salesPaid + " WHERE SALES_INVOICE = '" + salesInvoice + "'";
 
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
@@ -1615,7 +1615,7 @@ namespace AlphaSoft
                     { 
                         // SAVE TO CREDIT TABLE
                         sqlCommand = "INSERT INTO CREDIT (SALES_INVOICE, CREDIT_DUE_DATE, CREDIT_NOMINAL, CREDIT_PAID) VALUES " +
-                                            "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue) + ", " + salesPaid + ")";
+                                            "('" + salesInvoice + "', STR_TO_DATE('" + SODueDateTime + "', '%d-%m-%Y'), " + gutil.validateDecimalNumericInput(globalTotalValue- Convert.ToDouble(salesDiscountFinal)) + ", " + salesPaid + ")";
 
                         gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "INSERT TO CREDIT TABLE [" + salesInvoice + "]");
                         if (!DS.executeNonQueryCommand(sqlCommand, ref internalEX))
@@ -2903,11 +2903,9 @@ namespace AlphaSoft
             disc1Column.HeaderText = "DISC (%)";
             disc1Column.Name = "disc1";
             disc1Column.Width = 150;
+            disc1Column.Visible = false;//discVisible;
             disc1Column.MaxInputLength = 5;
-            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
-                disc1Column.Visible = false;
-            else
-                disc1Column.Visible = discVisible;
+            
             cashierDataGridView.Columns.Add(disc1Column);
 
             disc2Column.HeaderText = "DISC 2 (%)";
@@ -2920,7 +2918,10 @@ namespace AlphaSoft
             discRPColumn.HeaderText = "DISC RP";
             discRPColumn.Name = "discRP";
             discRPColumn.Width = 150;
-            discRPColumn.Visible = false; //discVisible;
+            if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
+                discRPColumn.Visible = false;
+            else
+                discRPColumn.Visible = discVisible;
             cashierDataGridView.Columns.Add(discRPColumn);
 
             subTotalColumn.HeaderText = "JUMLAH";
@@ -3135,11 +3136,11 @@ namespace AlphaSoft
                 if (originModuleID == 0 || originModuleID == globalConstants.SERVICE_AC)
                 {
                     // NORMAL TRANSACTION
-                    sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
+                    sqlCommandx = "SELECT SH.SALES_DISCOUNT_FINAL, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
                     "PRODUCT_SALES_PRICE AS 'PRICE', ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'" +
                     "UNION " +
-                    "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
+                    "SELECT SH.SALES_DISCOUNT_FINAL, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
                     "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER SH, SALES_DETAIL SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoice + "'";
                 }
@@ -3162,11 +3163,11 @@ namespace AlphaSoft
                 else
                 {
                     // GET DUMMY DATA
-                    sqlCommandx = "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
+                    sqlCommandx = "SELECT SH.SALES_DISCOUNT_FINAL, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', MC.CUSTOMER_FULL_NAME AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', " +
                     "PRODUCT_SALES_PRICE AS 'PRICE', ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER_TAX SH, SALES_DETAIL_TAX SD, MASTER_PRODUCT M, MASTER_CUSTOMER MC WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = MC.CUSTOMER_ID AND SH.SALES_INVOICE='" + selectedsalesinvoiceTax + "'" +
                     "UNION " +
-                    "SELECT SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
+                    "SELECT SH.SALES_DISCOUNT_FINAL, SD.ID, SH.SALES_DATE AS 'DATE', SD.SALES_INVOICE AS 'INVOICE', 'P-UMUM' AS 'CUSTOMER', M.PRODUCT_NAME AS 'PRODUCT', PRODUCT_QTY AS 'QTY', PRODUCT_SALES_PRICE AS 'PRICE', " +
                     "ROUND((PRODUCT_QTY * PRODUCT_SALES_PRICE) - SALES_SUBTOTAL, 2) AS 'POTONGAN', SALES_SUBTOTAL AS 'SUBTOTAL', SH.SALES_PAYMENT AS 'PAYMENT', SH.SALES_PAYMENT_CHANGE AS 'CHANGE' " +
                     "FROM SALES_HEADER_TAX SH, SALES_DETAIL_TAX SD, MASTER_PRODUCT M WHERE SD.PRODUCT_ID = M.PRODUCT_ID AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SH.CUSTOMER_ID = 0 AND SH.SALES_INVOICE='" + selectedsalesinvoiceTax + "'";
                 }
