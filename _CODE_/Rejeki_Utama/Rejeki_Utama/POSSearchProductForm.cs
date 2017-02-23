@@ -143,7 +143,7 @@ namespace AlphaSoft
             locationID = gutil.loadlocationID(2);
 
             //sqlCommand = "SELECT PRODUCT_PHOTO_1, ID, PRODUCT_ID AS 'PRODUK ID', PRODUCT_NAME AS 'NAMA PRODUK', PRODUCT_DESCRIPTION AS 'DESKRIPSI PRODUK' FROM MASTER_PRODUCT WHERE PRODUCT_ACTIVE = 1 AND PRODUCT_IS_SERVICE = 0 AND PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
-            sqlCommand = "SELECT MP.PRODUCT_PHOTO_1, MP.ID, MP.PRODUCT_NAME AS 'NAMA PRODUK', PL.PRODUCT_LOCATION_QTY AS 'QTY' FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE PL.PRODUCT_ID = MP.PRODUCT_ID AND PL.LOCATION_ID = " + locationID + " AND MP.PRODUCT_ACTIVE = 1 AND MP.PRODUCT_IS_SERVICE = 0 AND MP.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND MP.PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
+            sqlCommand = "SELECT MP.PRODUCT_PHOTO_1, MP.PRODUCT_ID AS 'PRODUK ID', MP.ID, MP.PRODUCT_NAME AS 'NAMA PRODUK', PL.PRODUCT_LOCATION_QTY AS 'QTY' FROM MASTER_PRODUCT MP, PRODUCT_LOCATION PL WHERE PL.PRODUCT_ID = MP.PRODUCT_ID AND PL.LOCATION_ID = " + locationID + " AND MP.PRODUCT_ACTIVE = 1 AND MP.PRODUCT_IS_SERVICE = 0 AND MP.PRODUCT_ID LIKE '%" + kodeProductParam + "%' AND MP.PRODUCT_NAME LIKE '%" + namaProductParam + "%'";
 
             using (rdr = DS.getData(sqlCommand))
             {
@@ -155,7 +155,7 @@ namespace AlphaSoft
                     dataProdukGridView.Columns["ID"].Visible = false;
                     dataProdukGridView.Columns["PRODUCT_PHOTO_1"].Visible = false;
                     
-                    //dataProdukGridView.Columns["PRODUK ID"].Visible = false;
+                    dataProdukGridView.Columns["PRODUK ID"].Visible = false;
                     dataProdukGridView.Columns["NAMA PRODUK"].Width = 200;
                     //dataProdukGridView.Columns["DESKRIPSI PRODUK"].Width = 300;
                 }
@@ -210,7 +210,7 @@ namespace AlphaSoft
             DataGridViewRow selectedRow = dataProdukGridView.Rows[selectedrowindex];
             selectedProductID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
             selectedProductName = selectedRow.Cells["NAMA PRODUK"].Value.ToString();
-            //selectedkodeProduct = selectedRow.Cells["PRODUK ID"].Value.ToString();
+            selectedkodeProduct = selectedRow.Cells["PRODUK ID"].Value.ToString();
 
             executeSpecificForm(selectedkodeProduct, selectedProductName, selectedRowIndex);
             this.Close();
@@ -228,7 +228,7 @@ namespace AlphaSoft
                 DataGridViewRow selectedRow = dataProdukGridView.Rows[selectedrowindex];
                 selectedProductID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
                 selectedProductName = selectedRow.Cells["NAMA PRODUK"].Value.ToString();
-                //selectedkodeProduct = selectedRow.Cells["PRODUK ID"].Value.ToString();
+                selectedkodeProduct = selectedRow.Cells["PRODUK ID"].Value.ToString();
 
                 executeSpecificForm(selectedkodeProduct, selectedProductName, selectedRowIndex);
                 this.Close();

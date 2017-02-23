@@ -37,7 +37,7 @@ namespace AlphaSoft
 
             DS.mySqlConnect();
 
-            using (rdr = DS.getData("SELECT LOCATION_NAME, IFNULL(LOCATION_DESCRIPTION, '') AS LOCATION_DESCRIPTION, LOCATION_ACTIVE FROM MASTER_LOCATION WHERE ID = " + selectedLocationID))
+            using (rdr = DS.getData("SELECT LOCATION_NAME, IFNULL(LOCATION_DESCRIPTION, '') AS LOCATION_DESCRIPTION, LOCATION_ACTIVE, LOCATION_ADDRESS FROM MASTER_LOCATION WHERE ID = " + selectedLocationID))
             {
                 if (rdr.HasRows)
                 {
@@ -45,6 +45,7 @@ namespace AlphaSoft
                     {
                         namaGroupTextBox.Text = rdr.GetString("LOCATION_NAME");
                         deskripsiTextBox.Text = rdr.GetString("LOCATION_DESCRIPTION");
+                        locationAddressTextBox.Text = rdr.GetString("LOCATION_ADDRESS");
 
                         if (rdr.GetInt32("LOCATION_ACTIVE") == 1)
                             nonAktifCheckbox.Checked = false;
@@ -77,6 +78,7 @@ namespace AlphaSoft
             string regionName = MySqlHelper.EscapeString(namaGroupTextBox.Text.Trim());
             string regionDesc = MySqlHelper.EscapeString(deskripsiTextBox.Text.Trim());
             byte regionStatus = 0;
+            string locationAddressValue = MySqlHelper.EscapeString(locationAddressTextBox.Text.Trim());
 
             if (nonAktifCheckbox.Checked)
                 regionStatus = 0;
@@ -92,10 +94,10 @@ namespace AlphaSoft
                 switch (originModuleID)
                 {
                     case globalConstants.NEW_LOCATION:
-                        sqlCommand = "INSERT INTO MASTER_LOCATION (LOCATION_NAME, LOCATION_DESCRIPTION, LOCATION_ACTIVE) VALUES ('" + regionName + "', '" + regionDesc + "', " + regionStatus + ")";
+                        sqlCommand = "INSERT INTO MASTER_LOCATION (LOCATION_NAME, LOCATION_DESCRIPTION, LOCATION_ACTIVE, LOCATION_ADDRESS) VALUES ('" + regionName + "', '" + regionDesc + "', " + regionStatus + ", '" + locationAddressValue + "')";
                         break;
                     case globalConstants.EDIT_LOCATION:
-                        sqlCommand = "UPDATE MASTER_LOCATION SET LOCATION_NAME = '" + regionName + "', LOCATION_DESCRIPTION= '" + regionDesc + "', LOCATION_ACTIVE = " + regionStatus + " WHERE ID = " + selectedLocationID;
+                        sqlCommand = "UPDATE MASTER_LOCATION SET LOCATION_NAME = '" + regionName + "', LOCATION_DESCRIPTION= '" + regionDesc + "', LOCATION_ACTIVE = " + regionStatus + ", LOCATION_ADDRESS = '" + locationAddressValue + "' WHERE ID = " + selectedLocationID;
                         break;
                 }
 

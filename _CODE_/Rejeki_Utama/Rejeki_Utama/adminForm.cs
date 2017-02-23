@@ -966,6 +966,10 @@ namespace AlphaSoft
             setAccessibility(globalConstants.MENU_TRANSAKSI_PENJUALAN, MENU_transaksiPenjualan);
             setAccessibility(globalConstants.MENU_TRANSAKSI_PENJUALAN, SHORTCUT_jual);
             setAccessibility(globalConstants.MENU_SET_NO_FAKTUR, MENU_setNoFaktur);
+            setAccessibility(globalConstants.MENU_SALES_ORDER_REVISION, MENU_SORevision);
+            setAccessibility(globalConstants.MENU_DELIVERY_ORDER, MENU_deliveryOrder);
+            setAccessibility(globalConstants.MENU_COPY_DELIVERY_ORDER, MENU_copyDO);
+
             // SUB MENU RETUR PENJUALAN
             setAccessibility(globalConstants.MENU_RETUR_PENJUALAN, MENU_returPenjualan);
             setAccessibility(globalConstants.MENU_RETUR_PENJUALAN_INVOICE, MENU_returByInvoice);
@@ -1524,6 +1528,12 @@ namespace AlphaSoft
         {
             technicianDailyJobViewForm displayForm = new technicianDailyJobViewForm();
             displayForm.ShowDialog(this);
+        }
+
+        private void MENU_copyDO_Click(object sender, EventArgs e)
+        {
+            dataSalesInvoice displayedForm = new dataSalesInvoice(globalConstants.COPY_DELIVERY_ORDER);
+            displayedForm.ShowDialog(this);
         }
     }
 }

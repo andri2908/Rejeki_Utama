@@ -96,7 +96,8 @@
             this.MENU_SalesCommission = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_setNoFaktur = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_modulKasir = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_deliveryOrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.MENU_copyDO = new System.Windows.Forms.ToolStripMenuItem();
             this.MENU_PEMASANGAN_BARU = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
@@ -838,7 +839,8 @@
             this.MENU_SalesCommission,
             this.MENU_setNoFaktur,
             this.MENU_modulKasir,
-            this.toolStripMenuItem10,
+            this.MENU_deliveryOrder,
+            this.MENU_copyDO,
             this.MENU_PEMASANGAN_BARU,
             this.toolStripMenuItem13,
             this.toolStripMenuItem18,
@@ -853,7 +855,7 @@
             this.MENU_SalesQuotation.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_SalesQuotation.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_SalesQuotation.Name = "MENU_SalesQuotation";
-            this.MENU_SalesQuotation.Size = new System.Drawing.Size(280, 22);
+            this.MENU_SalesQuotation.Size = new System.Drawing.Size(290, 22);
             this.MENU_SalesQuotation.Text = "Sales Quotation [HIDDEN]";
             this.MENU_SalesQuotation.Visible = false;
             this.MENU_SalesQuotation.Click += new System.EventHandler(this.MENU_SalesQuotation_Click);
@@ -863,7 +865,7 @@
             this.MENU_SORevision.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_SORevision.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_SORevision.Name = "MENU_SORevision";
-            this.MENU_SORevision.Size = new System.Drawing.Size(280, 22);
+            this.MENU_SORevision.Size = new System.Drawing.Size(290, 22);
             this.MENU_SORevision.Text = "Sales Order Revision ";
             this.MENU_SORevision.Click += new System.EventHandler(this.MENU_SORevision_Click);
             // 
@@ -872,7 +874,7 @@
             this.MENU_SalesCommission.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_SalesCommission.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_SalesCommission.Name = "MENU_SalesCommission";
-            this.MENU_SalesCommission.Size = new System.Drawing.Size(280, 22);
+            this.MENU_SalesCommission.Size = new System.Drawing.Size(290, 22);
             this.MENU_SalesCommission.Text = "Sales Commission [HIDDEN]";
             this.MENU_SalesCommission.Visible = false;
             this.MENU_SalesCommission.Click += new System.EventHandler(this.MENU_SalesTarget_Click);
@@ -882,7 +884,7 @@
             this.MENU_setNoFaktur.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_setNoFaktur.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_setNoFaktur.Name = "MENU_setNoFaktur";
-            this.MENU_setNoFaktur.Size = new System.Drawing.Size(280, 22);
+            this.MENU_setNoFaktur.Size = new System.Drawing.Size(290, 22);
             this.MENU_setNoFaktur.Text = "Set No Faktur";
             this.MENU_setNoFaktur.Click += new System.EventHandler(this.toolStripMenuItem19_Click);
             // 
@@ -891,25 +893,34 @@
             this.MENU_modulKasir.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_modulKasir.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_modulKasir.Name = "MENU_modulKasir";
-            this.MENU_modulKasir.Size = new System.Drawing.Size(280, 22);
+            this.MENU_modulKasir.Size = new System.Drawing.Size(290, 22);
             this.MENU_modulKasir.Text = "Modul Kasir";
             this.MENU_modulKasir.Click += new System.EventHandler(this.toolStripMenuItem18_Click);
             // 
-            // toolStripMenuItem10
+            // MENU_deliveryOrder
             // 
-            this.toolStripMenuItem10.BackColor = System.Drawing.Color.SteelBlue;
-            this.toolStripMenuItem10.ForeColor = System.Drawing.Color.FloralWhite;
-            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(280, 22);
-            this.toolStripMenuItem10.Text = "Delivery Order";
-            this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click_1);
+            this.MENU_deliveryOrder.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_deliveryOrder.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_deliveryOrder.Name = "MENU_deliveryOrder";
+            this.MENU_deliveryOrder.Size = new System.Drawing.Size(290, 22);
+            this.MENU_deliveryOrder.Text = "Delivery Order";
+            this.MENU_deliveryOrder.Click += new System.EventHandler(this.toolStripMenuItem10_Click_1);
+            // 
+            // MENU_copyDO
+            // 
+            this.MENU_copyDO.BackColor = System.Drawing.Color.SteelBlue;
+            this.MENU_copyDO.ForeColor = System.Drawing.Color.FloralWhite;
+            this.MENU_copyDO.Name = "MENU_copyDO";
+            this.MENU_copyDO.Size = new System.Drawing.Size(290, 22);
+            this.MENU_copyDO.Text = "Print Out Copy Delivery Order";
+            this.MENU_copyDO.Click += new System.EventHandler(this.MENU_copyDO_Click);
             // 
             // MENU_PEMASANGAN_BARU
             // 
             this.MENU_PEMASANGAN_BARU.BackColor = System.Drawing.Color.SteelBlue;
             this.MENU_PEMASANGAN_BARU.ForeColor = System.Drawing.Color.FloralWhite;
             this.MENU_PEMASANGAN_BARU.Name = "MENU_PEMASANGAN_BARU";
-            this.MENU_PEMASANGAN_BARU.Size = new System.Drawing.Size(280, 22);
+            this.MENU_PEMASANGAN_BARU.Size = new System.Drawing.Size(290, 22);
             this.MENU_PEMASANGAN_BARU.Text = "Surat Tugas";
             this.MENU_PEMASANGAN_BARU.Click += new System.EventHandler(this.MENU_PEMASANGAN_BARU_Click);
             // 
@@ -918,7 +929,7 @@
             this.toolStripMenuItem13.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem13.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(280, 22);
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem13.Text = "Monitor Surat Tugas";
             this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click_1);
             // 
@@ -927,7 +938,7 @@
             this.toolStripMenuItem18.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem18.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem18.Name = "toolStripMenuItem18";
-            this.toolStripMenuItem18.Size = new System.Drawing.Size(280, 22);
+            this.toolStripMenuItem18.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem18.Text = "Jadwal Teknisi";
             this.toolStripMenuItem18.Click += new System.EventHandler(this.toolStripMenuItem18_Click_1);
             // 
@@ -936,7 +947,7 @@
             this.toolStripMenuItem19.BackColor = System.Drawing.Color.SteelBlue;
             this.toolStripMenuItem19.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            this.toolStripMenuItem19.Size = new System.Drawing.Size(280, 22);
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(290, 22);
             this.toolStripMenuItem19.Text = "Jadwal Harian";
             this.toolStripMenuItem19.Click += new System.EventHandler(this.toolStripMenuItem19_Click_1);
             // 
@@ -1523,8 +1534,9 @@
             this.toolStripMenuItem25.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStripMenuItem25.ForeColor = System.Drawing.Color.FloralWhite;
             this.toolStripMenuItem25.Name = "toolStripMenuItem25";
-            this.toolStripMenuItem25.Size = new System.Drawing.Size(58, 20);
-            this.toolStripMenuItem25.Text = "Tools";
+            this.toolStripMenuItem25.Size = new System.Drawing.Size(130, 20);
+            this.toolStripMenuItem25.Text = "Tools [HIDDEN]";
+            this.toolStripMenuItem25.Visible = false;
             this.toolStripMenuItem25.DropDownClosed += new System.EventHandler(this.toolStripMenuItem25_DropDownClosed);
             this.toolStripMenuItem25.DropDownOpened += new System.EventHandler(this.toolStripMenuItem25_DropDownOpened);
             // 
@@ -2100,7 +2112,7 @@
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesQuotation;
         private System.Windows.Forms.ToolStripMenuItem MENU_SORevision;
         private System.Windows.Forms.ToolStripMenuItem MENU_SalesCommission;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem MENU_deliveryOrder;
         private System.Windows.Forms.ToolStripMenuItem MENU_membership;
         private System.Windows.Forms.ToolStripMenuItem MENU_tambahRegion;
         private System.Windows.Forms.ToolStripMenuItem MENU_transferStok;
@@ -2111,6 +2123,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.ToolStripMenuItem MENU_pengaturanSMStoolStripMenuItem14;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem MENU_copyDO;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem16;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem17;

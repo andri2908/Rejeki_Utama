@@ -1346,46 +1346,49 @@ namespace AlphaSoft
         {
             gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "SAVE PENERIMAAN BARANG");
 
-            if (saveData())
+            if (DialogResult.Yes == MessageBox.Show("SAVE DATA ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PENERIMAAN BARANG SAVED");
-
-                if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
+                if (saveData())
                 {
-                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PENERIMAAN BARANG FROM MUTASI, UPDATE HQ DATA");
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PENERIMAAN BARANG SAVED");
 
-                    // UPDATE DATA AT HQ
-                    if (!sendUpdateToHQ())
+                    if (originModuleId == globalConstants.PENERIMAAN_BARANG_DARI_MUTASI)
                     {
-                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "FAILED TO UPDATE HQ DATA");
-                        MessageBox.Show("KONEKSI KE PUSAT GAGAL");
+                        gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "PENERIMAAN BARANG FROM MUTASI, UPDATE HQ DATA");
+
+                        // UPDATE DATA AT HQ
+                        if (!sendUpdateToHQ())
+                        {
+                            gUtil.saveSystemDebugLog(globalConstants.MENU_PENERIMAAN_BARANG, "FAILED TO UPDATE HQ DATA");
+                            MessageBox.Show("KONEKSI KE PUSAT GAGAL");
+                        }
+                        gUtil.saveUserChangeLog(globalConstants.MENU_MUTASI_BARANG, globalConstants.CHANGE_LOG_INSERT, "PENERIMAAN BARANG [" + prInvoiceTextBox.Text + "] DARI MUTASI[" + noMutasiTextBox.Text + "]");
                     }
-                    gUtil.saveUserChangeLog(globalConstants.MENU_MUTASI_BARANG, globalConstants.CHANGE_LOG_INSERT, "PENERIMAAN BARANG [" + prInvoiceTextBox.Text + "] DARI MUTASI[" + noMutasiTextBox.Text + "]");
+                    else
+                        gUtil.saveUserChangeLog(globalConstants.MENU_MUTASI_BARANG, globalConstants.CHANGE_LOG_INSERT, "PENERIMAAN BARANG [" + prInvoiceTextBox.Text + "] NO PO [" + selectedInvoice + "]");
+
+                    if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    {
+                        smallPleaseWait pleaseWait = new smallPleaseWait();
+                        pleaseWait.Show();
+
+                        //  ALlow main UI thread to properly display please wait form.
+                        Application.DoEvents();
+                        printReport(prInvoiceTextBox.Text);
+
+                        pleaseWait.Close();
+                    }
+
+                    saveButton.Visible = false;
+                    reprintButton.Visible = true;
+
+                    gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
+
+                    prInvoiceTextBox.Enabled = false;
+                    PRDtPicker.Enabled = false;
+                    detailGridView.ReadOnly = true;
+                    gUtil.showSuccess(gUtil.INS);
                 }
-                else
-                    gUtil.saveUserChangeLog(globalConstants.MENU_MUTASI_BARANG, globalConstants.CHANGE_LOG_INSERT, "PENERIMAAN BARANG [" + prInvoiceTextBox.Text + "] NO PO [" + selectedInvoice + "]");
-
-                if (DialogResult.Yes == MessageBox.Show("PRINT RECEIPT ? ", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                {
-                    smallPleaseWait pleaseWait = new smallPleaseWait();
-                    pleaseWait.Show();
-
-                    //  ALlow main UI thread to properly display please wait form.
-                    Application.DoEvents();
-                    printReport(prInvoiceTextBox.Text);
-
-                    pleaseWait.Close();
-                }
-
-                saveButton.Visible = false;
-                reprintButton.Visible = true;
-
-                gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
-
-                prInvoiceTextBox.Enabled = false;
-                PRDtPicker.Enabled = false;
-                detailGridView.ReadOnly = true;
-                gUtil.showSuccess(gUtil.INS);
             }
         }
 
@@ -1591,6 +1594,7 @@ namespace AlphaSoft
                     selectedRow.Cells[columnName].Value = "0";
 
                     calculateTotal();
+                    isLoading = false;
 
                     return;
                 }

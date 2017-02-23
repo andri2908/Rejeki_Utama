@@ -73,6 +73,12 @@
             this.birthdayDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.resetbutton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CPTextBox = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.CPPhoneTextBox = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -209,7 +215,7 @@
             // saveButton
             // 
             this.saveButton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(330, 428);
+            this.saveButton.Location = new System.Drawing.Point(359, 463);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(95, 37);
             this.saveButton.TabIndex = 12;
@@ -222,6 +228,7 @@
             this.custAddress1TextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.custAddress1TextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.custAddress1TextBox.Location = new System.Drawing.Point(273, 84);
+            this.custAddress1TextBox.MaxLength = 50;
             this.custAddress1TextBox.Name = "custAddress1TextBox";
             this.custAddress1TextBox.Size = new System.Drawing.Size(600, 27);
             this.custAddress1TextBox.TabIndex = 19;
@@ -231,6 +238,7 @@
             this.custNameTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.custNameTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.custNameTextBox.Location = new System.Drawing.Point(273, 51);
+            this.custNameTextBox.MaxLength = 50;
             this.custNameTextBox.Name = "custNameTextBox";
             this.custNameTextBox.Size = new System.Drawing.Size(600, 27);
             this.custNameTextBox.TabIndex = 33;
@@ -240,6 +248,7 @@
             this.custTelTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.custTelTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.custTelTextBox.Location = new System.Drawing.Point(273, 183);
+            this.custTelTextBox.MaxLength = 16;
             this.custTelTextBox.Name = "custTelTextBox";
             this.custTelTextBox.Size = new System.Drawing.Size(234, 27);
             this.custTelTextBox.TabIndex = 17;
@@ -272,6 +281,7 @@
             this.custFaxTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.custFaxTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.custFaxTextBox.Location = new System.Drawing.Point(615, 183);
+            this.custFaxTextBox.MaxLength = 15;
             this.custFaxTextBox.Name = "custFaxTextBox";
             this.custFaxTextBox.Size = new System.Drawing.Size(258, 27);
             this.custFaxTextBox.TabIndex = 37;
@@ -360,7 +370,7 @@
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label19.Location = new System.Drawing.Point(253, 386);
+            this.label19.Location = new System.Drawing.Point(253, 416);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(14, 18);
             this.label19.TabIndex = 16;
@@ -372,7 +382,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label15.Location = new System.Drawing.Point(12, 386);
+            this.label15.Location = new System.Drawing.Point(12, 416);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(104, 18);
             this.label15.TabIndex = 17;
@@ -425,6 +435,7 @@
             this.custAddress2TextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.custAddress2TextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.custAddress2TextBox.Location = new System.Drawing.Point(273, 117);
+            this.custAddress2TextBox.MaxLength = 50;
             this.custAddress2TextBox.Name = "custAddress2TextBox";
             this.custAddress2TextBox.Size = new System.Drawing.Size(600, 27);
             this.custAddress2TextBox.TabIndex = 17;
@@ -537,7 +548,7 @@
             // 
             this.birthdayDateTimePicker.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.birthdayDateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.birthdayDateTimePicker.Location = new System.Drawing.Point(273, 380);
+            this.birthdayDateTimePicker.Location = new System.Drawing.Point(273, 413);
             this.birthdayDateTimePicker.Name = "birthdayDateTimePicker";
             this.birthdayDateTimePicker.Size = new System.Drawing.Size(152, 27);
             this.birthdayDateTimePicker.TabIndex = 17;
@@ -545,7 +556,7 @@
             // resetbutton
             // 
             this.resetbutton.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.resetbutton.Location = new System.Drawing.Point(478, 428);
+            this.resetbutton.Location = new System.Drawing.Point(478, 464);
             this.resetbutton.Name = "resetbutton";
             this.resetbutton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.resetbutton.Size = new System.Drawing.Size(95, 37);
@@ -556,6 +567,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label25);
+            this.groupBox1.Controls.Add(this.label26);
+            this.groupBox1.Controls.Add(this.CPPhoneTextBox);
+            this.groupBox1.Controls.Add(this.CPTextBox);
+            this.groupBox1.Controls.Add(this.label22);
+            this.groupBox1.Controls.Add(this.label24);
             this.groupBox1.Controls.Add(this.regionHiddenCombo);
             this.groupBox1.Controls.Add(this.resetbutton);
             this.groupBox1.Controls.Add(this.regionCombo);
@@ -601,17 +618,80 @@
             this.groupBox1.Font = new System.Drawing.Font("Verdana", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(1, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(907, 475);
+            this.groupBox1.Size = new System.Drawing.Size(907, 519);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "DATA PELANGGAN";
+            // 
+            // CPTextBox
+            // 
+            this.CPTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.CPTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CPTextBox.Location = new System.Drawing.Point(273, 380);
+            this.CPTextBox.Name = "CPTextBox";
+            this.CPTextBox.Size = new System.Drawing.Size(255, 27);
+            this.CPTextBox.TabIndex = 78;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label22.Location = new System.Drawing.Point(12, 383);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(174, 18);
+            this.label22.TabIndex = 77;
+            this.label22.Text = "CONTACT PERSON";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label24.Location = new System.Drawing.Point(254, 383);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(14, 18);
+            this.label24.TabIndex = 79;
+            this.label24.Text = ":";
+            // 
+            // CPPhoneTextBox
+            // 
+            this.CPPhoneTextBox.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.CPPhoneTextBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CPPhoneTextBox.Location = new System.Drawing.Point(618, 380);
+            this.CPPhoneTextBox.MaxLength = 16;
+            this.CPPhoneTextBox.Name = "CPPhoneTextBox";
+            this.CPPhoneTextBox.Size = new System.Drawing.Size(255, 27);
+            this.CPPhoneTextBox.TabIndex = 80;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label25.Location = new System.Drawing.Point(595, 383);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(14, 18);
+            this.label25.TabIndex = 82;
+            this.label25.Text = ":";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label26.Location = new System.Drawing.Point(547, 383);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(53, 18);
+            this.label26.TabIndex = 81;
+            this.label26.Text = "TELP";
             // 
             // dataPelangganDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FloralWhite;
-            this.ClientSize = new System.Drawing.Size(909, 513);
+            this.ClientSize = new System.Drawing.Size(909, 555);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -677,5 +757,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DateTimePicker birthdayDateTimePicker;
+        private System.Windows.Forms.TextBox CPTextBox;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox CPPhoneTextBox;
     }
 }

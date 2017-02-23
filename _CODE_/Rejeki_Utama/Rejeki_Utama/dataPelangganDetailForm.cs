@@ -62,7 +62,7 @@ namespace AlphaSoft
             sqlCommand = "SELECT CUSTOMER_BLOCKED, REGION_ID, CUSTOMER_JOINED_DATE, CUSTOMER_FULL_NAME, IFNULL(CUSTOMER_ADDRESS1, '') AS CUSTOMER_ADDRESS1, " +
                                    "IFNULL(CUSTOMER_ADDRESS2, '') AS CUSTOMER_ADDRESS2, IFNULL(CUSTOMER_ADDRESS_CITY, '') AS CUSTOMER_ADDRESS_CITY, " +
                                    "IFNULL(CUSTOMER_PHONE, '') AS CUSTOMER_PHONE, IFNULL(CUSTOMER_FAX, '') AS CUSTOMER_FAX, IFNULL(CUSTOMER_EMAIL, '') AS CUSTOMER_EMAIL, " +
-                                   "IFNULL(CUSTOMER_TOTAL_SALES_COUNT, '0') AS CUSTOMER_TOTAL_SALES_COUNT, IFNULL(CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, CUSTOMER_ACTIVE " +
+                                   "IFNULL(CUSTOMER_TOTAL_SALES_COUNT, '0') AS CUSTOMER_TOTAL_SALES_COUNT, IFNULL(CUSTOMER_GROUP, 1) AS CUSTOMER_GROUP, CUSTOMER_ACTIVE, CONTACT_PERSON, CONTACT_PERSON_PHONE " +
                                    "FROM MASTER_CUSTOMER WHERE CUSTOMER_ID = " + selectedCustomerID;
 
             DS.mySqlConnect();
@@ -83,7 +83,8 @@ namespace AlphaSoft
                         custFaxTextBox.Text = rdr.GetString("CUSTOMER_FAX");
                         custEmailTextBox.Text = rdr.GetString("CUSTOMER_EMAIL");
                         custTotalSalesTextBox.Text = rdr.GetString("CUSTOMER_TOTAL_SALES_COUNT");
-
+                        CPTextBox.Text = rdr.GetString("CONTACT_PERSON");
+                        CPPhoneTextBox.Text = rdr.GetString("CONTACT_PERSON_PHONE");
                         groupPelangganCombo.SelectedIndex = rdr.GetInt32("CUSTOMER_GROUP") - 1;
 
                         if (rdr.GetString("CUSTOMER_ACTIVE").Equals("1"))
@@ -95,7 +96,6 @@ namespace AlphaSoft
                             blockedCustomer.Checked = true;
                         else
                             blockedCustomer.Checked = false;
-
 
                         regionCombo.Text = regionCombo.Items[rdr.GetInt32("REGION_ID")].ToString();
                         regionHiddenCombo.SelectedIndex = rdr.GetInt32("REGION_ID");
@@ -268,8 +268,8 @@ namespace AlphaSoft
                 {
                     case globalConstants.NEW_CUSTOMER:
                         sqlCommand = "INSERT INTO MASTER_CUSTOMER " +
-                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED, REGION_ID, CUSTOMER_BIRTHDAY) " +
-                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ", " + selectedRegionID + ", STR_TO_DATE('" + custBirthday + "', '%d-%m-%Y'))";
+                                            "(CUSTOMER_FULL_NAME, CUSTOMER_ADDRESS1, CUSTOMER_ADDRESS2, CUSTOMER_ADDRESS_CITY, CUSTOMER_PHONE, CUSTOMER_FAX, CUSTOMER_EMAIL, CUSTOMER_ACTIVE, CUSTOMER_JOINED_DATE, CUSTOMER_TOTAL_SALES_COUNT, CUSTOMER_GROUP, MAX_CREDIT, CUSTOMER_BLOCKED, REGION_ID, CUSTOMER_BIRTHDAY, CONTACT_PERSON, CONTACT_PERSON_PHONE) " +
+                                            "VALUES ('" + custName + "', '" + custAddress1 + "', '" + custAddress2 + "', '" + custAddressCity + "', '" + custPhone + "', '" + custFax + "', '" + custEmail + "', " + custStatus + ", STR_TO_DATE('" + custJoinedDate + "', '%d-%m-%Y'), " + custTotalSales + ", " + custGroup + ", " + maxCreditAmount + ", " + custBlocked + ", " + selectedRegionID + ", STR_TO_DATE('" + custBirthday + "', '%d-%m-%Y'), '" + CPTextBox.Text + "', '" + CPPhoneTextBox.Text + "')";
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "INSERT NEW CUSTOMER DATA [" + custName + "]");
                         break;
                     case globalConstants.EDIT_CUSTOMER:
@@ -290,6 +290,8 @@ namespace AlphaSoft
                                             "CUSTOMER_BLOCKED = " + custBlocked + ", " +
                                             "REGION_ID = " + selectedRegionID + ", " +
                                             "CUSTOMER_BIRTHDAY = STR_TO_DATE('" + custBirthday + "', '%d-%m-%Y'), " +
+                                            "CONTACT_PERSON = '" + CPTextBox.Text + "', " +
+                                            "CONTACT_PERSON_PHONE = '" + CPPhoneTextBox.Text + "' " +
                                             "WHERE CUSTOMER_ID = " + selectedCustomerID;
                         gUtil.saveSystemDebugLog(globalConstants.MENU_PELANGGAN, "EDIT CUSTOMER DATA [" + selectedCustomerID + "]");
                         break;

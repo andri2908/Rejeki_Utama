@@ -137,6 +137,28 @@ namespace AlphaSoft
             return rslt;
         }
 
+        public string loadStoreName()
+        {
+            MySqlDataReader rdr;
+            DataTable dt = new DataTable();
+            DS.mySqlConnect();
+            string storeName = "";
+            int rslt = 0;
+            //1 load default 2 setting user
+            using (rdr = DS.getData("SELECT IFNULL(STORE_NAME, 'ALPHASOFT') AS 'NAME' FROM SYS_CONFIG WHERE ID = 2"))
+            {
+                if (rdr.HasRows)
+                {
+                    rdr.Read();
+                    if (!String.IsNullOrEmpty(rdr.GetString("NAME")))
+                    {
+                        storeName = rdr.GetString("NAME");
+                    }
+                }
+            }
+            return storeName;
+        }
+
         public int loadlocationID(int opt)
         {
             MySqlDataReader rdr;

@@ -1153,33 +1153,37 @@ namespace AlphaSoft
         private void saveButton_Click(object sender, EventArgs e)
         {
             gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "ATTEMPT TO SAVE DATA");
-            if (saveData())
+
+            if (DialogResult.Yes == MessageBox.Show("SAVE DATA ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
             {
-                gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "PURCHASE ORDER SAVED");
-                switch (originModuleID)
+                if (saveData())
                 {
-                    case globalConstants.NEW_PURCHASE_ORDER:
-                        gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "CREATE NEW PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
-                        break;
-                    case globalConstants.EDIT_PURCHASE_ORDER:
-                        gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
-                        break;
+                    gUtil.saveSystemDebugLog(globalConstants.MENU_PURCHASE_ORDER, "PURCHASE ORDER SAVED");
+                    switch (originModuleID)
+                    {
+                        case globalConstants.NEW_PURCHASE_ORDER:
+                            gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "CREATE NEW PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
+                            break;
+                        case globalConstants.EDIT_PURCHASE_ORDER:
+                            gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_UPDATE, "UPDATE PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
+                            break;
+                    }
+
+                    errorLabel.Text = "";
+                    generateButton.Visible = true;
+
+                    saveButton.Enabled = false;
+
+                    PODateTimePicker.Enabled = false;
+                    supplierCombo.Enabled = false;
+                    termOfPaymentCombo.Enabled = false;
+                    durationTextBox.ReadOnly = true;
+                    detailPODataGridView.ReadOnly = true;
+                    detailPODataGridView.AllowUserToAddRows = false;
+
+                    gUtil.showSuccess(gUtil.INS);
+                    gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
                 }
-
-                errorLabel.Text = "";
-                generateButton.Visible = true;
-
-                saveButton.Enabled = false;
-
-                PODateTimePicker.Enabled = false;
-                supplierCombo.Enabled = false;
-                termOfPaymentCombo.Enabled = false;
-                durationTextBox.ReadOnly = true;
-                detailPODataGridView.ReadOnly = true;
-                detailPODataGridView.AllowUserToAddRows = false;
-
-                gUtil.showSuccess(gUtil.INS);
-                gUtil.reArrangeButtonPosition(arrButton, arrButton[0].Top, this.Width);
             }
         }
 
@@ -1350,22 +1354,25 @@ namespace AlphaSoft
         {
             originModuleID = globalConstants.PRINTOUT_PURCHASE_ORDER;
 
-            if (saveData())
-            {
-                gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "PRINT OUT PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
+            if (DialogResult.Yes == MessageBox.Show("SAVE DATA ?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+            { 
+                if (saveData())
+                {
+                    gUtil.saveUserChangeLog(globalConstants.MENU_PURCHASE_ORDER, globalConstants.CHANGE_LOG_INSERT, "PRINT OUT PURCHASE ORDER [" + POinvoiceTextBox.Text + "]");
 
-                saveButton.Enabled = false;
-                POinvoiceTextBox.ReadOnly = true;
-                PODateTimePicker.Enabled = false;
-                supplierCombo.Enabled = false;
-                termOfPaymentCombo.Enabled = false;
-                durationTextBox.ReadOnly = true;
-                detailPODataGridView.ReadOnly = true;
-                detailPODataGridView.AllowUserToAddRows = false;
+                    saveButton.Enabled = false;
+                    POinvoiceTextBox.ReadOnly = true;
+                    PODateTimePicker.Enabled = false;
+                    supplierCombo.Enabled = false;
+                    termOfPaymentCombo.Enabled = false;
+                    durationTextBox.ReadOnly = true;
+                    detailPODataGridView.ReadOnly = true;
+                    detailPODataGridView.AllowUserToAddRows = false;
 
-                printOutPurchaseOrder();
+                    printOutPurchaseOrder();
 
-                gUtil.showSuccess(gUtil.INS);
+                    gUtil.showSuccess(gUtil.INS);
+                }
             }
         }
 

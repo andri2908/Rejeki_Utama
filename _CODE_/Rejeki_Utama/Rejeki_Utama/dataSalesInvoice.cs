@@ -176,7 +176,7 @@ namespace AlphaSoft
                     dataPenerimaanBarang.Columns["NO INVOICE"].Width = 200;
                     dataPenerimaanBarang.Columns["CUSTOMER"].Width = 200;
 
-                    if (originModuleID != globalConstants.COPY_DELIVERY_ORDER)
+                    if (originModuleID != globalConstants.COPY_DELIVERY_ORDER && originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
                     {
                         dataPenerimaanBarang.Columns["ID"].Visible = false;
                         dataPenerimaanBarang.Columns["TGL INVOICE"].Width = 200;
@@ -184,10 +184,6 @@ namespace AlphaSoft
                         dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.FormatProvider = culture;
                         dataPenerimaanBarang.Columns["TOTAL"].DefaultCellStyle.Format = "C2";
                     }
-                    else if (originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU)
-					{
-                        dataPenerimaanBarang.Columns["TOTAL"].Width = 200;
-                	}
                     else if (originModuleID == globalConstants.COPY_DELIVERY_ORDER)
                     {
                         dataPenerimaanBarang.Columns["TGL DO"].Width = 200;
@@ -242,7 +238,7 @@ namespace AlphaSoft
             //                            "FROM SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , SALES_DETAIL SD, MASTER_PRODUCT MP " +
             //                            "WHERE SH.SALES_INVOICE = '" + SONo + "' AND SD.SALES_INVOICE = SH.SALES_INVOICE AND SD.PRODUCT_ID = MP.PRODUCT_ID AND SD.REV_NO = '" + revNo + "' AND SH.REV_NO = '" + revNo + "'";
 
-            string sqlCommandx = "SELECT '0' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.DO_ID AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
+            string sqlCommandx = "SELECT DH.DO_ID, '0' AS 'SALES_STATUS', DH.DO_DATE AS 'TGL', DH.DO_ID AS 'INVOICE', IFNULL(MC.CUSTOMER_FULL_NAME, 'P-UMUM') AS 'CUSTOMER_NAME', MP.PRODUCT_NAME AS 'PRODUK', DD.PRODUCT_QTY AS 'QTY' " +
                             "FROM DELIVERY_ORDER_HEADER DH, DELIVERY_ORDER_DETAIL DD, SALES_HEADER SH LEFT OUTER JOIN MASTER_CUSTOMER MC ON (SH.CUSTOMER_ID = MC.CUSTOMER_ID) , MASTER_PRODUCT MP " +
                             "WHERE DH.DO_ID = '" + DO_ID + "' AND DH.SALES_INVOICE = '" + SONo + "' AND DD.DO_ID = DH.DO_ID AND DD.PRODUCT_ID = MP.PRODUCT_ID AND DH.REV_NO = '" + revNo + "' AND SH.SALES_INVOICE = '" + SONo + "' AND SH.REV_NO = '" + revNo + "'";
 
@@ -408,6 +404,7 @@ namespace AlphaSoft
             }
             else if (originModuleID == globalConstants.COPY_DELIVERY_ORDER)
             {
+                revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                 displaySpecificForm(noInvoice, revNo, selectedRow.Cells["NO DO"].Value.ToString());
             }
             else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
@@ -442,6 +439,7 @@ namespace AlphaSoft
                 }
                 else if (originModuleID == globalConstants.COPY_DELIVERY_ORDER)
                 {
+                    revNo = selectedRow.Cells["REV_NO"].Value.ToString();
                     displaySpecificForm(noInvoice, revNo, selectedRow.Cells["NO DO"].Value.ToString());
                 }
                 else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)

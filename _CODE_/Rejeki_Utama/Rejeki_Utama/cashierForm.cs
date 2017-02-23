@@ -19,7 +19,7 @@ namespace AlphaSoft
 {
     public partial class cashierForm : Form
     {
-        private string posTitle = "REJEKI UTAMA";
+        private string posTitle;// = "REJEKI UTAMA";
         private string selectedsalesinvoice = "";
         private string selectedsalesinvoiceTax = "";
         private string selectedsalesinvoiceRevNo = "";
@@ -95,7 +95,7 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : MULTIPLE CASHIER INSTANCE [" + counter + "]");
 
             label1.Text = "Struk # : " + counter;
-            titleLabel.Text = posTitle;
+            titleLabel.Text = gutil.loadStoreName();//posTitle;
 
             objCounter = counter + 1;
         }
@@ -107,11 +107,11 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.SERVICE_AC)
             {
-                posTitle = "REJEKI UTAMA - MODUL SERVICE AC";
+                posTitle = gutil.loadStoreName() + " - MODUL SERVICE AC";
             }
             else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
             {
-                posTitle = "REJEKI UTAMA - SURAT TUGAS";
+                posTitle = gutil.loadStoreName() + "  - SURAT TUGAS";
             }
 
             titleLabel.Text = posTitle;
@@ -125,7 +125,7 @@ namespace AlphaSoft
 
             if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU)
             {
-                posTitle = "REJEKI UTAMA - SURAT TUGAS";
+                posTitle = gutil.loadStoreName() + " - SURAT TUGAS";
             }
 
             titleLabel.Text = posTitle;
@@ -2756,11 +2756,11 @@ namespace AlphaSoft
 
                 if (originModuleID == globalConstants.SERVICE_AC)
                 {
-                    posTitle = "REJEKI UTAMA - MODUL SERVICE AC";
+                    posTitle = gutil.loadStoreName() + " - MODUL SERVICE AC";
                 }
                 else if (originModuleID == globalConstants.TUGAS_PEMASANGAN_BARU || originModuleID == globalConstants.MONITOR_SURAT_TUGAS)
                 {
-                    posTitle = "REJEKI UTAMA - SURAT TUGAS PEMASANGAN";
+                    posTitle = gutil.loadStoreName() + " - SURAT TUGAS PEMASANGAN";
                     panel6.Visible = false;
                     totalLabel.Visible = false;
                     label3.Visible = false;
@@ -3104,26 +3104,26 @@ namespace AlphaSoft
             gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt");
 
 
-            if (papermode == globalUtilities.PAPER_POS_RECEIPT && 
-                originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
-                originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU && 
-                originModuleID != globalConstants.MONITOR_SURAT_TUGAS) //kertas POS
-            {
-                gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
-                //width, height
-                paperLength = calculatePageLength();
-                PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
-                printDocument1.DefaultPageSettings.PaperSize = psize;
-                DialogResult result;
-                printPreviewDialog1.Width = 512;
-                printPreviewDialog1.Height = 768;
-                result = printPreviewDialog1.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    printDocument1.Print();
-                }
-            }
-            else
+            //if (papermode == globalUtilities.PAPER_POS_RECEIPT && 
+            //    originModuleID != globalConstants.TUGAS_PEMASANGAN_BARU && 
+            //    originModuleID != globalConstants.EDIT_TUGAS_PEMASANGAN_BARU && 
+            //    originModuleID != globalConstants.MONITOR_SURAT_TUGAS) //kertas POS
+            //{
+            //    gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, POS size Paper");
+            //    //width, height
+            //    paperLength = calculatePageLength();
+            //    PaperSize psize = new PaperSize("Custom", 320, paperLength);//820);
+            //    printDocument1.DefaultPageSettings.PaperSize = psize;
+            //    DialogResult result;
+            //    printPreviewDialog1.Width = 512;
+            //    printPreviewDialog1.Height = 768;
+            //    result = printPreviewDialog1.ShowDialog();
+            //    if (result == DialogResult.OK)
+            //    {
+            //        printDocument1.Print();
+            //    }
+            //}
+            //else
             {
                 gutil.saveSystemDebugLog(globalConstants.MENU_PENJUALAN, "CASHIER FORM : PrintReceipt, papermode [" + papermode + "]");
 
